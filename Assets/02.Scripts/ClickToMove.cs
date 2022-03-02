@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 /// <summary>
-/// 플레이어 이동 감지
+/// 플레이어 이동 터치 감지
 /// </summary>
 public class ClickToMove : MonoBehaviour, IPointerDownHandler
 {
@@ -19,6 +19,12 @@ public class ClickToMove : MonoBehaviour, IPointerDownHandler
     {
         Ray ray = cam.ScreenPointToRay(eventData.position);
         Physics.Raycast(ray, out hit);
+        if (hit.transform != null)
+        {
+            clickEffect.SetActive(false);
+            clickEffect.transform.position = cam.WorldToScreenPoint(hit.point);
+            clickEffect.SetActive(true);
+        }
         clickEffect.transform.position = hit.point;
         StopCoroutine("PlayerMove");  //중복터치 방지
         StartCoroutine("PlayerMove");
@@ -26,13 +32,13 @@ public class ClickToMove : MonoBehaviour, IPointerDownHandler
     IEnumerator PlayerMove()
     {
         clickEffect.SetActive(true);
-        while(true)
+        while (true)
         {
-            targetDis = (hit.point-player.transform.position).magnitude; //거리로 변경
+            targetDis = (hit.point - player.transform.position).magnitude; //거리로 변경
             player.transform.LookAt(hit.point);
             player.transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-            if (targetDis<=0.1f)
+            if (targetDis <= 0.1f)
             {
                 StopCoroutine("PlayerMove");
                 clickEffect.SetActive(false);
@@ -41,4 +47,5 @@ public class ClickToMove : MonoBehaviour, IPointerDownHandler
             yield return null;
         }
     }
+
 }
