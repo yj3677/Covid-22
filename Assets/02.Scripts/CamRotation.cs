@@ -17,7 +17,7 @@ public class CamRotation : MonoBehaviour
     }
     void LookAround()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
         {
             Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); //이전값과 현재값의 차이
             Vector3 camAngle = cam.rotation.eulerAngles;

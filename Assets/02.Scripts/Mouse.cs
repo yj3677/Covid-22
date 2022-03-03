@@ -9,15 +9,20 @@ using UnityEngine.AI;
 /// </summary>
 public class Mouse : MonoBehaviour
 {
+    public int stamina;
+    bool isRest = false; //달리기 가능 상태
+    bool isRunning = false; //달리기중
+
     private Camera cam;
     public GameObject player; //이동 대상
     private NavMeshAgent agent;
     private Animator playerAnim;
 
+    public Button runBtn;
     public GameObject clickEffect;  //클릭지점
     
 
-    private bool isRun=false;
+    
     private bool isMove;
     private Vector3 destination;
 
@@ -28,23 +33,29 @@ public class Mouse : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
 
-    }
 
+    }
     
+
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        InputMouse();
+        LookMoveDirection();
+        
+    }
+    void InputMouse()
+    {
+        if (Input.GetMouseButton(0))
         {
             playerAnim.SetBool("IsWalk", true);
             RaycastHit hit;
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition),out hit))
+            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 SetDestination(hit.point);
             }
             clickEffect.transform.position = hit.point;
             clickEffect.SetActive(true);
         }
-        LookMoveDirection();
     }
     private void SetDestination(Vector3 dest)
     {
@@ -70,26 +81,32 @@ public class Mouse : MonoBehaviour
         }
      
     }
-    public void RunTouch()
+    void Stamina()
     {
-        if (isRun==false)
+        if (stamina<=0)
         {
-            
-            agent.speed = 9;
-            Debug.Log("Run");
-            isRun = true;
+            isRest = true;
         }
-       
+    }
+    public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
+    {
+        if (!isRest && !isRunning)
+        {
+            stamina -= 4;
+            agent.speed = 9;
+            isRunning = true;
+            Invoke("RunOff", 4);
+        }
         
     }
-    public void RunOutTouch()
+    void RunOff()
     {
-        if (isRun==true)
-        {
-            
-            agent.speed = 5;
-            isRun = false;
+        float originSpeed = agent.speed;
+        if (agent.speed == 9)
+        { 
+            agent.speed =  5;
+            isRunning = false;
         }
-       
     }
+    
 }

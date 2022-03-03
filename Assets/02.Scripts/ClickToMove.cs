@@ -11,6 +11,7 @@ public class ClickToMove : MonoBehaviour, IPointerDownHandler
     private float targetDis;   //목표거리
     public float speed;
 
+
     public Camera cam;
     public GameObject clickEffect; 
 
