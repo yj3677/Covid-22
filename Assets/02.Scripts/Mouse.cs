@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
 /// <summary>
@@ -14,7 +15,9 @@ public class Mouse : MonoBehaviour
     private Animator playerAnim;
 
     public GameObject clickEffect;  //클릭지점
+    
 
+    private bool isRun=false;
     private bool isMove;
     private Vector3 destination;
 
@@ -66,5 +69,27 @@ public class Mouse : MonoBehaviour
             //transform.position += dir.normalized*Time.deltaTime*5;
         }
      
+    }
+    public void RunTouch()
+    {
+        if (isRun==false)
+        {
+            
+            agent.speed = 9;
+            Debug.Log("Run");
+            isRun = true;
+        }
+       
+        
+    }
+    public void RunOutTouch()
+    {
+        if (isRun==true)
+        {
+            
+            agent.speed = 5;
+            isRun = false;
+        }
+       
     }
 }
