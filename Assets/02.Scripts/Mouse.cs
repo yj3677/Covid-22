@@ -9,9 +9,15 @@ using UnityEngine.AI;
 /// </summary>
 public class Mouse : MonoBehaviour
 {
+    [Header("---Running---")]
     public int stamina;
-    bool isRest = false; //달리기 가능 상태
     bool isRunning = false; //달리기중
+    [Header("---Crouch---")]
+    float recoveryTime = 0;
+    private float crouchPosY;  //앉을 높이
+    private float originPosY;
+    private float applyCrouchPosY;
+    bool isCrouch = false;
 
     private Camera cam;
     public GameObject player; //이동 대상
@@ -23,7 +29,7 @@ public class Mouse : MonoBehaviour
     
 
     
-    private bool isMove;
+    private bool isMove=false;
     private Vector3 destination;
 
     private void Awake()
@@ -35,13 +41,16 @@ public class Mouse : MonoBehaviour
 
 
     }
-    
+    private void FixedUpdate()
+    {
+        Stamina();
+    }
 
     void Update()
     {
         InputMouse();
         LookMoveDirection();
-        
+        Recovery();
     }
     void InputMouse()
     {
@@ -81,16 +90,62 @@ public class Mouse : MonoBehaviour
         }
      
     }
+
+    public void Crouch()
+    {
+        agent.speed = 0;
+        isCrouch = !isCrouch;
+        if (isCrouch)
+        {
+            
+            //앉기 애니매이션 넣기
+            
+        }
+        else
+        {
+            //일어서기 애니매이션 넣기
+            
+            agent.speed = 5;
+        }
+       
+    }
     void Stamina()
     {
         if (stamina<=0)
         {
-            isRest = true;
+            stamina = 0;
+        }
+        if(stamina>=100)
+        {
+            stamina = 100;
         }
     }
+    public void Recovery() //1프레임에 스테미너 1회복
+    {
+        
+        //crouch()넣기
+        if (stamina>=100) //스테미너 100이상 리턴
+        {
+            recoveryTime = 0;
+            return;
+        }
+        
+        else if(isCrouch) //앉은 상태에서만 회복
+        {
+            recoveryTime += Time.fixedDeltaTime;
+            if (recoveryTime > 3)
+            {
+                Debug.Log(recoveryTime);
+                stamina += 1;
+                recoveryTime = 0;
+            }
+        }
+  
+    }
+
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
     {
-        if (!isRest && !isRunning)
+        if (!isRunning && stamina!=0)
         {
             stamina -= 4;
             agent.speed = 9;
