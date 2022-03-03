@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.AI;
-
+/// <summary>
+/// 플레이어 이동 감지
+/// </summary>
 public class Mouse : MonoBehaviour
 {
     private Camera cam;
-    public GameObject player;
+    public GameObject player; //이동 대상
     private NavMeshAgent agent;
     private Animator playerAnim;
+
+    public GameObject clickEffect;  //클릭지점
 
     private bool isMove;
     private Vector3 destination;
@@ -33,6 +38,8 @@ public class Mouse : MonoBehaviour
             {
                 SetDestination(hit.point);
             }
+            clickEffect.transform.position = hit.point;
+            clickEffect.SetActive(true);
         }
         LookMoveDirection();
     }
@@ -44,11 +51,11 @@ public class Mouse : MonoBehaviour
     }
     private void LookMoveDirection()
     {
-
         if (isMove)
         {
-            if (agent.velocity.magnitude == 0)
+            if (agent.velocity.magnitude == 0)  //이동거리가 0이면
             {
+                clickEffect.SetActive(false);  //클릭이펙트 끄기
                 isMove = false;
                 playerAnim.SetBool("IsWalk", false);
                 return;
