@@ -6,18 +6,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.AI;
 /// <summary>
 /// 플레이어 이동 감지
+/// 하나의 동작 상태일 때 다른 동작 불가능
+/// 스테미너를 사용한 달리기
+/// 스테미너 회복
 /// </summary>
 public class Mouse : MonoBehaviour
 {
     [Header("---Running---")]
     public int stamina;
-    bool isRunning = false; //달리기중
+    public bool isRunning = false; //달리기중
     [Header("---Crouch---")]
     float recoveryTime = 0;
-    private float crouchPosY;  //앉을 높이
-    private float originPosY;
-    private float applyCrouchPosY;
-    bool isCrouch = false;
+    public bool isCrouch = false;
+
+    
 
     private Camera cam;
     public GameObject player; //이동 대상
@@ -25,7 +27,7 @@ public class Mouse : MonoBehaviour
     private Animator playerAnim;
 
     public Button runBtn;
-    public GameObject clickEffect;  //클릭지점
+    public GameObject clickEffect;  //클릭 지점
     
 
     
@@ -44,6 +46,7 @@ public class Mouse : MonoBehaviour
     private void FixedUpdate()
     {
         Stamina();
+        
     }
 
     void Update()
@@ -51,19 +54,26 @@ public class Mouse : MonoBehaviour
         InputMouse();
         LookMoveDirection();
         Recovery();
+        
     }
     void InputMouse()
     {
-        if (Input.GetMouseButton(0))
+        if ((Input.GetMouseButton(0)) )// && !isCrouch)
         {
-            playerAnim.SetBool("IsWalk", true);
-            RaycastHit hit;
-            if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit))
+            if (EventSystem.current.IsPointerOverGameObject()==false)
             {
-                SetDestination(hit.point);
+                
+                playerAnim.SetBool("IsWalk", true);
+                RaycastHit hit;
+                if (Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hit) )
+                {
+                    SetDestination(hit.point);
+                    isCrouch = false;
+                }
+                clickEffect.transform.position = hit.point;
+                clickEffect.SetActive(true);
             }
-            clickEffect.transform.position = hit.point;
-            clickEffect.SetActive(true);
+           
         }
     }
     private void SetDestination(Vector3 dest)
@@ -93,20 +103,22 @@ public class Mouse : MonoBehaviour
 
     public void Crouch()
     {
-        agent.speed = 0;
-        isCrouch = !isCrouch;
-        if (isCrouch)
+        if (!isRunning)
         {
-            
-            //앉기 애니매이션 넣기
-            
+            isCrouch = !isCrouch;
+
+            if (isCrouch)
+            {
+                //앉기 애니매이션 넣기    
+
+
+            }
+            else
+            {
+                //일어서기 애니매이션 넣기
+            }
         }
-        else
-        {
-            //일어서기 애니매이션 넣기
-            
-            agent.speed = 5;
-        }
+      
        
     }
     void Stamina()
@@ -130,7 +142,7 @@ public class Mouse : MonoBehaviour
             return;
         }
         
-        else if(isCrouch) //앉은 상태에서만 회복
+        else if(isCrouch&&!isMove) //앉은 상태에서만 회복
         {
             recoveryTime += Time.fixedDeltaTime;
             if (recoveryTime > 3)
@@ -139,13 +151,15 @@ public class Mouse : MonoBehaviour
                 stamina += 1;
                 recoveryTime = 0;
             }
+           
         }
-  
+        
+        
     }
-
+    
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
     {
-        if (!isRunning && stamina!=0)
+        if (!isRunning && stamina!=0 && !isCrouch)
         {
             stamina -= 4;
             agent.speed = 9;
