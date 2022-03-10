@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// 캐릭터 상태
+/// 캐릭터 상태 UI
 /// 체력, 스테미너, 배고픔, 목마름, 피곤함
 /// </summary>
 
@@ -24,21 +24,29 @@ public class PlayerState : MonoBehaviour
 
     //배고픔
     public int hungry;
+    [SerializeField]
     private int currentHungry;
-    public int hungryDecreaseTime=5;
-    public int currentHungryDecreaseTime;
+    private float hungryDecreaseTime=2; 
+    private float currentHungryDecreaseTime;
 
     //목마름
-    private int currentThirsty;
+    public int thirsty;
+    [SerializeField]
+    private float currentThirsty;
+    private int thirstyDecreaseTime = 2;
+    private float currentThirstyDecreaseTime;
 
-
-
-    [SerializeField] //피곤함
-    private int tired;
-    private int currentTired;
-
+     //피곤함
+    public int tired;
+    [SerializeField]
+    private float currentTired;
+    private int tiredDecreaseTime = 2;
+    private float currentTiredDecreaseTime;
+    //배열로 구현하기
     public Image Image_gauges1;
     public Image Image_gauges2;
+    public Image Image_gauges3;
+    public Image Image_gauges4;
 
     Mouse player;
 
@@ -51,6 +59,8 @@ public class PlayerState : MonoBehaviour
     {
         currentSt = stamina;
         currentHungry = hungry;
+        currentThirsty = thirsty;
+        currentTired = tired;
     }
 
     private void FixedUpdate()
@@ -62,6 +72,8 @@ public class PlayerState : MonoBehaviour
     {
         Recovery();
         Hungry();
+        Thirsty();
+        Tired();
         GaugeUpdate();
     }
 
@@ -71,7 +83,7 @@ public class PlayerState : MonoBehaviour
         {
             if (currentHungryDecreaseTime <= hungryDecreaseTime)
             {
-                currentHungryDecreaseTime++;
+                currentHungryDecreaseTime+=Time.deltaTime;
             }
             else
             {
@@ -82,11 +94,46 @@ public class PlayerState : MonoBehaviour
         else //사망처리하기
             Debug.Log("배고픔 수치가 0이 되었습니다.");
     }
-
+    void Thirsty()
+    {
+        if (currentThirsty > 0)
+        {
+            if (currentThirstyDecreaseTime <= thirstyDecreaseTime)
+            {
+                currentThirstyDecreaseTime += Time.deltaTime;
+            }
+            else
+            {
+                currentThirsty--;
+                currentThirstyDecreaseTime = 0;
+            }
+        }
+        else //사망처리하기
+            Debug.Log("목마름 수치가 0이 되었습니다.");
+    }
+    void Tired()
+    {
+        if (currentTired > 0)
+        {
+            if (currentTiredDecreaseTime <= tiredDecreaseTime)
+            {
+                currentTiredDecreaseTime += Time.deltaTime;
+            }
+            else
+            {
+                currentTired--;
+                currentTiredDecreaseTime = 0;
+            }
+        }
+        else //사망처리하기
+            Debug.Log("피곤함 수치가 0이 되었습니다.");
+    }
     private void GaugeUpdate()
     {
         Image_gauges1.fillAmount = (float)stamina / currentSt;
-        Image_gauges2.fillAmount = (float)hungry / currentHungry;
+        Image_gauges2.fillAmount = (float)currentHungry/hungry;
+        Image_gauges3.fillAmount = (float)currentThirsty / thirsty;
+        Image_gauges4.fillAmount = (float)currentTired / tired;
 
     }
     public void Crouch()
