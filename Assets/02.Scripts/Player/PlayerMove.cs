@@ -12,12 +12,18 @@ public class PlayerMove : MonoBehaviour
 
     private bool isMove;
 
+ 
     Animator anim;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
+
     }
- 
+    private void Start()
+    {
+        
+    }
+
     public void Move(Vector2 inputDirection)
     {
         Vector2 moveInput = inputDirection;
@@ -33,10 +39,12 @@ public class PlayerMove : MonoBehaviour
             transform.position += moveDir * Time.deltaTime * speed;
         }
     }
-    void LookAround(Vector3 inputDirection) //카메라 방향
+
+
+    public void LookAround(Vector3 inputDirection) //카메라 방향
     {
-   
-        Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); //마우스 이동 값:이전값과 현재값의 차이
+
+        Vector2 mouseDelta = inputDirection;
         Vector3 camAngle = cam.rotation.eulerAngles;
 
         float x = camAngle.x - mouseDelta.y;

@@ -7,18 +7,22 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
 {
     [SerializeField]
     private RectTransform stickCircle;
-    private RectTransform rectTramsform;
+    private RectTransform rectTransform;
 
     [SerializeField,Range(-20,360)]
     float stickCircleRange;
 
+    
     public PlayerMove playerMove;
     public Vector2 inputDirection;
     private bool isInput; 
+
+    public enum JoyStickType { Move, Rotate}
+    public JoyStickType joystickType;
     private void Awake()
     {
-        rectTramsform = GetComponent<RectTransform>();
-        playerMove = GetComponent<PlayerMove>();
+        rectTransform = GetComponent<RectTransform>();
+        
     }
     void Update()
     {
@@ -40,23 +44,40 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        stickCircle.anchoredPosition = Vector3.zero;
+        stickCircle.anchoredPosition = Vector2.zero;
         isInput = false;
-        //playerMove.Move(inputDirection);
-        Debug.Log("End");
+        switch (joystickType)
+        {
+            case JoyStickType.Move:
+                playerMove.Move(Vector2.zero);
+                break;
+            case JoyStickType.Rotate:
+                break;
+        }
+        
+        
     }
     private void JoystickCircle(PointerEventData eventData)
     {
-        var inputPos = eventData.position - rectTramsform.anchoredPosition; 
+        var inputPos = eventData.position - rectTransform.anchoredPosition; 
         var inputVector = inputPos.magnitude < stickCircleRange ? inputPos : inputPos.normalized * stickCircleRange;
         stickCircle.anchoredPosition = inputVector;
-        inputDirection = inputVector / stickCircleRange;
+        inputDirection = inputVector / stickCircleRange; //0-1정규화된 값으로 캐릭터에게 전달 
     }
     public void InputControlVector()
     {
-        Debug.Log("1");
         //캐릭터에게 입력벡터를 전달
-        playerMove.Move(inputDirection);
+        switch (joystickType)
+        {
+            case JoyStickType.Move:
+                playerMove.Move(inputDirection);
+                break;
+            case JoyStickType.Rotate:
+                playerMove.LookAround(inputDirection);
+                break;
+        }
+
+       
         Debug.Log(inputDirection.x + "/" + inputDirection.y);
     }
 
