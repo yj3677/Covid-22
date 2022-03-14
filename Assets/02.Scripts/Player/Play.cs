@@ -9,12 +9,14 @@ public class Play : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private float speed;
 
+    Vector3 offset;
+
     private int rightFingerId;
     float halfScreenWidth;  //화면 절반만 터치하면 카메라 회전
     private Vector2 prevPoint;
     
 
-    public Transform cameraTransform;
+    public Transform cam;
     public float cameraSensitivity;
 
     private Vector2 lookInput;
@@ -26,15 +28,17 @@ public class Play : MonoBehaviour
         this.rightFingerId = -1;    //-1은 추적중이 아닌 손가락
         this.halfScreenWidth = Screen.width / 2;
         this.cameraPitch = 35f;
-
+        offset = transform.position - player.transform.position;
+        transform.position = player.transform.position + offset;
+    }
+    private void FixedUpdate()
+    {
        
     }
 
-  
     void Update()
     {
-        //this.transform.position = Vector3.Lerp(this.transform.position, this.player.transform.position + new Vector3(0, this.transform.position.y, 0), this.speed);
-
+        transform.position = player.transform.position + offset;  //카메라
         GetTouchInput();
     }
 
@@ -63,17 +67,8 @@ public class Play : MonoBehaviour
                     {
                         if (touch.fingerId == this.rightFingerId)
                         {
-
-                            //수평
-                            this.prevPoint = touch.position - touch.deltaPosition;
-                            this.transform.RotateAround(this.player.transform.position, Vector3.up, -(touch.position.x - this.prevPoint.x) * 0.2f);
-                            this.prevPoint = touch.position;
-
-
-                            //수직
-                            this.lookInput = touch.deltaPosition * this.cameraSensitivity * Time.deltaTime;
-                            this.cameraPitch = Mathf.Clamp(this.cameraPitch - this.lookInput.y, 10f, 35f);
-                            this.cameraTransform.localRotation = Quaternion.Euler(this.cameraPitch, 0, 0);
+                            
+                            CamLookAround();
                         }
                     }
                     break;
@@ -83,7 +78,6 @@ public class Play : MonoBehaviour
                     if (touch.fingerId == this.rightFingerId)
                     {
                         this.lookInput = Vector2.zero;
-
                     }
                     break;
 
@@ -93,7 +87,6 @@ public class Play : MonoBehaviour
                     {
                         this.rightFingerId = -1;
                         Debug.Log("오른쪽 손가락 끝");
-
                     }
                     break;
 
@@ -109,7 +102,27 @@ public class Play : MonoBehaviour
             }
         }
     }
+    void CamLookAround()
+    {
+        
+            Vector2 mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); //이전값과 현재값의 차이
+            Vector3 camAngle = cam.rotation.eulerAngles;
+        
 
+        float x = camAngle.x - mouseDelta.y;
+            if (x < 180)
+            {
+                x = Mathf.Clamp(x, -70, -1);
+            }
+            else
+            {
+                x = Mathf.Clamp(x, 315, 359);
+            }
+            cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);
+        
+
+
+    }
 
 }
 

@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragHandler
 {
     [SerializeField]
-    private RectTransform stickCircle;
+    private RectTransform stickCircle;  
     private RectTransform rectTransform;
 
-    [SerializeField,Range(-20,360)]
+    [SerializeField,Range(0,180)]
     float stickCircleRange;
 
     
     public PlayerMove playerMove;
     public Vector2 inputDirection;
-    private bool isInput; 
+    bool isInput;
 
-    public enum JoyStickType { Move, Rotate}
+    public enum JoyStickType { Move, Rotate }
     public JoyStickType joystickType;
     private void Awake()
     {
@@ -46,14 +46,19 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
     {
         stickCircle.anchoredPosition = Vector2.zero;
         isInput = false;
-        switch (joystickType)
+        playerMove.anim.SetBool("IsWalk", false);  //백조이스틱 안에서 손 땠을때 움직이는 현상 방지
+        if (EventSystem.current.IsPointerOverGameObject() == false)
         {
-            case JoyStickType.Move:
-                playerMove.Move(Vector2.zero);
-                break;
-            case JoyStickType.Rotate:
-                break;
+            switch (joystickType)
+            {
+                case JoyStickType.Move:
+                    playerMove.Move(Vector2.zero);
+                    break;
+                case JoyStickType.Rotate:
+                    break;
+            }
         }
+      
         
         
     }

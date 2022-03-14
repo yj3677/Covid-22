@@ -12,8 +12,8 @@ public class PlayerMove : MonoBehaviour
 
     private bool isMove;
 
- 
-    Animator anim;
+    public PlayerInput playerInput;
+    public Animator anim;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -31,8 +31,8 @@ public class PlayerMove : MonoBehaviour
         anim.SetBool("IsWalk", isMove);
         if (isMove)
         {
-            Vector3 lookForward = new Vector3(cam.forward.x, 0, cam.forward.z).normalized;
-            Vector3 lookRight = new Vector3(cam.right.x, 0, cam.right.z).normalized;
+            Vector3 lookForward = new Vector3(cam.forward.x*(-1), 0, cam.forward.z * (-1)).normalized;
+            Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
 
             player.forward = moveDir;  //방향 바라보기
@@ -43,7 +43,6 @@ public class PlayerMove : MonoBehaviour
 
     public void LookAround(Vector3 inputDirection) //카메라 방향
     {
-
         Vector2 mouseDelta = inputDirection;
         Vector3 camAngle = cam.rotation.eulerAngles;
 
