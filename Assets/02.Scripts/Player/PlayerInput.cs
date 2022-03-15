@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
     private RectTransform stickCircle;  
     private RectTransform rectTransform;
 
-    [SerializeField,Range(0,180)]
+    [SerializeField,Range(0,360)]
     float stickCircleRange;
 
     
@@ -65,8 +65,8 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
     private void JoystickCircle(PointerEventData eventData)
     {
         var inputPos = eventData.position - rectTransform.anchoredPosition; 
-        var inputVector = inputPos.magnitude < stickCircleRange ? inputPos : inputPos.normalized * stickCircleRange;
-        stickCircle.anchoredPosition = inputVector;
+        var inputVector = inputPos.magnitude < stickCircleRange ? inputPos : inputPos.normalized * stickCircleRange; //스틱범위
+        stickCircle.anchoredPosition = inputVector;  
         inputDirection = inputVector / stickCircleRange; //0-1정규화된 값으로 캐릭터에게 전달 
     }
     public void InputControlVector()

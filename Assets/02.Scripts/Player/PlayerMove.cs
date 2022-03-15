@@ -31,12 +31,12 @@ public class PlayerMove : MonoBehaviour
         anim.SetBool("IsWalk", isMove);
         if (isMove)
         {
-            Vector3 lookForward = new Vector3(cam.forward.x*(-1), 0, cam.forward.z * (-1)).normalized;
+            Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
             Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
 
             player.forward = moveDir;  //방향 바라보기
-            transform.position += moveDir * Time.deltaTime * speed;
+            transform.localPosition += moveDir * Time.deltaTime * speed;
         }
     }
 
