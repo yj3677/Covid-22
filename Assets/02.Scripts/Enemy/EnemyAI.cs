@@ -33,11 +33,13 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.Find("Player").transform;
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        
     }
     private void OnEnable()
     {
         AIRangeCheck();
     }
+
     private void Update()
     {
        AIRangeCheck();
@@ -47,6 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);  //시야범위
+        Debug.Log(playerInSightRange);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer); //공격범위
         Debug.Log(playerInAttackRange);
         if (!playerInSightRange && !playerInAttackRange)
@@ -135,7 +138,7 @@ public class EnemyAI : MonoBehaviour
             
 
             alreadyAttacked = true;
-            Invoke("ResetAttack", timeBetweenAttacks);  //공격시간
+            Invoke("ResetAttack", timeBetweenAttacks);  //공격시간차
         }
     }
     void ResetAttack()

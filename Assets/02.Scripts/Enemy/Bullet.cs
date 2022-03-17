@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Destroy(this.gameObject, 1);
     }
     private void OnCollisionEnter(Collision collision)
     {
