@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    public bool alreadyAttacked;
     public GameObject projectile;
 
     //States
@@ -31,13 +31,14 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
-        anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
+       
         
     }
-    private void OnEnable()
+    private void Start()
     {
-        AIRangeCheck();
+        InvokeRepeating("AIRangeCheck", 0, 30);
     }
 
     private void Update()
@@ -49,16 +50,17 @@ public class EnemyAI : MonoBehaviour
     {
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);  //시야범위
-        Debug.Log(playerInSightRange);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer); //공격범위
-        Debug.Log(playerInAttackRange);
+
         if (!playerInSightRange && !playerInAttackRange)
         {
+            anim.SetBool("IsWalk", true);
             Patroling();
             
         }
         if (playerInSightRange && !playerInAttackRange)
         {
+            anim.SetBool("IsWalk", true);
             ChasePlayer();
         }
         if (playerInSightRange && playerInAttackRange)
@@ -80,7 +82,7 @@ public class EnemyAI : MonoBehaviour
         {
             agent.SetDestination(walkPoint); //목적지로 이동
         }
-        Vector3 distanceToWalkPoint = transform.position - walkPoint; //목적지로 이동
+        Vector3 distanceToWalkPoint = transform.position - walkPoint; //목적지 거리계산
         AiIdle();
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1)
@@ -95,9 +97,10 @@ public class EnemyAI : MonoBehaviour
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);  //AI랜덤이동
-        
-        walkPointSet = true;
-
+        if (Physics.Raycast(walkPoint,-transform.up,2,isGround))
+        {
+            walkPointSet = true;
+        }
     }
     void AiIdle() //10초가 되면 멈추기
     {
@@ -132,11 +135,9 @@ public class EnemyAI : MonoBehaviour
         {
             anim.SetBool("IsWalk", false);
             //Attack 
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  //공격체 생성
-            rb.AddForce(transform.forward * 32, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8, ForceMode.Impulse);
-            
-
+            //Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  //공격체 생성
+            //rb.AddForce(transform.forward * 32, ForceMode.Impulse);
+            //rb.AddForce(transform.up * 8, ForceMode.Impulse);
             alreadyAttacked = true;
             Invoke("ResetAttack", timeBetweenAttacks);  //공격시간차
         }
@@ -160,9 +161,9 @@ public class EnemyAI : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, attackRange);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 }
