@@ -53,6 +53,7 @@ MonoBehaviour:
   stickCircleRange: 130
   playerMove: {fileID: 0}
   inputDirection: {x: 0, y: 0}
+  joystickType: 0
 --- !u!1 &5503291345314790633
 GameObject:
   m_ObjectHideFlags: 0

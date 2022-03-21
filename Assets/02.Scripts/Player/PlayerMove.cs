@@ -8,12 +8,14 @@ public class PlayerMove : MonoBehaviour
     private Transform player;
     [SerializeField]
     private Transform cam;
+    [SerializeField]
+    private InputTest moveJoystick;
+    [SerializeField]
+    private InputTest camJoystick;
     public int speed;
 
     private bool isMove;
-
-    public PlayerInput playerInput;
-    public Animator anim;
+    private Animator anim;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -23,10 +25,15 @@ public class PlayerMove : MonoBehaviour
     {
         
     }
-
-    public void Move(Vector2 inputDirection)
+    private void Update()
     {
-        Vector2 moveInput = inputDirection;
+        Move();
+    }
+
+
+    public void Move()
+    {
+        Vector2 moveInput = new Vector2(moveJoystick.horizontal, moveJoystick.vertical);
         isMove = moveInput.magnitude != 0;
         anim.SetBool("IsWalk", isMove);
         if (isMove)

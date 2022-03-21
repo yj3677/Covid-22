@@ -46,13 +46,13 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
     {
         stickCircle.anchoredPosition = Vector2.zero;
         isInput = false;
-        playerMove.anim.SetBool("IsWalk", false);  //백조이스틱 안에서 손 땠을때 움직이는 현상 방지
+        //playerMove.anim.SetBool("IsWalk", false);  //백조이스틱 안에서 손 땠을때 움직이는 현상 방지
         if (EventSystem.current.IsPointerOverGameObject() == false)
         {
             switch (joystickType)
             {
                 case JoyStickType.Move:
-                    playerMove.Move(Vector2.zero);
+                    playerMove.Move();
                     break;
                 case JoyStickType.Rotate:
                     break;
@@ -75,7 +75,7 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
         switch (joystickType)
         {
             case JoyStickType.Move:
-                playerMove.Move(inputDirection);
+                playerMove.Move();
                 break;
             case JoyStickType.Rotate:
                 playerMove.LookAround(inputDirection);
