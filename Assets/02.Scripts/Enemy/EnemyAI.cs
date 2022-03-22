@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     public State state = State.PATROL;
     private Transform playerTr;
     private Transform enemyTr;
+   // private Animator animator;
 
     public float attackDist = 5;
     public float traceDis = 10;
@@ -21,10 +22,15 @@ public class EnemyAI : MonoBehaviour
 
     private WaitForSeconds waitForSeconds;
     private EnemyMove enemyMove;
+
+    //애니메이터 컨트롤러에 정의한 파라미터의 해시값을 미리 추출
+   // private readonly int hashMove = Animator.StringToHash("IsWalk");
+   // private readonly int hashSpeed = Animator.StringToHash("Speed");
     private void Awake()
     {
         enemyMove = GetComponent<EnemyMove>();
         enemyTr = GetComponent<Transform>();
+      //  animator = GetComponent<Animator>();
         waitForSeconds = new WaitForSeconds(0.3f);
         var player = GameObject.FindGameObjectWithTag("Player");
 
@@ -38,6 +44,10 @@ public class EnemyAI : MonoBehaviour
         StartCoroutine(CheckState());
         StartCoroutine(Action());
     }
+    private void Start()
+    {
+        
+    }
 
     IEnumerator Action()
     {
@@ -49,12 +59,20 @@ public class EnemyAI : MonoBehaviour
             switch(state)
             {
                 case State.PATROL:
+                    enemyMove.patrolling = true;
+                  //  animator.SetBool(hashMove, true);
                     break;
                 case State.TRACE:
+                    enemyMove.traceTarget = playerTr.position;  //플레이어 추적
+                  //  animator.SetBool(hashMove, true);
                     break;
                 case State.ATTACK:
+                    enemyMove.StopEnemy();
+                   // animator.SetBool(hashMove, false);
                     break;
                 case State.DIE:
+                    enemyMove.StopEnemy();
+                    
                     break;
             }
         }
@@ -83,5 +101,10 @@ public class EnemyAI : MonoBehaviour
             }
             yield return waitForSeconds;
         }
+    }
+    private void Update()
+    {
+        Debug.Log("d");
+        //animator.SetFloat(hashSpeed, enemyMove.speed);
     }
 }

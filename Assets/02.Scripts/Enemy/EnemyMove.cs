@@ -11,9 +11,14 @@ public class EnemyMove : MonoBehaviour
     public int nextIdx;
 
     private NavMeshAgent agent;
+    private Transform enemyTr;
 
-    private readonly float patrollSpeed = 1.5f;
+    [SerializeField]
+    public readonly float patrollSpeed = 1.5f;
+    [SerializeField]
     private readonly float traceSpeed = 4;
+    [SerializeField]
+    private float damping = 1;
 
     private bool _patrolling;  //순찰 여부 판단
     public bool patrolling
@@ -23,6 +28,8 @@ public class EnemyMove : MonoBehaviour
             if (_patrolling)
             {
                 agent.speed = patrollSpeed;
+                //순찰 상태의 회전계수
+                damping = 1;
                 MoveWayPoint();
             }
         }
@@ -36,8 +43,14 @@ public class EnemyMove : MonoBehaviour
         {
             _traceTarget = value;
             agent.speed = traceSpeed;
+            //추적상태의 회전계수
+            damping = 7;
             TraceTarget(_traceTarget);
         }
+    }
+    public float speed
+    {
+        get { return agent.velocity.magnitude; }
     }
     void TraceTarget(Vector3 pos)
     {
@@ -50,8 +63,13 @@ public class EnemyMove : MonoBehaviour
     }
     private void Start()
     {
+        enemyTr = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
+        //자동으로 회전하는 기능 비활성화
+        agent.updateRotation = false;
+        agent.speed = patrollSpeed;
+
         var group = GameObject.Find("WayPoints");
         if (group!=null)
         {
@@ -62,6 +80,18 @@ public class EnemyMove : MonoBehaviour
     }
     private void Update()
     {
+        if (agent.isStopped==false)
+        {
+            //애너미가 가야할 방향 벡터를 쿼터니언 타입 각도로 변환
+            Quaternion rot = Quaternion.LookRotation(agent.desiredVelocity);
+            //보간 함수를 사용해 점진적으로 회전시킴
+            enemyTr.rotation = Quaternion.Slerp(enemyTr.rotation, rot, Time.deltaTime * damping);
+        }
+        if (!_patrolling)
+        {
+            return;
+        }
+
         //NavMeshAgent가 이동하고 있고 목적지에 도착했는지 여부 계산
         if (agent.velocity.sqrMagnitude>=0.2f*0.2f && agent.remainingDistance<=0.5f)
         {
@@ -81,5 +111,11 @@ public class EnemyMove : MonoBehaviour
         agent.destination = wayPoint[nextIdx].position;
         agent.isStopped = false;
         
+    }
+    public void StopEnemy()
+    {
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;  //정지. 속도0
+        _patrolling = false;  //순찰정지
     }
 }
