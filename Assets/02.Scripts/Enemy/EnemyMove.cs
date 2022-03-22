@@ -36,7 +36,7 @@ public class EnemyMove : MonoBehaviour
         {
             _traceTarget = value;
             agent.speed = traceSpeed;
-            traceTarget(_traceTarget);
+            TraceTarget(_traceTarget);
         }
     }
     void TraceTarget(Vector3 pos)
@@ -45,7 +45,8 @@ public class EnemyMove : MonoBehaviour
         {
             return;
         }
-        agent.destination
+        agent.destination = pos;
+        agent.isStopped = false;
     }
     private void Start()
     {
