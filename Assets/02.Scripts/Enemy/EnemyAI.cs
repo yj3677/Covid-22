@@ -20,22 +20,44 @@ public class EnemyAI : MonoBehaviour
     public bool isDie = false;
 
     private WaitForSeconds waitForSeconds;
-
+    private EnemyMove enemyMove;
     private void Awake()
     {
+        enemyMove = GetComponent<EnemyMove>();
+        enemyTr = GetComponent<Transform>();
+        waitForSeconds = new WaitForSeconds(0.3f);
         var player = GameObject.FindGameObjectWithTag("Player");
 
         if (player !=null)
         {
             playerTr = player.GetComponent<Transform>();
-            enemyTr = GetComponent<Transform>();
-            waitForSeconds = new WaitForSeconds(0.3f);
         }
     }
     private void OnEnable()
     {
         StartCoroutine(CheckState());
+        StartCoroutine(Action());
+    }
 
+    IEnumerator Action()
+    {
+        //적 캐릭터가 사망할 때까지 무한루프
+        while (!isDie)
+        {
+            yield return waitForSeconds;
+            //상태에 따라 분기처리
+            switch(state)
+            {
+                case State.PATROL:
+                    break;
+                case State.TRACE:
+                    break;
+                case State.ATTACK:
+                    break;
+                case State.DIE:
+                    break;
+            }
+        }
     }
     IEnumerator CheckState()
     {

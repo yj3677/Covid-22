@@ -3,15 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemytest1 : MonoBehaviour
+public class EnemyMove : MonoBehaviour
 {
     //순찰 지점들을 저장하기 위한 List 타입 변수
     public List<Transform> wayPoint;
     //다음 순찰 지점 배열의 Index
     public int nextIdx;
 
-
     private NavMeshAgent agent;
+
+    private readonly float patrollSpeed = 1.5f;
+    private readonly float traceSpeed = 4;
+
+    private bool _patrolling;  //순찰 여부 판단
+    public bool patrolling
+    {
+        get { return _patrolling; }
+        set { _patrolling = value;
+            if (_patrolling)
+            {
+                agent.speed = patrollSpeed;
+                MoveWayPoint();
+            }
+        }
+    }
+
+    private Vector3 _traceTarget;//추적 대상의 위치를 저장하는 변수
+    public Vector3 traceTarget
+    {
+        get { return _traceTarget; }
+        set
+        {
+            _traceTarget = value;
+            agent.speed = traceSpeed;
+            traceTarget(_traceTarget);
+        }
+    }
+    void TraceTarget(Vector3 pos)
+    {
+        if (agent.isPathStale) 
+        {
+            return;
+        }
+        agent.destination
+    }
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -35,7 +70,8 @@ public class Enemytest1 : MonoBehaviour
             MoveWayPoint();
         }
     }
-    private void MoveWayPoint()
+    //표시해둔 영역 찾아가기
+    private void MoveWayPoint() 
     {
         if (agent.isPathStale)
         {
