@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMove : MonoBehaviour
-{ 
+{
+    [Header("---Running---")]
+    public bool isRunning = false; //달리기중
     [SerializeField]
     private Transform player;
     [SerializeField]
@@ -12,14 +15,20 @@ public class PlayerMove : MonoBehaviour
     private InputTest moveJoystick;
     [SerializeField]
     private InputTest camJoystick;
-    public int speed;
 
-    private bool isMove;
+   
+    public bool isMove;
     private Animator anim;
+    public NavMeshAgent navMesh;
+    private PlayerState playerState;
+    public InputTest playerInput;
+    Vector2 moveInput;
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
-
+        navMesh = GetComponent<NavMeshAgent>();
+        playerState = GetComponent<PlayerState>();
+ 
     }
     private void Start()
     {
@@ -35,16 +44,39 @@ public class PlayerMove : MonoBehaviour
     {
         Vector2 moveInput = new Vector2(moveJoystick.horizontal, moveJoystick.vertical);
         isMove = moveInput.magnitude != 0;
-        anim.SetBool("IsWalk", isMove);
+        
+        
+
+        Debug.Log(moveInput.magnitude);
         if (isMove)
         {
             Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
             Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
-
+            
             player.forward = moveDir;  //방향 바라보기
-            transform.localPosition += moveDir * Time.deltaTime * speed;
+            transform.localPosition += moveDir * Time.deltaTime * navMesh.speed;
+            if (!isRunning)
+            {
+                anim.SetBool("IsWalk", isMove);
+                anim.SetFloat("Speed", moveInput.magnitude);
+            }
+            else if(isRunning)
+            {
+                anim.SetBool("IsWalk", false);
+                anim.SetBool("IsRun", true);
+                if (moveInput.magnitude == 0 || !isMove)
+                {
+                    anim.SetBool("IsRun", false);
+                }
+            }
+               
+            
+            
         }
+        else
+            anim.SetBool("IsWalk", false); //멈춰있을때 애니메이션 멈추기
+
     }
 
 
@@ -65,5 +97,27 @@ public class PlayerMove : MonoBehaviour
         cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);  //카메라 회전
     }
 
+    public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
+    {
+        if (!(isRunning) && playerState.stamina != 0 && !(playerState.isCrouch))
+        {
+            playerState.stamina -= 4;
+            navMesh.speed = 9;
+            
+            isRunning = true;
+            Invoke("RunOff", 4);
 
+        }
+        
+    }
+    void RunOff()
+    {
+        float originSpeed = navMesh.speed;
+        if (navMesh.speed == 9)
+        {
+            navMesh.speed = 5;
+            anim.SetBool("IsRun", false);
+            isRunning = false;
+        }
+    }
 }

@@ -9,8 +9,7 @@ using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
-    [Header("---Running---")]
-    public bool isRunning = false; //달리기중
+
 
     [Header("---Crouch---")]
     float recoveryTime = 0;
@@ -48,11 +47,11 @@ public class PlayerState : MonoBehaviour
     public Image Image_gauges3;
     public Image Image_gauges4;
 
-    Mouse player;
-
+    PlayerMove player;
+   
     private void Awake()
     {
-        player = FindObjectOfType<Mouse>();
+        player = FindObjectOfType<PlayerMove>();
 
     }
     private void Start()
@@ -138,7 +137,7 @@ public class PlayerState : MonoBehaviour
     }
     public void Crouch()
     {
-        if (!isRunning)
+        if (!(player.isRunning))
         {
             isCrouch = !isCrouch;
 
@@ -185,24 +184,26 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
-    {
-        if (!isRunning && stamina != 0 && !isCrouch)
-        {
-            stamina -= 4;
-            player.agent.speed = 9;
-            isRunning = true;
-            Invoke("RunOff", 4);
-        }
-    }
-    void RunOff()
-    {
-        float originSpeed = player.agent.speed;
-        if (player.agent.speed == 9)
-        {
-            player.agent.speed = 5;
-            isRunning = false;
-        }
-    }
+    //public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
+    //{
+    //    if (!isRunning && stamina != 0 && !isCrouch)
+    //    {
+    //        stamina -= 4;
+    //        player.navMesh.speed = 9;
+    //        playerAnim.SetBool("IsWalk", true) ;
+    //        playerAnim.SetFloat("Speed", 9);
+    //        isRunning = true;
+    //        Invoke("RunOff", 4);
+    //    }
+    //}
+    //void RunOff()
+    //{
+    //    float originSpeed = player.navMesh.speed;
+    //    if (player.navMesh.speed == 9)
+    //    {
+    //        player.navMesh.speed = 5;
+    //        isRunning = false;
+    //    }
+    //}
 
 }

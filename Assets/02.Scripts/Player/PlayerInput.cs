@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
     
     public PlayerMove playerMove;
     public Vector2 inputDirection;
-    bool isInput;
+    public bool isInput;
 
     public enum JoyStickType { Move, Rotate }
     public JoyStickType joystickType;
@@ -83,7 +83,7 @@ public class PlayerInput : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDrag
         }
 
        
-        Debug.Log(inputDirection.x + "/" + inputDirection.y);
+        //Debug.Log(inputDirection.x + "/" + inputDirection.y);
     }
 
 

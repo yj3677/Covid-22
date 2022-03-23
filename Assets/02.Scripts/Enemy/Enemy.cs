@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     public float sightRange, attackRange;   //시야,공격 범위
     public bool playerInSightRange, playerInAttackRange;
 
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;

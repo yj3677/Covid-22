@@ -51,7 +51,9 @@ public class EnemyMove : MonoBehaviour
     public float speed
     {
         get { return agent.velocity.magnitude; }
+        
     }
+    
     void TraceTarget(Vector3 pos)
     {
         if (agent.isPathStale) 
@@ -80,6 +82,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void Update()
     {
+        //Debug.Log(agent.velocity.magnitude);
         if (agent.isStopped==false)
         {
             //애너미가 가야할 방향 벡터를 쿼터니언 타입 각도로 변환
@@ -109,8 +112,7 @@ public class EnemyMove : MonoBehaviour
             return;
         }
         agent.destination = wayPoint[nextIdx].position;
-        agent.isStopped = false;
-        
+        agent.isStopped = false; 
     }
     public void StopEnemy()
     {

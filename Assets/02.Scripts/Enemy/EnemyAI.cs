@@ -23,14 +23,12 @@ public class EnemyAI : MonoBehaviour
     private WaitForSeconds waitForSeconds;
     private EnemyMove enemyMove;
 
-    //애니메이터 컨트롤러에 정의한 파라미터의 해시값을 미리 추출
-    private readonly int hashMove = Animator.StringToHash("IsWalk");
-    private readonly int hashSpeed = Animator.StringToHash("Speed");
+
     private void Awake()
     {
         enemyMove = GetComponent<EnemyMove>();
         enemyTr = GetComponent<Transform>();
-      //  animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         waitForSeconds = new WaitForSeconds(0.3f);
         var player = GameObject.FindGameObjectWithTag("Player");
 
@@ -60,15 +58,15 @@ public class EnemyAI : MonoBehaviour
             {
                 case State.PATROL:
                     enemyMove.patrolling = true;
-                    animator.SetBool(hashMove, true);
+                    animator.SetBool("IsWalk", true);
                     break;
                 case State.TRACE:
                     enemyMove.traceTarget = playerTr.position;  //플레이어 추적
-                    animator.SetBool(hashMove, true);
+                    animator.SetBool("IsWalk", true);
                     break;
                 case State.ATTACK:
                     enemyMove.StopEnemy();
-                    animator.SetBool(hashMove, false);
+                    animator.SetBool("IsWalk", false);
                     break;
                 case State.DIE:
                     enemyMove.StopEnemy();
@@ -81,17 +79,18 @@ public class EnemyAI : MonoBehaviour
     {
         while(!isDie)
         {
-            if (state == State.DIE) 
+            if (state == State.DIE)
             {
                 yield break;
             }
-            float dist = Vector3.Distance(playerTr.position, enemyTr.position);
             
-            if (dist<=attackDist)
+            float dist = Vector3.Distance(playerTr.position, enemyTr.position);
+
+            if (dist <= attackDist && dist > traceDis)
             {
                 state = State.ATTACK;
             }
-            else if (dist<=traceDis)
+            else if (dist <= traceDis)
             {
                 state = State.TRACE;
             }
@@ -100,10 +99,13 @@ public class EnemyAI : MonoBehaviour
                 state = State.PATROL;
             }
             yield return waitForSeconds;
+            
+            
         }
     }
+
     private void Update()
     {
-        animator.SetFloat(hashSpeed, enemyMove.speed);
+        
     }
 }
