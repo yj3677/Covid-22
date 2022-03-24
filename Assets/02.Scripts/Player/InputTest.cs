@@ -7,13 +7,13 @@ public class InputTest : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
     private Image joyBackground;
     private Image joyController;
-    private Vector2 inputDirection;
+    public Vector2 inputDirection;
 
     public enum JoyStickType { Move, Rotate }
     public JoyStickType joystickType;
     public float sensitivity;
 
-
+    public bool isInput=false;
     public float horizontal { get { return inputDirection.x * sensitivity; } }
     public float vertical { get { return inputDirection.y * sensitivity; } }
 
@@ -39,7 +39,7 @@ public class InputTest : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
 
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(joyBackground.rectTransform, eventData.position,eventData.pressEventCamera, out inputDirection))
         {
-            Debug.Log(inputDirection);
+            //Debug.Log(inputDirection);
             inputDirection.x = (inputDirection.x / joyBackground.rectTransform.sizeDelta.x);
             inputDirection.y = (inputDirection.y / joyBackground.rectTransform.sizeDelta.y);
 
@@ -57,6 +57,7 @@ public class InputTest : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
             Vector2 controllerPosition = new Vector2(inputDirection.x * joyBackground.rectTransform.sizeDelta.x / 3.5f,
                                                    inputDirection.y * joyBackground.rectTransform.sizeDelta.y / 3.5f);
             joyController.rectTransform.anchoredPosition = controllerPosition;
+            isInput = true;
         }
        
     }
@@ -67,6 +68,7 @@ public class InputTest : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoin
         joyController.rectTransform.anchoredPosition = Vector2.zero;
 
         inputDirection = Vector2.zero;
+        isInput = false;
         Debug.Log("터치 종료");
 
 

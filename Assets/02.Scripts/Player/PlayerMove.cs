@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     public NavMeshAgent navMesh;
     private PlayerState playerState;
     public InputTest playerInput;
-    Vector2 moveInput;
+
     private void Awake()
     {
         anim = GetComponentInChildren<Animator>();
@@ -45,9 +45,7 @@ public class PlayerMove : MonoBehaviour
         Vector2 moveInput = new Vector2(moveJoystick.horizontal, moveJoystick.vertical);
         isMove = moveInput.magnitude != 0;
         
-        
-
-        Debug.Log(moveInput.magnitude);
+        //Debug.Log(moveInput.magnitude);
         if (isMove)
         {
             Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
@@ -56,6 +54,7 @@ public class PlayerMove : MonoBehaviour
             
             player.forward = moveDir;  //방향 바라보기
             transform.localPosition += moveDir * Time.deltaTime * navMesh.speed;
+            //걷기 & 달리기 애니메이션
             if (!isRunning)
             {
                 anim.SetBool("IsWalk", isMove);
@@ -65,17 +64,15 @@ public class PlayerMove : MonoBehaviour
             {
                 anim.SetBool("IsWalk", false);
                 anim.SetBool("IsRun", true);
-                if (moveInput.magnitude == 0 || !isMove)
-                {
-                    anim.SetBool("IsRun", false);
-                }
-            }
-               
-            
-            
+            }   
         }
-        else
-            anim.SetBool("IsWalk", false); //멈춰있을때 애니메이션 멈추기
+        //멈춘 상태에서는 애니메이션 정지
+        else 
+        {
+            anim.SetBool("IsRun", false);
+            anim.SetBool("IsWalk", false);  
+        }
+
 
     }
 
