@@ -20,8 +20,11 @@ public class EnemyAI : MonoBehaviour
     public float traceDis = 10;
     public bool isDie = false;
 
+
+
     private WaitForSeconds waitForSeconds;
     private EnemyMove enemyMove;
+    private EnemyFire enemyFire;
 
 
     private void Awake()
@@ -29,6 +32,7 @@ public class EnemyAI : MonoBehaviour
         enemyMove = GetComponent<EnemyMove>();
         enemyTr = GetComponent<Transform>();
         animator = GetComponent<Animator>();
+        enemyFire = GetComponent<EnemyFire>();
         waitForSeconds = new WaitForSeconds(0.3f);
         var player = GameObject.FindGameObjectWithTag("Player");
 
@@ -57,16 +61,23 @@ public class EnemyAI : MonoBehaviour
             switch(state)
             {
                 case State.PATROL:
+                    //공격정지
+                    enemyFire.isFire = false;
                     enemyMove.patrolling = true;
                     animator.SetBool("IsWalk", true);
                     break;
                 case State.TRACE:
+                    enemyFire.isFire = false;
                     enemyMove.traceTarget = playerTr.position;  //플레이어 추적
                     animator.SetBool("IsWalk", true);
                     break;
                 case State.ATTACK:
                     enemyMove.StopEnemy();
                     animator.SetBool("IsWalk", false);
+                    if (enemyFire.isFire == false)
+                    {
+                        enemyFire.isFire = true;
+                    }
                     break;
                 case State.DIE:
                     enemyMove.StopEnemy();
@@ -86,7 +97,7 @@ public class EnemyAI : MonoBehaviour
             
             float dist = Vector3.Distance(playerTr.position, enemyTr.position);
 
-            if (dist <= attackDist && dist > traceDis)
+            if (dist <= attackDist)
             {
                 state = State.ATTACK;
             }
@@ -103,9 +114,5 @@ public class EnemyAI : MonoBehaviour
             
         }
     }
-
-    private void Update()
-    {
-        
-    }
+   
 }
