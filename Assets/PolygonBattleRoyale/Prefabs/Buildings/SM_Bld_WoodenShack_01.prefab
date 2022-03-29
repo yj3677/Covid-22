@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4313176750508668}
   - component: {fileID: 33496462993904764}
   - component: {fileID: 23605714977781758}
+  - component: {fileID: 363470003}
   m_Layer: 7
   m_Name: SM_Bld_WoodenShack_01
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &363470003
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393828521067074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5268555, y: 3.9359367, z: 6.2219286}
+  m_Center: {x: 0.00000011920929, y: 1.9679683, z: 0.0000011920929}
