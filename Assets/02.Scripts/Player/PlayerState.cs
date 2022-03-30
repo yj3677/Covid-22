@@ -9,8 +9,10 @@ using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
+    private Animator playerAnim;
+    
 
-
+    //앉기
     [Header("---Crouch---")]
     float recoveryTime = 0;
     public bool isCrouch = false;
@@ -52,7 +54,7 @@ public class PlayerState : MonoBehaviour
     private void Awake()
     {
         player = FindObjectOfType<PlayerMove>();
-
+        playerAnim = GetComponentInChildren<Animator>();
     }
     private void Start()
     {
@@ -137,19 +139,20 @@ public class PlayerState : MonoBehaviour
     }
     public void Crouch()
     {
-        if (!(player.isRunning))
+        if (!(player.isRunning)||!(player.isMove))
         {
             isCrouch = !isCrouch;
 
             if (isCrouch)
             {
-                //앉기 애니매이션 넣기    
-
+                playerAnim.SetBool("IsCrouch", isCrouch);
+                player.navMesh.speed = 0;
 
             }
             else
             {
-                //일어서기 애니매이션 넣기
+                playerAnim.SetBool("IsCrouch", false);
+                player.navMesh.speed = 5;
             }
         }
     }

@@ -12,16 +12,16 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private Transform cam;
     [SerializeField]
-    private InputTest moveJoystick;
+    private PlayerInput moveJoystick;
     [SerializeField]
-    private InputTest camJoystick;
+    private PlayerInput camJoystick;
 
    
     public bool isMove;
     private Animator anim;
     public NavMeshAgent navMesh;
     private PlayerState playerState;
-    public InputTest playerInput;
+    public PlayerInput playerInput;
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class PlayerMove : MonoBehaviour
             {
                 anim.SetBool("IsWalk", false);
                 anim.SetBool("IsRun", true);
-            }   
+            }
         }
         //멈춘 상태에서는 애니메이션 정지
         else 

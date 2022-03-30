@@ -2,63 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Item 인벤토리 창 활성화
+/// Item 
 /// </summary>
 
-public class ItemInven : MonoBehaviour
+public class OutLines : MonoBehaviour
 {
     bool isMouseover = false;
-    bool isInside;
-    Vector3 dir;
-    Vector3 curInside;
 
-    public Transform playerPos;
     Outline outline;
     public GameObject inventory;
-    private void Awake()
-    {
-       
-    }
     private void Start()
     {
         outline = GetComponent<Outline>();
-        
-        dir = (playerPos.position - transform.position);
-    }
-    private void Update()
-    {
-       // ItemBoxOpen();
     }
 
-    private void OnMouseEnter()
-    {
-     
-    }
 
-    private void OnMouseExit()
-    {
-       
-    }
     private void OnMouseDown()
     {
-        
-        float distance = Vector3.Distance(playerPos.position, transform.position); //플레이어가 아이템박스 근처로 갔을때 활성화
-        Debug.Log(distance);
+        Debug.Log("Item");
         if (gameObject.tag=="Item")
         {
-            Debug.Log("Item");
-            if (distance < 2)
-            {
-                outline.enabled = false;
-                inventory.SetActive(true);
-            }
+            outline.enabled = false;
+            inventory.SetActive(true);
         }
         isMouseover = true;
-    }
-    void ItemBoxOpen()
-    {
-        float distance = Vector3.Distance(playerPos.position, transform.position);
-
-        
     }
 }
