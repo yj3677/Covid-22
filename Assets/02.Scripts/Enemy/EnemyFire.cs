@@ -31,7 +31,7 @@ public class EnemyFire : MonoBehaviour
         muzzleFlash.enabled = false;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         EnemyAttack();
@@ -61,8 +61,8 @@ public class EnemyFire : MonoBehaviour
         //_audio.PlayOneShot(fireSfx, 1.0f); //소리넣기
         //Attack
         Rigidbody rb = Instantiate(attackBullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  //공격체 생성
-        rb.AddForce(transform.forward * 32, ForceMode.Impulse);
-        rb.AddForce(transform.up * 8, ForceMode.Impulse);
+        rb.AddForce(transform.forward * 10, ForceMode.Impulse);
+        rb.AddForce(transform.up * 5, ForceMode.Impulse);
     }
 
     //effect

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// 사용안함
+/// </summary>
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent agent;

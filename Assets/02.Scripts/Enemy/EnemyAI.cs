@@ -80,7 +80,12 @@ public class EnemyAI : MonoBehaviour
                     }
                     break;
                 case State.DIE:
+                    isDie = true;
+                    enemyFire.isFire = false;
                     enemyMove.StopEnemy();
+
+                    animator.SetTrigger("Die");
+                    GetComponent<NavMeshAgent>().enabled = false;
                     
                     break;
             }

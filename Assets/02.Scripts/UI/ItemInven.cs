@@ -8,7 +8,6 @@ using UnityEngine;
 public class ItemInven : MonoBehaviour
 {
     bool isMouseover = false;
-    bool isInside;
     Vector3 dir;
     Vector3 curInside;
     [SerializeField]
@@ -25,7 +24,7 @@ public class ItemInven : MonoBehaviour
     {
         outline = GetComponent<Outline>();
         
-        dir = (playerPos.position - transform.position);
+       // dir = (playerPos.position - transform.position);
     }
     private void Update()
     {
