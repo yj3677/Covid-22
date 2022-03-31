@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
 
    
     public bool isMove;
+    private AttackCtrl playerAttack;
     private Animator anim;
     public NavMeshAgent navMesh;
     private PlayerState playerState;
@@ -28,6 +29,7 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         playerState = GetComponent<PlayerState>();
+        playerAttack = GetComponent<AttackCtrl>();
  
     }
     private void Start()
@@ -42,6 +44,10 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
+        if (playerAttack.isFireReady)
+        { 
+            return;
+        }
         Vector2 moveInput = new Vector2(moveJoystick.horizontal, moveJoystick.vertical);
         isMove = moveInput.magnitude != 0;
         
