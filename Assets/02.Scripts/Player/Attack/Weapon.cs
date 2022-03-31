@@ -6,6 +6,15 @@ public class Weapon : MonoBehaviour
 {
     //무기
     GameObject nearObject;
+    public GameObject weapon;
+    public bool hasWeapon;
+
+    PlayerState playerState;
+
+    private void Awake()
+    {
+        playerState = FindObjectOfType<PlayerState>();
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -22,4 +31,5 @@ public class Weapon : MonoBehaviour
             nearObject = null;
         }
     }
+   
 }
