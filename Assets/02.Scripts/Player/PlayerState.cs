@@ -262,10 +262,11 @@ public class PlayerState : MonoBehaviour
         else 
         {
             playerAnim.SetTrigger("IsDead");
-            transform.position = new Vector3(transform.position.x, -0.9f, transform.position.z);
+            //죽었을때 높이 조절 
+            playerDeadTr.transform.position = new Vector3(transform.position.x, -0.85f, transform.position.z);
             isDead = true;
             playermove.navMesh.speed = 0; //속도0
-            //죽었을때 높이 조절 
+            
             playerInput.inputDirection = Vector2.zero;
             playermove.isMove = false;
             

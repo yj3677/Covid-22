@@ -36,6 +36,10 @@ public class Play : MonoBehaviour
     {
         transform.position = player.transform.position + offset;  //카메라
         GetTouchInput();
+        //if (Input.GetMouseButton(1))
+        //{
+        //    CamLookAround();
+        //}
     }
 
     private void GetTouchInput()

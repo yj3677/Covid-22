@@ -87,22 +87,22 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    public void LookAround(Vector3 inputDirection) //카메라 방향
-    {
-        Vector2 mouseDelta = inputDirection;
-        Vector3 camAngle = cam.rotation.eulerAngles;
+    //public void LookAround(Vector3 inputDirection) //카메라 방향
+    //{
+    //    Vector2 mouseDelta = inputDirection;
+    //    Vector3 camAngle = cam.rotation.eulerAngles;
 
-        float x = camAngle.x - mouseDelta.y;
-        if (x < 180)
-        {
-            x = Mathf.Clamp(x, -70, -1);  //위쪽 방향 제한
-        }
-        else
-        {
-            x = Mathf.Clamp(x, 359, 359); //아래쪽 방향 제한
-        }
-        cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);  //카메라 회전
-    }
+    //    float x = camAngle.x - mouseDelta.y;
+    //    if (x < 180)
+    //    {
+    //        x = Mathf.Clamp(x, -70, -1);  //위쪽 방향 제한
+    //    }
+    //    else
+    //    {
+    //        x = Mathf.Clamp(x, 359, 359); //아래쪽 방향 제한
+    //    }
+    //    cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);  //카메라 회전
+    //}
 
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
     {

@@ -91,7 +91,7 @@ public class EnemyMove : MonoBehaviour
         if (enemyAI.state==EnemyAI.State.DIE)
         {
             //죽었을때 높이 조절
-            transform.position = new Vector3(transform.position.x, -0.8f,transform.position.z);
+            transform.position = new Vector3(transform.position.x, -0.85f,transform.position.z);
             return;
         }
         //Debug.Log(agent.velocity.magnitude);
