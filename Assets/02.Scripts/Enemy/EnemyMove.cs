@@ -12,6 +12,7 @@ public class EnemyMove : MonoBehaviour
 
     private NavMeshAgent agent;
     private Transform enemyTr;
+    private EnemyAI enemyAI;
 
     [SerializeField]
     public readonly float patrollSpeed = 1.5f;
@@ -63,10 +64,14 @@ public class EnemyMove : MonoBehaviour
         agent.destination = pos;
         agent.isStopped = false;
     }
-    private void Start()
+    private void Awake()
     {
         enemyTr = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
+        enemyAI = GetComponent<EnemyAI>();
+    }
+    private void Start()
+    {
         agent.autoBraking = false;
         //자동으로 회전하는 기능 비활성화
         agent.updateRotation = false;
@@ -82,6 +87,11 @@ public class EnemyMove : MonoBehaviour
     }
     private void Update()
     {
+        //사망상태에는 실행X
+        if (enemyAI.state==EnemyAI.State.DIE)
+        {
+            return;
+        }
         //Debug.Log(agent.velocity.magnitude);
         if (agent.isStopped==false)
         {

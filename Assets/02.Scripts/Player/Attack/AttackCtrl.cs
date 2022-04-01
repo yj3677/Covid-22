@@ -10,13 +10,13 @@ using UnityEngine.UI;
 /// </summary>
 public class AttackCtrl : MonoBehaviour
 {
-    [SerializeField]
-    private float damage;
+    
+    public int damage;
     public float rate;
     [SerializeField]
     private float fireDelay;
-
     public bool isFireReady;
+    public bool isReadyAttack;
 
     Vector3 SpawnWeapon;
 
@@ -54,32 +54,37 @@ public class AttackCtrl : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("2");
-        if (equipWeapon==null)
+        if (equipWeapon==null || isReadyAttack) //무기X OR 중복공격 방지
         {
             return;
         }
-        Debug.Log("3");
-        
         Debug.Log(fireDelay);
         if(rate < fireDelay)
         {
             isFireReady = true;
-        }
-        
+        }  
         //공격준비 완료, 앉아 있는 상태가 아니라면
         if (isFireReady && !playerState.isCrouch)
         {
-            Debug.Log("1");
+            isReadyAttack = true;
+            Debug.Log("Attack");
             WeaponUse();
             playerAnim.SetTrigger("doSwing"); //*플레이어 공격 애니메이션 넣기
             fireDelay = 0;
             Invoke("isFireReadyDelay", 0.9f);
         }
     }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag=="Enemy")
+    //    {
+
+    //    }
+    //}
     void isFireReadyDelay()
     {
         isFireReady = false;
+        isReadyAttack = false;
     }
 
     IEnumerator Swing()
@@ -89,7 +94,7 @@ public class AttackCtrl : MonoBehaviour
         meleeArea.enabled = true;
         trailEffect.enabled = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.9f);
         meleeArea.enabled = false;
         
 

@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         playerState = GetComponent<PlayerState>();
-        playerAttack = GetComponent<AttackCtrl>();
+        playerAttack = FindObjectOfType<AttackCtrl>();
  
     }
     private void Start()

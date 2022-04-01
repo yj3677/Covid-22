@@ -31,10 +31,6 @@ public class Play : MonoBehaviour
         offset = transform.position - player.transform.position;
         transform.position = player.transform.position + offset;
     }
-    private void FixedUpdate()
-    {
-       
-    }
 
     void Update()
     {
