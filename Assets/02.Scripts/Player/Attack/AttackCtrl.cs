@@ -54,7 +54,7 @@ public class AttackCtrl : MonoBehaviour
 
     public void Attack()
     {
-        if (equipWeapon==null || isReadyAttack) //무기X OR 중복공격 방지
+        if (equipWeapon==null || isReadyAttack || playerState.isDead) //무기X OR 중복공격 방지
         {
             return;
         }
@@ -94,7 +94,7 @@ public class AttackCtrl : MonoBehaviour
         meleeArea.enabled = true;
         trailEffect.enabled = true;
 
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.5f);
         meleeArea.enabled = false;
         
 

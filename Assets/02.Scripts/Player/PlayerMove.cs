@@ -44,40 +44,44 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (playerAttack.isFireReady)
+        if (playerAttack.isFireReady || playerState.isDead == true)
         { 
             return;
         }
         Vector2 moveInput = new Vector2(moveJoystick.horizontal, moveJoystick.vertical);
         isMove = moveInput.magnitude != 0;
-        
-        //Debug.Log(moveInput.magnitude);
-        if (isMove)
+
+        if (playerState.isDead == false)
         {
-            Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
-            Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
-            
-            player.forward = moveDir;  //방향 바라보기
-            transform.localPosition += moveDir * Time.deltaTime * navMesh.speed;
-            //걷기 & 달리기 애니메이션
-            if (!isRunning)
+            //Debug.Log(moveInput.magnitude);
+            if (isMove)
             {
-                anim.SetBool("IsWalk", isMove);
-                anim.SetFloat("Speed", moveInput.magnitude);
+                Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
+                Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
+                Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
+
+                player.forward = moveDir;  //방향 바라보기
+                transform.localPosition += moveDir * Time.deltaTime * navMesh.speed;
+                //걷기 & 달리기 애니메이션
+                if (!isRunning)
+                {
+                    anim.SetBool("IsWalk", isMove);
+                    anim.SetFloat("Speed", moveInput.magnitude);
+                }
+                else if (isRunning)
+                {
+                    anim.SetBool("IsWalk", false);
+                    anim.SetBool("IsRun", true);
+                }
             }
-            else if(isRunning)
+            //멈춘 상태에서는 애니메이션 정지
+            else
             {
+                anim.SetBool("IsRun", false);
                 anim.SetBool("IsWalk", false);
-                anim.SetBool("IsRun", true);
             }
         }
-        //멈춘 상태에서는 애니메이션 정지
-        else 
-        {
-            anim.SetBool("IsRun", false);
-            anim.SetBool("IsWalk", false);  
-        }
+       
 
 
     }
@@ -102,6 +106,10 @@ public class PlayerMove : MonoBehaviour
 
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
     {
+        if (playerState.isDead)
+        {
+            return;
+        }
         if (!(isRunning) && playerState.stamina != 0 && !(playerState.isCrouch))
         {
             playerState.stamina -= 4;

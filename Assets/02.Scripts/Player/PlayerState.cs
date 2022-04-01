@@ -9,14 +9,19 @@ using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
+    private PlayerMove playermove;
+    private PlayerInput playerInput;
     private Animator playerAnim;
-    
+    private EnemyFire enemyfire;
+    private GameObject playerDeadTr;
 
     //앉기
     [Header("---Crouch---")]
     float recoveryTime = 0;
     public bool isCrouch = false;
     //체력
+    public int health = 100;
+    [SerializeField]
     private int currentHp;
 
     //스테미너
@@ -44,20 +49,27 @@ public class PlayerState : MonoBehaviour
     private int tiredDecreaseTime = 2;
     private float currentTiredDecreaseTime;
     //배열로 구현하기
+    public Image Image_gauges0;
     public Image Image_gauges1;
     public Image Image_gauges2;
     public Image Image_gauges3;
     public Image Image_gauges4;
+    
 
-    PlayerMove player;
+
+    public bool isDead=false;
    
     private void Awake()
     {
-        player = FindObjectOfType<PlayerMove>();
+        playerInput = FindObjectOfType<PlayerInput>();
+        playermove = FindObjectOfType<PlayerMove>();
+        enemyfire = FindObjectOfType<EnemyFire>();
         playerAnim = GetComponentInChildren<Animator>();
+        playerDeadTr = transform.GetChild(0).gameObject;
     }
     private void Start()
     {
+        currentHp = health;
         currentSt = stamina;
         currentHungry = hungry;
         currentThirsty = thirsty;
@@ -76,10 +88,33 @@ public class PlayerState : MonoBehaviour
         Thirsty();
         Tired();
         GaugeUpdate();
+       
+    }
+
+    void Health()
+    {
+        if (isDead)
+        {
+            return;
+        }
+        if (currentHp>0)
+        {
+            currentHp -= enemyfire.damage;
+            if (currentHp <= 0)
+            {
+                isDead = true;
+                Die();
+            }
+        }
+      
     }
 
     void Hungry()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (currentHungry > 0)
         {
             if (currentHungryDecreaseTime <= hungryDecreaseTime)
@@ -93,10 +128,19 @@ public class PlayerState : MonoBehaviour
             }
         }
         else //사망처리하기
+        {
+            isDead = true;
+            Die();
             Debug.Log("배고픔 수치가 0이 되었습니다.");
+        }
+          
     }
     void Thirsty()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (currentThirsty > 0)
         {
             if (currentThirstyDecreaseTime <= thirstyDecreaseTime)
@@ -110,10 +154,19 @@ public class PlayerState : MonoBehaviour
             }
         }
         else //사망처리하기
+        {
+            isDead = true;
+            Die();
             Debug.Log("목마름 수치가 0이 되었습니다.");
+        }
+            
     }
     void Tired()
     {
+        if (isDead)
+        {
+            return;
+        }
         if (currentTired > 0)
         {
             if (currentTiredDecreaseTime <= tiredDecreaseTime)
@@ -127,32 +180,42 @@ public class PlayerState : MonoBehaviour
             }
         }
         else //사망처리하기
+        {
+            isDead = true;
+            Die();
             Debug.Log("피곤함 수치가 0이 되었습니다.");
+        }
+            
     }
     private void GaugeUpdate()
     {
+        Image_gauges0.fillAmount = (float)currentHp / health;
         Image_gauges1.fillAmount = (float)stamina / currentSt;
         Image_gauges2.fillAmount = (float)currentHungry/hungry;
         Image_gauges3.fillAmount = (float)currentThirsty / thirsty;
         Image_gauges4.fillAmount = (float)currentTired / tired;
+        
 
     }
     public void Crouch()
     {
-        if (!(player.isRunning)||!(player.isMove))
+        if (isDead)
+        {
+            return;
+        }
+        if (!(playermove.isRunning)||!(playermove.isMove))
         {
             isCrouch = !isCrouch;
 
             if (isCrouch)
             {
                 playerAnim.SetBool("IsCrouch", isCrouch);
-                player.navMesh.speed = 0;
-
+                playermove.navMesh.speed = 0;
             }
             else
             {
                 playerAnim.SetBool("IsCrouch", false);
-                player.navMesh.speed = 5;
+                playermove.navMesh.speed = 5;
             }
         }
     }
@@ -169,13 +232,17 @@ public class PlayerState : MonoBehaviour
     }
     public void Recovery() //1프레임에 스테미너 1회복
     {
+        if (isDead)
+        {
+            return;
+        }
         //crouch()넣기
         if (stamina >= 100) //스테미너 100이상 리턴
         {
             recoveryTime = 0;
             return;
         }
-        else if (isCrouch && !player.isMove) //앉은 상태에서만 회복
+        else if (isCrouch && !playermove.isMove) //앉은 상태에서만 회복
         {
             recoveryTime += Time.fixedDeltaTime;
             if (recoveryTime > 3)
@@ -186,27 +253,37 @@ public class PlayerState : MonoBehaviour
             }
         }
     }
-
-    //public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
-    //{
-    //    if (!isRunning && stamina != 0 && !isCrouch)
-    //    {
-    //        stamina -= 4;
-    //        player.navMesh.speed = 9;
-    //        playerAnim.SetBool("IsWalk", true) ;
-    //        playerAnim.SetFloat("Speed", 9);
-    //        isRunning = true;
-    //        Invoke("RunOff", 4);
-    //    }
-    //}
-    //void RunOff()
-    //{
-    //    float originSpeed = player.navMesh.speed;
-    //    if (player.navMesh.speed == 9)
-    //    {
-    //        player.navMesh.speed = 5;
-    //        isRunning = false;
-    //    }
-    //}
+    public void Die()
+    {
+        if (!isDead)
+        {
+            return;
+        }
+        else 
+        {
+            playerAnim.SetTrigger("IsDead");
+            transform.position = new Vector3(transform.position.x, -0.9f, transform.position.z);
+            isDead = true;
+            playermove.navMesh.speed = 0; //속도0
+            //죽었을때 높이 조절 
+            playerInput.inputDirection = Vector2.zero;
+            playermove.isMove = false;
+            
+        }
+    }
+ 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDead)
+        {
+            return;
+        }
+        //애너미에게 바이러스 공격 당했을 때
+        if (other.gameObject.tag == "Virus")
+        {
+            Debug.Log(currentHp);
+            Health();
+        }
+    }
 
 }

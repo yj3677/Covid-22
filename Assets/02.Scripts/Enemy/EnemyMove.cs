@@ -90,6 +90,8 @@ public class EnemyMove : MonoBehaviour
         //사망상태에는 실행X
         if (enemyAI.state==EnemyAI.State.DIE)
         {
+            //죽었을때 높이 조절
+            transform.position = new Vector3(transform.position.x, -0.8f,transform.position.z);
             return;
         }
         //Debug.Log(agent.velocity.magnitude);

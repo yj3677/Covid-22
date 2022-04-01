@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+///   사용안함
+/// </summary>
 public class EnemyTest : MonoBehaviour
 {
     public int maxHealth;

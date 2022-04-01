@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class EnemyFire : MonoBehaviour
 {
+    public int damage;
     private Animator anim;
     private Transform playerTr;
     private Transform enemyTr;
+    private PlayerState playerState;
 
     public GameObject attackBullet;  //공격 수단
 
@@ -24,6 +26,7 @@ public class EnemyFire : MonoBehaviour
 
     void Start()
     {
+        playerState = FindObjectOfType<PlayerState>();
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyTr = GetComponent<Transform>();
         anim = GetComponent<Animator>();
@@ -39,6 +42,10 @@ public class EnemyFire : MonoBehaviour
     //isFire면 애너미가 공격
     void EnemyAttack()
     {
+        if (playerState.isDead)
+        {
+            return;
+        }
         if (isFire)
         {
             //공격 후, time+딜레이+랜덤 딜레이 저장

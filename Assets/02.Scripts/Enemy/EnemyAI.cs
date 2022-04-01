@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     private Transform playerTr;
     private Transform enemyTr;
     private Animator animator;
+    private PlayerState playerState;
 
     public float attackDist = 5;
     public float traceDis = 10;
@@ -33,6 +34,7 @@ public class EnemyAI : MonoBehaviour
         enemyTr = GetComponent<Transform>();
         animator = GetComponent<Animator>();
         enemyFire = GetComponent<EnemyFire>();
+        playerState = FindObjectOfType<PlayerState>();
         waitForSeconds = new WaitForSeconds(0.3f);
         var player = GameObject.FindGameObjectWithTag("Player");
 

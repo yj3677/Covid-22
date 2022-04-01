@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Play : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private Transform player;
     [SerializeField] private float speed;
 
     Vector3 offset;
