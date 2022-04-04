@@ -14,6 +14,7 @@ public class EnemyMove : MonoBehaviour
     private NavMeshAgent agent;
     private Transform enemyTr;
     private EnemyAI enemyAI;
+    private EnemyFire enemyFire;
 
     [SerializeField]
     public readonly float patrollSpeed = 1.5f;
@@ -67,7 +68,8 @@ public class EnemyMove : MonoBehaviour
     }
     private void Awake()
     {
-        playerState = FindObjectOfType<PlayerState>();
+        //playerState = FindObjectOfType<PlayerState>();
+        enemyFire = GetComponent<EnemyFire>();
         enemyTr = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         enemyAI = GetComponent<EnemyAI>();
@@ -133,7 +135,7 @@ public class EnemyMove : MonoBehaviour
     }
     public void StopEnemy()
     {
-        
+        enemyFire.isFire = false; //공격 멈춤
         agent.isStopped = true;
         agent.velocity = Vector3.zero;  //정지. 속도0
         _patrolling = false;  //순찰정지

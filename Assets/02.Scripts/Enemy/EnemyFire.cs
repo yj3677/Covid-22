@@ -43,10 +43,10 @@ public class EnemyFire : MonoBehaviour
     //isFire면 애너미가 공격
     void EnemyAttack()
     {
-        if (playerState.isDead)
-        {
-            return;
-        }
+        //if (playerState.isDead) //플레이어 죽었을 때 공격 안함
+        //{
+        //    return;
+        //}
         if (isFire)
         {
             //공격 후, time+딜레이+랜덤 딜레이 저장

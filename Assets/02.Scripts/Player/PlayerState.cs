@@ -13,6 +13,7 @@ public class PlayerState : MonoBehaviour
     private PlayerInput playerInput;
     private Animator playerAnim;
     private EnemyFire enemyfire;
+    private EnemyMove enemyMove;
     private GameObject playerDeadTr;
 
     //앉기
@@ -64,6 +65,7 @@ public class PlayerState : MonoBehaviour
         playerInput = FindObjectOfType<PlayerInput>();
         playermove = FindObjectOfType<PlayerMove>();
         enemyfire = FindObjectOfType<EnemyFire>();
+        enemyMove = FindObjectOfType<EnemyMove>();
         playerAnim = GetComponentInChildren<Animator>();
         playerDeadTr = transform.GetChild(0).gameObject;
     }
@@ -265,7 +267,7 @@ public class PlayerState : MonoBehaviour
             //playerDeadTr.transform.position = new Vector3(transform.position.x, -1.85f, transform.position.z);
             isDead = true;
             playermove.navMesh.speed = 0; //속도0
-            
+            enemyMove.StopEnemy();
             playerInput.inputDirection = Vector2.zero;
             playermove.isMove = false;
             
