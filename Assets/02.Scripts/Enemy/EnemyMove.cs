@@ -10,6 +10,7 @@ public class EnemyMove : MonoBehaviour
     //다음 순찰 지점 배열의 Index
     public int nextIdx;
 
+    private PlayerState playerState;
     private NavMeshAgent agent;
     private Transform enemyTr;
     private EnemyAI enemyAI;
@@ -66,6 +67,7 @@ public class EnemyMove : MonoBehaviour
     }
     private void Awake()
     {
+        playerState = FindObjectOfType<PlayerState>();
         enemyTr = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
         enemyAI = GetComponent<EnemyAI>();
@@ -82,6 +84,8 @@ public class EnemyMove : MonoBehaviour
         {
             group.GetComponentsInChildren<Transform>(wayPoint);
             wayPoint.RemoveAt(0);
+
+            nextIdx = Random.Range(0, wayPoint.Count);
         }
         MoveWayPoint();
     }
@@ -110,8 +114,8 @@ public class EnemyMove : MonoBehaviour
         //NavMeshAgent가 이동하고 있고 목적지에 도착했는지 여부 계산
         if (agent.velocity.sqrMagnitude>=0.2f*0.2f && agent.remainingDistance<=0.5f)
         {
-            //다음 목적지의 배열 첨자를 계산
-            nextIdx = ++nextIdx % wayPoint.Count; //random으로 바꾸기
+            //다음 목적지로 랜덤 이동
+            nextIdx = Random.Range(0, wayPoint.Count);
             //다음 목적지로 이동 명령
             MoveWayPoint();
         }
@@ -119,8 +123,9 @@ public class EnemyMove : MonoBehaviour
     //표시해둔 영역 찾아가기
     private void MoveWayPoint() 
     {
-        if (agent.isPathStale)
+        if (agent.isPathStale || playerState.isDead==true)  //고치기
         {
+            //플레이어 죽었을 때 애너미 멈추는 애니메이션 넣기
             return;
         }
         agent.destination = wayPoint[nextIdx].position;
@@ -128,6 +133,7 @@ public class EnemyMove : MonoBehaviour
     }
     public void StopEnemy()
     {
+        
         agent.isStopped = true;
         agent.velocity = Vector3.zero;  //정지. 속도0
         _patrolling = false;  //순찰정지

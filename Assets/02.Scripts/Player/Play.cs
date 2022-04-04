@@ -66,8 +66,7 @@ public class Play : MonoBehaviour
                     if (!EventSystem.current.IsPointerOverGameObject(i))
                     {
                         if (touch.fingerId == this.rightFingerId)
-                        {
-                            
+                        {  
                             CamLookAround();
                         }
                     }

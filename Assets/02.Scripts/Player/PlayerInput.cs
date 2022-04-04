@@ -4,6 +4,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
+    [SerializeField]
+    private Transform cam;
 
     private Image joyBackground;
     private Image joyController;
@@ -61,6 +63,7 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         }
        
     }
+
 
     public void OnPointerUp(PointerEventData eventData)
     {

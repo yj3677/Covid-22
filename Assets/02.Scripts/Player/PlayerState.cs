@@ -56,7 +56,7 @@ public class PlayerState : MonoBehaviour
     public Image Image_gauges4;
     
 
-
+    //플레이어 죽음
     public bool isDead=false;
    
     private void Awake()
@@ -78,8 +78,7 @@ public class PlayerState : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Stamina();
-        
+        Stamina();       
     }
     void Update()
     {
@@ -263,7 +262,7 @@ public class PlayerState : MonoBehaviour
         {
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
-            playerDeadTr.transform.position = new Vector3(transform.position.x, -0.85f, transform.position.z);
+            //playerDeadTr.transform.position = new Vector3(transform.position.x, -1.85f, transform.position.z);
             isDead = true;
             playermove.navMesh.speed = 0; //속도0
             

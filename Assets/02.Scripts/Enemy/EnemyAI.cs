@@ -21,7 +21,7 @@ public class EnemyAI : MonoBehaviour
     public float traceDis = 10;
     public bool isDie = false;
 
-
+    private float offset;
 
     private WaitForSeconds waitForSeconds;
     private EnemyMove enemyMove;
@@ -42,6 +42,7 @@ public class EnemyAI : MonoBehaviour
         {
             playerTr = player.GetComponent<Transform>();
         }
+        animator.SetFloat("Offset", Random.Range(0, 1));
     }
     private void OnEnable()
     {

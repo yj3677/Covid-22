@@ -74,13 +74,7 @@ public class AttackCtrl : MonoBehaviour
             Invoke("isFireReadyDelay", 0.9f);
         }
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.gameObject.tag=="Enemy")
-    //    {
 
-    //    }
-    //}
     void isFireReadyDelay()
     {
         isFireReady = false;

@@ -10,6 +10,7 @@ public class EnemyFire : MonoBehaviour
     private Transform enemyTr;
     private PlayerState playerState;
 
+
     public GameObject attackBullet;  //공격 수단
 
     private AudioSource _audio;
