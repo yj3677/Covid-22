@@ -22,6 +22,7 @@ public class EnemyAI : MonoBehaviour
     public bool isDie = false;
 
     private float offset;
+    private float walkSpeed;
 
     private WaitForSeconds waitForSeconds;
     private EnemyMove enemyMove;
@@ -43,6 +44,7 @@ public class EnemyAI : MonoBehaviour
             playerTr = player.GetComponent<Transform>();
         }
         animator.SetFloat("Offset", Random.Range(0, 1));
+        animator.SetFloat("WalkSpeed", Random.Range(1, 1.2f));
     }
     private void OnEnable()
     {
