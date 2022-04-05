@@ -12,9 +12,6 @@ using UnityEngine.AI;
 /// </summary>
 public class Mouse : MonoBehaviour
 {
- 
-
-    
 
     private Camera cam;
     public GameObject player; //이동 대상

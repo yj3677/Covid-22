@@ -262,6 +262,7 @@ public class PlayerState : MonoBehaviour
         }
         else 
         {
+            Debug.Log("Player Die");
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
             //playerDeadTr.transform.position = new Vector3(transform.position.x, -1.85f, transform.position.z);
