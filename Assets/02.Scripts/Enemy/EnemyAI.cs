@@ -58,10 +58,6 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator Action()
     {
-        if (playerState.isDead)
-        {
-            enemyMove.StopEnemy();
-        }
         //적 캐릭터가 사망할 때까지 무한루프
         while (!isDie)
         {

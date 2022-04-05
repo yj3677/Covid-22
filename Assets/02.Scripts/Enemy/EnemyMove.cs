@@ -125,7 +125,7 @@ public class EnemyMove : MonoBehaviour
     //표시해둔 영역 찾아가기
     private void MoveWayPoint() 
     {
-        if (agent.isPathStale || playerState.isDead==true)  //고치기
+        if (agent.isPathStale )  
         {
             //플레이어 죽었을 때 애너미 멈추는 애니메이션 넣기
             return;
@@ -135,9 +135,11 @@ public class EnemyMove : MonoBehaviour
     }
     public void StopEnemy()
     {
+        //애너미가 죽었을 때 실행
         enemyFire.isFire = false; //공격 멈춤
-        //agent.isStopped = true;
+        agent.isStopped = true;
         agent.velocity = Vector3.zero;  //정지. 속도0
         _patrolling = false;  //순찰정지
     }
+
 }
