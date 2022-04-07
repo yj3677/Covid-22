@@ -50,6 +50,11 @@ public class EnemyAI : MonoBehaviour
     {
         StartCoroutine(CheckState());
         StartCoroutine(Action());
+        PlayerState.OnPlayerDie += this.OnPlayerDie;
+    }
+    private void OnDisable()
+    {
+        PlayerState.OnPlayerDie -= this.OnPlayerDie;
     }
     private void Start()
     {
@@ -85,10 +90,11 @@ public class EnemyAI : MonoBehaviour
                     }
                     break;
                 case State.DIE:
+                    this.gameObject.tag = "Untagged"; //적을 재생성 시키기 위해
                     isDie = true;
                     enemyFire.isFire = false;
                     enemyMove.StopEnemy();
-
+                    //Invoke("EnemyRemove", 0.6f);
                     animator.SetTrigger("Die");
                     GetComponent<NavMeshAgent>().enabled = false;
                     
@@ -123,6 +129,24 @@ public class EnemyAI : MonoBehaviour
             
             
         }
+    }
+    public void OnPlayerDie()
+    {
+        //플레이어가 죽었을 때 살아있는 적들 중지
+        Debug.Log("실행 확인");
+        if (!isDie)
+        {
+            enemyMove.agent.isStopped = true;
+            enemyFire.isFire = false;
+            animator.SetBool("IsWalk", false);
+            StopAllCoroutines();
+        }
+    }
+    public void EnemyRemove()
+    {
+        //죽은 적 비활성화 시키기
+        //아이템 리스폰 결정됐을 때 수정하기
+        //this.gameObject.SetActive(false);
     }
    
 }

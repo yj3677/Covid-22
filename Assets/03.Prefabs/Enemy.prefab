@@ -470,8 +470,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b436ba57752cdb8428c67fab0a9af6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wayPoint: []
+  wayPoint:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   nextIdx: 0
+  agent: {fileID: 0}
   damping: 1
 --- !u!114 &7000002909515978285
 MonoBehaviour:

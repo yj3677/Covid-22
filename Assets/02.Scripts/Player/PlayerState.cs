@@ -60,6 +60,9 @@ public class PlayerState : MonoBehaviour
 
     //플레이어 죽음
     public bool isDead=false;
+    //델리게이트를 이용해 모든 적 AI스크립트를 검색해 OnPlayerDie 함수를 실행시킴.
+    public delegate void PlayerDieHandler();
+    public static event PlayerDieHandler OnPlayerDie;
    
     private void Awake()
     {
@@ -272,12 +275,7 @@ public class PlayerState : MonoBehaviour
             playermove.navMesh.speed = 0; //속도0
             playerInput.inputDirection = Vector2.zero;
             playermove.isMove = false;
-            if (!enemyAI.isDie)
-            {
-                enemyMove.StopEnemy();
-                enemyMove.StopAllCoroutines();
-                
-            }
+            OnPlayerDie();
         }
     }
  

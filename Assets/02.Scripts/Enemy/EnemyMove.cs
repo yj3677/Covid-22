@@ -11,7 +11,7 @@ public class EnemyMove : MonoBehaviour
     public int nextIdx;
 
     private PlayerState playerState;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private Transform enemyTr;
     private EnemyAI enemyAI;
     private EnemyFire enemyFire;
