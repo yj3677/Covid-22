@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHpBar : MonoBehaviour
 {
     private Camera uiCamera;
-    private Canvas canvas;
+    private Canvas uicanvas;
     private RectTransform rectParent;
     private RectTransform rectHp;
 
@@ -15,17 +15,13 @@ public class EnemyHpBar : MonoBehaviour
     public Transform targetTr;  //적의 위치를 알아내기 위해
     void Start()
     {
-        canvas = GetComponentInParent<Canvas>();
-        uiCamera = canvas.worldCamera;  //캔버스에 있는 카메라 불러오기
-        rectParent = canvas.GetComponent<RectTransform>(); //부모의 위치값
-        rectHp = this.gameObject.GetComponent<RectTransform>();
+        uicanvas = GetComponentInParent<Canvas>();
+        uiCamera = uicanvas.worldCamera;  //캔버스에 있는 카메라 불러오기
+        rectParent = uicanvas.GetComponent<RectTransform>(); //부모의 위치값
+        rectHp = GetComponent<RectTransform>();
     }
 
-    
-    void Update()
-    {
-        
-    }
+ 
     private void LateUpdate()
     {
         var screenPos = Camera.main.WorldToScreenPoint(targetTr.position + offset);
@@ -36,7 +32,9 @@ public class EnemyHpBar : MonoBehaviour
         }
 
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, uiCamera, out localPos);
+        //스크린 좌표
+        RectTransformUtility.ScreenPointToLocalPointInRectangle
+            (rectParent, screenPos, uiCamera, out localPos);
 
         rectHp.localPosition = localPos;
     }
