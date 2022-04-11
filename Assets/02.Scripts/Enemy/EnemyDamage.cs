@@ -56,6 +56,11 @@ public class EnemyDamage : MonoBehaviour
             {
                 GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
+
+                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                GameManager.instance.IncKillCount();
+                //Capsule Collider 컴포넌트 비활성화
+                GetComponent<CapsuleCollider>().enabled = false;
             }
         }
     }

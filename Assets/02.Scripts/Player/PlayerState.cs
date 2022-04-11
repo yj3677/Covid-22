@@ -22,9 +22,9 @@ public class PlayerState : MonoBehaviour
     float recoveryTime = 0;
     public bool isCrouch = false;
     //체력
-    public int health = 100;
+    public float health;
     [SerializeField]
-    private int currentHp;
+    private float currentHp;
 
     //스테미너
     public int stamina=10;
@@ -76,6 +76,7 @@ public class PlayerState : MonoBehaviour
     }
     private void Start()
     {
+        health = GameManager.instance.gameData.hp;
         currentHp = health;
         currentSt = stamina;
         currentHungry = hungry;
@@ -267,6 +268,7 @@ public class PlayerState : MonoBehaviour
         }
         else 
         {
+            GameManager.instance.isGameOver = true;
             Debug.Log("Player Die");
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
