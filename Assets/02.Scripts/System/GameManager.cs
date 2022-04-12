@@ -31,6 +31,11 @@ public class GameManager : MonoBehaviour
     //DataManager를 저장할 변수
     private DataManager dataMgr;
     public GameData gameData;
+
+    //인벤토리의 아이템이 변경됐을 때 발생시킬 이벤트 정의
+    public delegate void ItemChangeDelegate();
+    public static event ItemChangeDelegate OnItemChange;
+
     void Awake()
     {
         if (instance==null)
@@ -70,6 +75,7 @@ public class GameManager : MonoBehaviour
         //게임 종료 전 게임 데이터를 저장한다.
         SaveGameData();
     }
+   
     public void OnInventoryOpen(bool isOpen)
     {
         //isOpen상태면 아이템 창이 열리고, 하위 기능 활성화
@@ -84,14 +90,18 @@ public class GameManager : MonoBehaviour
         GameData data = dataMgr.Load();
 
         gameData.hp = data.hp;
-        gameData.damage = data.damage;
-        gameData.speed = data.speed;
+        gameData.stamina = data.stamina;
         gameData.killCount = data.killCount;
         gameData.equipItem = data.equipItem;
+
+
         //Kill Count 키로 지정된 값을 로드한다.
         //killCount = PlayerPrefs.GetInt("KillCount", 0);
         killCountText.text = "KILL " + gameData.killCount.ToString("0000");
     }
+
+   
+
     private void SaveGameData()
     {
         dataMgr.Save(gameData);

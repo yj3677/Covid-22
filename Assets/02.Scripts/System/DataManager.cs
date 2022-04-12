@@ -27,9 +27,8 @@ public class DataManager : MonoBehaviour
         //파일에 저장할 클래스에 데이터 할당
         GameData data = new GameData();
         data.killCount = gameData.killCount;
-        data.hp = gameData.hp; ;
-        data.speed = gameData.speed;
-        data.damage = gameData.damage;
+        data.hp = gameData.hp;
+        data.stamina = gameData.stamina;
         data.equipItem = gameData.equipItem;
 
         //BinaryFormater를 사용해 파일에 데이터 기록

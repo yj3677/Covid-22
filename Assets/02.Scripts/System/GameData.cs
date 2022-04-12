@@ -9,8 +9,7 @@ namespace DataInfo
     {
         public int killCount = 0;
         public float hp = 120;
-        public float damage = 25;
-        public float speed = 6;
+        public float stamina = 20;
         public List<Item> equipItem = new List<Item>();
     }
     [System.Serializable]

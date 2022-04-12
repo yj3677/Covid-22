@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class PlayerState : MonoBehaviour
 {
+    private ActionCtrl actionCtrl;
     private PlayerMove playermove;
     private PlayerInput playerInput;
     private Animator playerAnim;
@@ -66,6 +67,7 @@ public class PlayerState : MonoBehaviour
    
     private void Awake()
     {
+        actionCtrl = FindObjectOfType<ActionCtrl>();
         playerInput = FindObjectOfType<PlayerInput>();
         playermove = FindObjectOfType<PlayerMove>();
         enemyfire = FindObjectOfType<EnemyFire>();
@@ -274,6 +276,7 @@ public class PlayerState : MonoBehaviour
             //죽었을때 높이 조절 
             //playerDeadTr.transform.position = new Vector3(transform.position.x, -1.85f, transform.position.z);
             isDead = true;
+            actionCtrl.DisAppearInfo();
             playermove.navMesh.speed = 0; //속도0
             playerInput.inputDirection = Vector2.zero;
             playermove.isMove = false;
