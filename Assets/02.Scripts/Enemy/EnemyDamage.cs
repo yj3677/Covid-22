@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class EnemyDamage : MonoBehaviour
 {
-    private string attackTag = "Weapon";
     [SerializeField]
     private float startHp = 2;  //시작체력
     [SerializeField]
@@ -20,12 +19,13 @@ public class EnemyDamage : MonoBehaviour
 
     private Canvas uiCanavas;
     private Image hpBarImage;
-    private AttackCtrl attackDamage;
+    private PlayerShooter attackDamage;
+    Collision collision;
     void Start()
     {
         currenthp = startHp;
         healEffect = Resources.Load<GameObject>("BloodSplat_FX");
-        attackDamage = FindObjectOfType<AttackCtrl>();
+        attackDamage = FindObjectOfType<PlayerShooter>();
         SetHpBar();
     }
  
@@ -44,11 +44,12 @@ public class EnemyDamage : MonoBehaviour
         hpbar.offset = hpBarOffset;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.gameObject.tag=="Weapon")
+        if (collider.gameObject.tag== "VaccineBullet")
         {
-            Debug.Log(currenthp);
+            Debug.Log("백신맞고 치유");
+            ShowBloodEffect();
             currenthp -= attackDamage.damage;
             hpBarImage.fillAmount = currenthp / startHp;
             //체력이 0이 되면 에너미 상태를 DIE로 전환
@@ -88,11 +89,10 @@ public class EnemyDamage : MonoBehaviour
 
     }
 
-    private void ShowBloodEffect(Collision collision)
+    private void ShowBloodEffect()
     {
-        Vector3 pos = collision.contacts[0].point;
-        Vector3 _normal = collision.contacts[0].normal;
-        Quaternion rot = Quaternion.FromToRotation(-Vector3.forward, _normal);
+        Vector3 pos = transform.position;
+        Quaternion rot = Quaternion.FromToRotation(-Vector3.forward,pos);
 
         GameObject blood = Instantiate<GameObject>(healEffect, pos, rot);
         Destroy(blood, 1);

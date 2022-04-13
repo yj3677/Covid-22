@@ -14,7 +14,7 @@ public class EnemyFire : MonoBehaviour
     public GameObject attackBullet;  //공격 수단
 
     private AudioSource _audio;
-    public MeshRenderer muzzleFlash;
+   // public MeshRenderer muzzleFlash;
 
     private readonly int hashFire = Animator.StringToHash("Fire");
 
@@ -32,7 +32,7 @@ public class EnemyFire : MonoBehaviour
         enemyTr = GetComponent<Transform>();
         anim = GetComponent<Animator>();
         _audio = GetComponent<AudioSource>();
-        muzzleFlash.enabled = false;
+        //muzzleFlash.enabled = false;
     }
 
     
@@ -65,7 +65,7 @@ public class EnemyFire : MonoBehaviour
     void VirusAttack()
     {
         anim.SetTrigger(hashFire);
-        StartCoroutine(ShowMuzzleFlash()); //effect
+        //StartCoroutine(ShowMuzzleFlash()); //effect
         //_audio.PlayOneShot(fireSfx, 1.0f); //소리넣기
         //Attack
         Rigidbody rb = Instantiate(attackBullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  //공격체 생성
@@ -74,18 +74,18 @@ public class EnemyFire : MonoBehaviour
     }
 
     //effect
-    IEnumerator ShowMuzzleFlash()
-    {
-        muzzleFlash.enabled = true;
-        //z축 랜덤 회전
-        Quaternion rot = Quaternion.Euler(Vector3.forward * Random.Range(0, 360));
-        muzzleFlash.transform.localRotation = rot;
-        muzzleFlash.transform.localScale = Vector3.one * Random.Range(1, 2);
+    //IEnumerator ShowMuzzleFlash()
+    //{
+    //    muzzleFlash.enabled = true;
+    //    //z축 랜덤 회전
+    //    Quaternion rot = Quaternion.Euler(Vector3.forward * Random.Range(0, 360));
+    //    muzzleFlash.transform.localRotation = rot;
+    //    muzzleFlash.transform.localScale = Vector3.one * Random.Range(1, 2);
 
-        Vector2 offset = new Vector2(Random.Range(0,2),Random.Range(0,2))*0.5f;
-        muzzleFlash.material.SetTextureOffset("_MainTex", offset); //effect
+    //    Vector2 offset = new Vector2(Random.Range(0,2),Random.Range(0,2))*0.5f;
+    //    muzzleFlash.material.SetTextureOffset("_MainTex", offset); //effect
 
-        yield return new WaitForSeconds(Random.Range(0.05f, 0.2f));
-        muzzleFlash.enabled = false;
-    }
+    //    yield return new WaitForSeconds(Random.Range(0.05f, 0.2f));
+    //    muzzleFlash.enabled = false;
+    //}
 }

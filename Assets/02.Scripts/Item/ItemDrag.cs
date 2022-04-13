@@ -16,9 +16,9 @@ public class ItemDrag : MonoBehaviour ,IDragHandler, IBeginDragHandler,IEndDragH
   
     void Start()
     {
-        inventoryTr = GameObject.Find("Inventory").GetComponent<Transform>();
+        inventoryTr = GameObject.Find("PlayerInventory").GetComponent<Transform>();
         itemTr = GetComponent<Transform>();
-        getSlotListTr = GameObject.Find("GetSlotList").GetComponent<Transform>();
+        getSlotListTr = GameObject.Find("GetItemSlot").GetComponent<Transform>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -46,8 +46,6 @@ public class ItemDrag : MonoBehaviour ,IDragHandler, IBeginDragHandler,IEndDragH
         if (itemTr.parent==inventoryTr)
         {
             itemTr.SetParent(getSlotListTr.transform);
-            //슬롯에 추가된 아이템의 갱신을 알림
-            //GameManager.instance.RemoveItem(GetComponent<ItemInfo>().itemData);
         }
     }
 }

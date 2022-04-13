@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
 
    
     public bool isMove;
-    private AttackCtrl playerAttack;
+    private PlayerShooter playerShooter;
     private Animator anim;
     public NavMeshAgent navMesh;
     private PlayerState playerState;
@@ -29,7 +29,7 @@ public class PlayerMove : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         playerState = GetComponent<PlayerState>();
-        playerAttack = FindObjectOfType<AttackCtrl>();
+        playerShooter = FindObjectOfType<PlayerShooter>();
  
     }
     private void Start()
@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (playerAttack.isFireReady || playerState.isDead == true)
+        if (playerShooter.isFireReady || playerState.isDead == true)
         { 
             return;
         }

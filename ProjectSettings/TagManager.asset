@@ -9,6 +9,7 @@ TagManager:
   - Attack
   - Weapon
   - Virus
+  - VaccineBullet
   layers:
   - Default
   - TransparentFX

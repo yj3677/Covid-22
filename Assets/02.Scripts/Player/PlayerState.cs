@@ -16,7 +16,9 @@ public class PlayerState : MonoBehaviour
     private EnemyFire enemyfire;
     private EnemyMove enemyMove;
     private EnemyAI enemyAI;
+    [SerializeField]
     private GameObject playerDeadTr;
+
 
     //앉기
     [Header("---Crouch---")]
@@ -74,7 +76,6 @@ public class PlayerState : MonoBehaviour
         enemyMove = FindObjectOfType<EnemyMove>();
         enemyAI = FindObjectOfType<EnemyAI>();
         playerAnim = GetComponentInChildren<Animator>();
-        playerDeadTr = transform.GetChild(0).gameObject;
     }
     private void Start()
     {
@@ -274,7 +275,8 @@ public class PlayerState : MonoBehaviour
             Debug.Log("Player Die");
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
-            //playerDeadTr.transform.position = new Vector3(transform.position.x, -1.85f, transform.position.z);
+            playerAnim.applyRootMotion = true;
+            //playerDeadTr.transform.position = new Vector3(transform.position.x, -0.2f, transform.position.z);
             isDead = true;
             actionCtrl.DisAppearInfo();
             playermove.navMesh.speed = 0; //속도0

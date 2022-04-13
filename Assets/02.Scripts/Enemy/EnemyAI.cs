@@ -14,7 +14,7 @@ public class EnemyAI : MonoBehaviour
     public State state = State.PATROL;
     private Transform playerTr;
     private Transform enemyTr;
-    private Animator animator;
+    public Animator animator;
     private PlayerState playerState;
 
     public float attackDist = 5;

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerClickHandler
 {
     public Item item; //획득한 아이템
     public int itemCount; //획득한 아이템의 개수
@@ -13,7 +14,13 @@ public class Slot : MonoBehaviour
     private Text textCount; //텍스트UI
     [SerializeField]
     private GameObject CountImage; //아이템 획득시 텍스트 이미지 띄우기
-    
+
+    private WeaponManager weaponManger;
+    private void Start()
+    {
+        weaponManger = FindObjectOfType<WeaponManager>();
+    }
+
     private void SetColor(float alpha)
     {
         //인벤토리에 아이템이 없으면 아이템이미지 투명하게 설정
@@ -64,5 +71,28 @@ public class Slot : MonoBehaviour
         textCount.text = " ";
         CountImage.SetActive(false);
         
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button==PointerEventData.InputButton.Right)
+        {
+            if (item!=null)
+            {
+                if (item.itemType==Item.ItemType.Equipment)
+                {
+                    //장착
+                    //StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType,item.itemName));
+
+                }
+                else
+                {
+                    //소모
+                    Debug.Log(item.itemName + "을 사용했습니다.");
+                    SetSlotCount(-1);
+                    
+                }
+            }
+        }
     }
 }
