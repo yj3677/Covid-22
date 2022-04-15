@@ -3,49 +3,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 총알구현 바꿔야함
+/// gun에 따라 무기 교체 구현하기
+/// 
 /// </summary>
 public class PlayerShooter : MonoBehaviour
 {
-    public GameObject bullet;
-    public Transform firePos;
+    WeaponManager weaponManager;
+    public GameObject gunWeapon; //백신무기
+    PlayerState playerState;
+    public GunData gunData; //총 데이터
+    public GameObject bullet; //백신 총알
+    public Transform firePos;  //총알 발사 위치
 
-    public int damage;
-    public float attackTime;
+    public float attackTime; //발사 시간
     [SerializeField]
-    private float fireDelay;
-    public bool isFireReady;
-    public bool isReadyAttack;
+    private float fireDelay;  //발사 딜레이
+    public bool isFireReady;  //총을 쏠 준비
+    public bool isReadyAttack;  //공격 여부
+    public bool isReload = false;  //재장전
+    public int currBullet; //현재 탄창에 있는 총알 개수
+    public int remainBullet; //현재 소유하고 있는 전체 총알 개수  
+    public int bulletCapacity=20; //탄창 용량
+
+    public bool isActive=true; //무기교체 후
+    public string currentWeaponType; //현재무기타입
 
     Vector3 SpawnWeapon;
 
-    private float reloadTime = 2; //장전시간
-    [SerializeField]
-    private int maxBullet = 30;  //최대 소지 총알
-    [SerializeField]
-    private int currBullet = 10; //현재 총알
-    [SerializeField]
-    private int remainBullet = 10;
-    private bool isReload = false;
-
-    public GameObject equipWeapon; //백신무기
-    PlayerState playerState;
-    Animator playerAnim;
-
-
     private void Awake()
     {
-        playerAnim = GetComponentInChildren<Animator>();
+        weaponManager = FindObjectOfType<WeaponManager>();
         playerState = FindObjectOfType<PlayerState>();
+    }
+    private void OnEnable()
+    {
+        gunData.weaponType = GunData.WeaponType.Gun;
+        remainBullet = gunData.remainBullet; //전체 탄알양 초기화
+        currBullet = bulletCapacity; //현재 탄창 가득 채우기
+        fireDelay = 0;
     }
 
     private void Start()
     {
         transform.localPosition = SpawnWeapon;
+
     }
     private void Update()
     {
-        fireDelay += Time.deltaTime;
+        if (isActive)
+        {
+            fireDelay += Time.deltaTime;
+        }
+
     }
 
     void isFireReadyDelay()
@@ -56,38 +65,67 @@ public class PlayerShooter : MonoBehaviour
   
     public void Fire()
     {//무기&총알X , 중복공격 방지, 사망, 재장전 중일때는 실행X
-        if (equipWeapon == null || isReadyAttack || playerState.isDead ||isReload ||currBullet<=0) 
+        if (weaponManager.currentWeaponType == "Mlee"|| isReadyAttack || playerState.isDead ||isReload || currBullet <= 0 || playerState.isCrouch||!isActive) 
         {
+            Debug.Log("공격 불가");
             return;
         }
         if (attackTime < fireDelay)
         {
             isFireReady = true;
         }
+
         //공격준비 완료, 앉아 있는 상태가 아니라면
-        if (isFireReady && !playerState.isCrouch &&!isReload)
+        if (isFireReady && !playerState.isCrouch &&!isReload &&isActive)
         {
-            playerAnim.SetTrigger("doFire"); //*플레이어 공격 애니메이션 넣기
+            playerState.playerAnim.SetTrigger("doFire"); //*플레이어 공격 애니메이션 넣기
+            currBullet--;
             Instantiate(bullet, firePos.position, firePos.rotation);
             fireDelay = 0;
             Debug.Log("Fire");
             Invoke("isFireReadyDelay", 0.9f);
 
         }
-        isReload = (--currBullet % maxBullet == 0);
+        //탄창 총알이 0이고 현재 소유한 총알 전체 개수가 0보다 클때
+        if (currBullet == 0 && remainBullet>0) 
+        {
+            isReload = true;
+        }
+        //isReload = (--gunData.currBullet % gunData.maxBullet == 0);
         if (isReload)
         {
-            StartCoroutine(Reloading());
+            if (isActive)
+            {
+                StartCoroutine(Reloading());
+            }
+
         }
     }
 
     IEnumerator Reloading()
     {
-        playerAnim.SetTrigger("Reload");
+        //만약 소유한 전체 총알 개수가 재장전 해야할 개수보다 많다면
+        if (remainBullet>=gunData.reloadBulletCount)
+        {
+            currBullet = gunData.reloadBulletCount; //탄창에 재장전 개수만큼 넣기
+            remainBullet -= gunData.reloadBulletCount; //소유한 총알 개수를 재장전한 만큼 빼기 
+        }
+        else
+        {
+            currBullet = remainBullet;
+            remainBullet = 0;
+        }
+        playerState.playerAnim.SetTrigger("Reload");
         yield return new WaitForSeconds(2);
-        currBullet = maxBullet;
-        //총알구현 바꾸기
         isReload = false;
-
     }
+    public void CancleReload()
+    {
+        if (isReload)
+        {
+            StopAllCoroutines();
+            isReload = false;
+        }
+    }
+ 
 }

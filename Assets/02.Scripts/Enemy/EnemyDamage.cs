@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField]
-    private float startHp = 2;  //시작체력
+    private float startHp;  //시작체력
     [SerializeField]
-    private float currenthp; //현재체력
+    private float currentHp; //현재체력
 
     private GameObject healEffect; //치료이펙트 추가하기
 
@@ -17,26 +17,22 @@ public class EnemyDamage : MonoBehaviour
     public GameObject vaccineItem;//(총알)백신 아이템
     public GameObject staminaItem; //총 아이템
 
-    private Canvas uiCanavas;
-    private Image hpBarImage;
+    private Canvas uiCanvas;
+    public Image hpBarImage;
     private PlayerShooter attackDamage;
-    Collision collision;
+
     void Start()
     {
-        currenthp = startHp;
+        currentHp = startHp;
         healEffect = Resources.Load<GameObject>("BloodSplat_FX");
         attackDamage = FindObjectOfType<PlayerShooter>();
         SetHpBar();
     }
- 
-    void Update()
+
+    public void SetHpBar()
     {
-        
-    }
-    void SetHpBar()
-    {
-        uiCanavas = GameObject.Find("UI Canvas").GetComponent<Canvas>();
-        GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanavas.transform);
+        uiCanvas = GameObject.Find("UI Canvas").GetComponent<Canvas>();
+        GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
         hpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
 
         var hpbar = hpBar.GetComponent<EnemyHpBar>();
@@ -50,10 +46,10 @@ public class EnemyDamage : MonoBehaviour
         {
             Debug.Log("백신맞고 치유");
             ShowBloodEffect();
-            currenthp -= attackDamage.damage;
-            hpBarImage.fillAmount = currenthp / startHp;
+            currentHp -= attackDamage.gunData.damage;
+            hpBarImage.fillAmount = currentHp / startHp;
             //체력이 0이 되면 에너미 상태를 DIE로 전환
-            if (currenthp <= 0)
+            if (currentHp <= 0)
             {
                 GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
@@ -65,6 +61,7 @@ public class EnemyDamage : MonoBehaviour
                 GetComponent<CapsuleCollider>().enabled = false;
             }
         }
+        
     }
 
     private void ItemDrop()

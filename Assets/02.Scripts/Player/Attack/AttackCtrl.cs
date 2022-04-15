@@ -10,11 +10,10 @@ using UnityEngine.UI;
 /// </summary>
 public class AttackCtrl : MonoBehaviour
 {
-    
     public int damage;
     public float rate;
     [SerializeField]
-    private float fireDelay;
+    private float attackDelay;
     public bool isFireReady;
     public bool isReadyAttack;
 
@@ -43,7 +42,7 @@ public class AttackCtrl : MonoBehaviour
     }
     private void Update()
     {
-        fireDelay += Time.deltaTime;
+        attackDelay += Time.deltaTime;
     }
 
     public void WeaponUse()
@@ -58,8 +57,8 @@ public class AttackCtrl : MonoBehaviour
         {
             return;
         }
-        Debug.Log(fireDelay);
-        if(rate < fireDelay)
+        Debug.Log(attackDelay);
+        if(rate < attackDelay)
         {
             isFireReady = true;
         }  
@@ -70,7 +69,7 @@ public class AttackCtrl : MonoBehaviour
             Debug.Log("Attack");
             WeaponUse();
             playerAnim.SetTrigger("doSwing"); //*플레이어 공격 애니메이션 넣기
-            fireDelay = 0;
+            attackDelay = 0;
             Invoke("isFireReadyDelay", 0.9f);
         }
     }
@@ -82,8 +81,7 @@ public class AttackCtrl : MonoBehaviour
     }
 
     IEnumerator Swing()
-    {
-        
+    {   
         yield return new WaitForSeconds(0.1f);
         meleeArea.enabled = true;
         trailEffect.enabled = true;
@@ -91,7 +89,6 @@ public class AttackCtrl : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         meleeArea.enabled = false;
         
-
         yield return new WaitForSeconds(0.3f);
         trailEffect.enabled = false;
     }

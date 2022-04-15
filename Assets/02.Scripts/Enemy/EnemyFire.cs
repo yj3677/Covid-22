@@ -33,6 +33,7 @@ public class EnemyFire : MonoBehaviour
         anim = GetComponent<Animator>();
         _audio = GetComponent<AudioSource>();
         //muzzleFlash.enabled = false;
+
     }
 
     
@@ -69,8 +70,8 @@ public class EnemyFire : MonoBehaviour
         //_audio.PlayOneShot(fireSfx, 1.0f); //소리넣기
         //Attack
         Rigidbody rb = Instantiate(attackBullet, transform.position, Quaternion.identity).GetComponent<Rigidbody>();  //공격체 생성
-        rb.AddForce(transform.forward * 10, ForceMode.Impulse);
-        rb.AddForce(transform.up * 5, ForceMode.Impulse);
+        rb.AddForce(transform.forward * 6, ForceMode.Impulse);
+        rb.AddForce(transform.up * 1f, ForceMode.Impulse);
     }
 
     //effect

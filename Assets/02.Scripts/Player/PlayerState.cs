@@ -12,7 +12,7 @@ public class PlayerState : MonoBehaviour
     private ActionCtrl actionCtrl;
     private PlayerMove playermove;
     private PlayerInput playerInput;
-    private Animator playerAnim;
+    public Animator playerAnim;
     private EnemyFire enemyfire;
     private EnemyMove enemyMove;
     private EnemyAI enemyAI;

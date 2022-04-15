@@ -323,6 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
+  animator: {fileID: 0}
   attackDist: 4
   traceDis: 10
   isDie: 0
@@ -502,7 +503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 4
   attackBullet: {fileID: 3391073235763723496, guid: 484758ae56194734f951df2d3f9a7d8f, type: 3}
-  muzzleFlash: {fileID: 0}
   isFire: 0
 --- !u!114 &7000002909515978286
 MonoBehaviour:
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2a86d59b7c1534449537bc895203923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHp: 1
+  startHp: 4
   currenthp: 0
   hpBarPrefab: {fileID: 60710510764128949, guid: 5a9c0f83cae081b4dbb81d532cd03c1f, type: 3}
   hpBarOffset: {x: 0, y: 2.2, z: 0}
@@ -543,7 +543,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 38f7fb2b6c80bbd40bc7e5d7c4d161cf, type: 2}
+  - {fileID: 2100000, guid: 747e2efd0a3b338478314fcbd0f4cba4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

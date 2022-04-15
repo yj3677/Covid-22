@@ -68,6 +68,10 @@ public class GameManager : MonoBehaviour
             StartCoroutine(this.CreateEnemy());
         }
     }
+    private void Update()
+    {
+        
+    }
 
     //앱이 종료되는 시점에 호출되는 이벤트 함수
     private void OnApplicationQuit()
@@ -129,6 +133,13 @@ public class GameManager : MonoBehaviour
                 Instantiate(enemy, points[idx].position, points[idx].rotation);
             }
             else yield return null;
+        }
+    }
+    public void GameOver()
+    {
+        if (isGameOver)
+        {
+            playerState.Die();
         }
     }
 }

@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (playerShooter.isFireReady || playerState.isDead == true)
+        if (playerState.isDead == true)
         { 
             return;
         }
