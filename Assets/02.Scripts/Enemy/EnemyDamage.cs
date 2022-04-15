@@ -12,21 +12,22 @@ public class EnemyDamage : MonoBehaviour
 
     public GameObject hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, 2.2f, 0);
-
+    [Header("---Item---")]
     public GameObject hpItem; //체력 아이템
     public GameObject vaccineItem;//(총알)백신 아이템
     public GameObject staminaItem; //총 아이템
 
+    private PlayerShooter bulletDamage;
+    private AttackCtrl mleeDamage;
     private Canvas uiCanvas;
     public Image hpBarImage;
-    private PlayerShooter attackDamage;
 
     void Start()
     {
         currentHp = startHp;
         healEffect = Resources.Load<GameObject>("BloodSplat_FX");
-        attackDamage = FindObjectOfType<PlayerShooter>();
         SetHpBar();
+        mleeDamage = FindObjectOfType<AttackCtrl>();
     }
 
     public void SetHpBar()
@@ -44,11 +45,30 @@ public class EnemyDamage : MonoBehaviour
     {
         if (collider.gameObject.tag== "VaccineBullet")
         {
+            bulletDamage = FindObjectOfType<PlayerShooter>();
             Debug.Log("백신맞고 치유");
             ShowBloodEffect();
-            currentHp -= attackDamage.gunData.damage;
+            currentHp -= bulletDamage.gunData.damage;
             hpBarImage.fillAmount = currentHp / startHp;
             //체력이 0이 되면 에너미 상태를 DIE로 전환
+            if (currentHp <= 0)
+            {
+                GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
+                hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
+                //아이템 드롭하는 함수 호출
+                ItemDrop();
+                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                GameManager.instance.IncKillCount();
+                //Capsule Collider 컴포넌트 비활성화
+                GetComponent<CapsuleCollider>().enabled = false;
+            }
+        }
+        else if(collider.gameObject.tag == "Weapon")
+        {
+            
+            Debug.Log("방망이 맞음");
+            currentHp -= mleeDamage.damage;
+            hpBarImage.fillAmount = currentHp / startHp;
             if (currentHp <= 0)
             {
                 GetComponent<EnemyAI>().state = EnemyAI.State.DIE;

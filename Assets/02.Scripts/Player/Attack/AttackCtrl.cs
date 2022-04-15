@@ -68,7 +68,7 @@ public class AttackCtrl : MonoBehaviour
             isReadyAttack = true;
             Debug.Log("Attack");
             WeaponUse();
-            playerAnim.SetTrigger("doSwing"); //*플레이어 공격 애니메이션 넣기
+            playerState.playerAnim.SetTrigger("doSwing"); //*플레이어 공격 애니메이션 넣기
             attackDelay = 0;
             Invoke("isFireReadyDelay", 0.9f);
         }
@@ -86,7 +86,7 @@ public class AttackCtrl : MonoBehaviour
         meleeArea.enabled = true;
         trailEffect.enabled = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         meleeArea.enabled = false;
         
         yield return new WaitForSeconds(0.3f);

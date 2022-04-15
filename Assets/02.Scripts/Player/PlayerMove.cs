@@ -15,11 +15,11 @@ public class PlayerMove : MonoBehaviour
     private PlayerInput moveJoystick;
     [SerializeField]
     private PlayerInput camJoystick;
+    
 
-   
     public bool isMove;
     private PlayerShooter playerShooter;
-    private Animator anim;
+    public Animator anim;
     public NavMeshAgent navMesh;
     private PlayerState playerState;
     public PlayerInput playerInput;

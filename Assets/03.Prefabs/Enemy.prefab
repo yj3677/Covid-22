@@ -517,12 +517,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startHp: 4
-  currenthp: 0
+  currentHp: 0
   hpBarPrefab: {fileID: 60710510764128949, guid: 5a9c0f83cae081b4dbb81d532cd03c1f, type: 3}
   hpBarOffset: {x: 0, y: 2.2, z: 0}
   hpItem: {fileID: 1312147477053388, guid: 073acd292c607a74f87acefe09997b8a, type: 3}
   vaccineItem: {fileID: 1084548859578234, guid: 0bf010f3db9e87048a36ab32de6616aa, type: 3}
   staminaItem: {fileID: 1054813816626682, guid: 818680f6ca257c542941f32c1463cf77, type: 3}
+  bulletDamage: {fileID: 0}
+  hpBarImage: {fileID: 0}
+  mleeDamage: {fileID: 0}
 --- !u!96 &5653292392472803168
 TrailRenderer:
   serializedVersion: 2

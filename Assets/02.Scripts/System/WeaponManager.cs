@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class WeaponManager : MonoBehaviour
 {
+    [SerializeField]
+    private AnimatorOverrideController[] overrideControllers;
+ 
+
     public static Transform currentWeapon;  //다른 스크립트에서 접근이 용이하게
     //무기 중복 교체 실행 방지
     public static bool isChangeWeapon=false;  //무기 교체중인지
@@ -28,14 +32,16 @@ public class WeaponManager : MonoBehaviour
 
     private AttackCtrl attackCtrl; //근접 공격
     private PlayerShooter shootCtrl; //원거리 공격
-    private PlayerState playerState; 
-
+    private PlayerState playerState;
+    private PlayerMove playermove;
 
     void Start()
     {
         attackCtrl = FindObjectOfType<AttackCtrl>();
         shootCtrl = FindObjectOfType<PlayerShooter>();
+        playermove = FindObjectOfType<PlayerMove>();
         currentWeaponType = "Mlee";
+        SetAnimations(overrideControllers[0]);
     }
 
     void Update()
@@ -85,6 +91,7 @@ public class WeaponManager : MonoBehaviour
                 weaponGun.gameObject.SetActive(true);
                 gunButton.gameObject.SetActive(true);
                 currentWeaponType = "Gun"; //타입이 총으로 변경
+                SetAnimations(overrideControllers[1]);
             }
             //총을 들고 있다면
             else if (currentWeaponType == "Gun")
@@ -95,13 +102,28 @@ public class WeaponManager : MonoBehaviour
                 Weaponmlee.gameObject.SetActive(true);
                 mleeButton.gameObject.SetActive(true);
                 currentWeaponType = "Mlee";  //타입이 근접 무기로 변경
+                SetAnimations(overrideControllers[0]);
             }
-           
-
-
         }
     }
-    
+    public void SetAttackType(int value)
+    {
+        if (currentWeaponType == "Gun")
+        {
+            SetAnimations(overrideControllers[1]);
+        }
+        else if(currentWeaponType == "Mlee")
+        {
+            SetAnimations(overrideControllers[0]);
+        }
+        
+    }
+    public void SetAnimations(AnimatorOverrideController overrideController)
+    {
+        playermove.anim.runtimeAnimatorController = overrideController;
+    }
+
+
     public IEnumerator ChangeWeaponCoroutine()
     {
         isChangeWeapon = true;  //무기교체중
@@ -111,7 +133,7 @@ public class WeaponManager : MonoBehaviour
         Debug.Log("a");
         WeaponChange();
         yield return new WaitForSeconds(changeWeaponEndDelayTime);
-        currentWeaponType = "Gun";
+
         isChangeWeapon = false;
     }
 

@@ -26,7 +26,7 @@ public class PlayerShooter : MonoBehaviour
     public int bulletCapacity=20; //탄창 용량
 
     public bool isActive=true; //무기교체 후
-    public string currentWeaponType; //현재무기타입
+
 
     Vector3 SpawnWeapon;
 
@@ -35,16 +35,13 @@ public class PlayerShooter : MonoBehaviour
         weaponManager = FindObjectOfType<WeaponManager>();
         playerState = FindObjectOfType<PlayerState>();
     }
-    private void OnEnable()
+
+    private void Start()
     {
         gunData.weaponType = GunData.WeaponType.Gun;
         remainBullet = gunData.remainBullet; //전체 탄알양 초기화
         currBullet = bulletCapacity; //현재 탄창 가득 채우기
         fireDelay = 0;
-    }
-
-    private void Start()
-    {
         transform.localPosition = SpawnWeapon;
 
     }
