@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
-public class Slot : MonoBehaviour, IPointerClickHandler
+public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
 {
     public Item item; //획득한 아이템
     public int itemCount; //획득한 아이템의 개수
@@ -13,7 +14,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Text textCount; //텍스트UI
     [SerializeField]
-    private GameObject CountImage; //아이템 획득시 텍스트 이미지 띄우기
+    private GameObject countImage; //아이템 획득시 텍스트 이미지 띄우기
 
     private WeaponManager weaponManger;
     private void Start()
@@ -37,13 +38,13 @@ public class Slot : MonoBehaviour, IPointerClickHandler
 
         if (item.itemType!=Item.ItemType.Equipment)
         {
-            CountImage.SetActive(true);
+            countImage.SetActive(true);
             textCount.text = itemCount.ToString();
         }
         else
         {
             textCount.text = " ";
-            CountImage.SetActive(false);
+            countImage.SetActive(false);
         }
 
         //아이템 획득 시 알파값1
@@ -69,20 +70,20 @@ public class Slot : MonoBehaviour, IPointerClickHandler
         itemImage.sprite = null;
         SetColor(0);
         textCount.text = " ";
-        CountImage.SetActive(false);
+        countImage.SetActive(false);
         
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button==PointerEventData.InputButton.Right)
+        if (eventData.button==PointerEventData.InputButton.Right) //우클릭시 
         {
-            if (item!=null)
+            if (item!=null) //아이템 유무 확인
             {
-                if (item.itemType==Item.ItemType.Equipment)
+                if (item.itemType==Item.ItemType.Equipment) //클릭한게 장비 아이템인지
                 {
                     //장착
-                    //StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType,item.itemName));
+                    StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType));
 
                 }
                 else
@@ -93,6 +94,57 @@ public class Slot : MonoBehaviour, IPointerClickHandler
                     
                 }
             }
+        }
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if (item!=null)
+        {
+            DragSlot.instance.dragSlot = this; //드래그에 자기자신 넣기(아이템 정보)
+            DragSlot.instance.DragSetImage(itemImage); //드래그 중인 아이템 이미지가 넣어짐
+            DragSlot.instance.transform.position = eventData.position;
+        }
+        
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (item != null)
+        {
+            DragSlot.instance.transform.position = eventData.position;
+        }
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    { //드래그가 끝나면 아이템 정보를 빼고 이미지 없애기
+        DragSlot.instance.SetColor(0);
+        DragSlot.instance.dragSlot = null;
+        Debug.Log("OnEndDrag 호출");
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    { //아이템슬롯의 자리가 서로 바뀌는 것을 구현 
+        if (DragSlot.instance.dragSlot !=null)
+        { //아이템이 없는 빈 슬롯을 드래그 할 때 ChangeSlot()이 호출되는 것을 방지
+            ChangeSlot();
+        }
+        Debug.Log("OnDrop 호출");
+    }
+
+    private void ChangeSlot()
+    {
+        Item tempItem = item; //아이템(B)
+        int tempItemCount = itemCount;
+        //(A)드래그하고 있는 아이템을 (B)다른 아이템 자리에 놓기
+        AddItem(DragSlot.instance.dragSlot.item, DragSlot.instance.dragSlot.itemCount);
+        if (tempItem !=null)
+        {  //옮기려는 자리에 (B)다른 아이템이 있다면 아이템끼리 자리를 교환
+            DragSlot.instance.dragSlot.AddItem(tempItem, tempItemCount);
+        }
+        else
+        {  //비어있으면 그대로 넣기
+            DragSlot.instance.dragSlot.ClearSlot();
         }
     }
 }

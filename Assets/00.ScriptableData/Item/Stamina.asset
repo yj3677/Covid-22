@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Stamina
   itemType: 1
-  itemImage: {fileID: -8822960181987362397, guid: 0bfc2a6ac98567d4e9b2ddf04ad0790e, type: 3}
+  itemImage: {fileID: 3076390919313205009, guid: 0bfc2a6ac98567d4e9b2ddf04ad0790e, type: 3}
   itemPrefab: {fileID: 1054813816626682, guid: 818680f6ca257c542941f32c1463cf77, type: 3}
   weaponType: 

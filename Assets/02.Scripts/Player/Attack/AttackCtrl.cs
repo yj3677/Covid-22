@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 /// <summary>
 /// 근접 공격
 /// 어택 버튼을 눌렀을 때 어택 실행(백신)
@@ -86,7 +83,7 @@ public class AttackCtrl : MonoBehaviour
         meleeArea.enabled = true;
         trailEffect.enabled = true;
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.35f);
         meleeArea.enabled = false;
         
         yield return new WaitForSeconds(0.3f);

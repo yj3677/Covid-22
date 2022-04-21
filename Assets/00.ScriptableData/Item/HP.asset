@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: HP
   itemType: 1
-  itemImage: {fileID: -4079343537010028569, guid: 0bfc2a6ac98567d4e9b2ddf04ad0790e, type: 3}
-  itemPrefab: {fileID: 1084548859578234, guid: 0bf010f3db9e87048a36ab32de6616aa, type: 3}
+  itemImage: {fileID: -5835147781481664051, guid: 0bfc2a6ac98567d4e9b2ddf04ad0790e, type: 3}
+  itemPrefab: {fileID: 1435410842068634, guid: 9efa848c9a423b04493ee1b7772154b2, type: 3}
   weaponType: 

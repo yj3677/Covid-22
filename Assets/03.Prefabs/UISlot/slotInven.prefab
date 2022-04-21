@@ -118,7 +118,7 @@ MonoBehaviour:
   itemCount: 0
   itemImage: {fileID: 9097752190043119798}
   textCount: {fileID: 9097752190884906829}
-  CountImage: {fileID: 9097752189901445773}
+  countImage: {fileID: 9097752190884906827}
 --- !u!1 &9097752189901445773
 GameObject:
   m_ObjectHideFlags: 0

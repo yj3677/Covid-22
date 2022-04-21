@@ -72,14 +72,13 @@ public class PlayerState : MonoBehaviour
         actionCtrl = FindObjectOfType<ActionCtrl>();
         playerInput = FindObjectOfType<PlayerInput>();
         playermove = FindObjectOfType<PlayerMove>();
-        enemyfire = FindObjectOfType<EnemyFire>();
+
         enemyMove = FindObjectOfType<EnemyMove>();
         enemyAI = FindObjectOfType<EnemyAI>();
-        playerAnim = GetComponentInChildren<Animator>();
+        playerAnim = GetComponent<Animator>();
     }
     private void Start()
     {
-        health = GameManager.instance.gameData.hp;
         currentHp = health;
         currentSt = stamina;
         currentHungry = hungry;
@@ -103,12 +102,14 @@ public class PlayerState : MonoBehaviour
 
     void Health()
     {
+        Debug.Log("체력함수실행");
         if (isDead)
         {
             return;
         }
         if (currentHp>0)
         {
+            Debug.Log("체력--");
             currentHp -= enemyfire.damage;
             if (currentHp <= 0)
             {
@@ -271,7 +272,7 @@ public class PlayerState : MonoBehaviour
         }
         else 
         {
-            GameManager.instance.isGameOver = true;
+            //GameManager.instance.isGameOver = true;
             Debug.Log("Player Die");
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
@@ -296,6 +297,7 @@ public class PlayerState : MonoBehaviour
         if (other.gameObject.tag == "Virus")
         {
             Debug.Log(currentHp);
+            enemyfire = FindObjectOfType<EnemyFire>();
             Health();
         }
     }

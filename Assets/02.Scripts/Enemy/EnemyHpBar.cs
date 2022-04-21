@@ -21,11 +21,11 @@ public class EnemyHpBar : MonoBehaviour
         rectHp = GetComponent<RectTransform>();
     }
 
- 
+    //테스트 때문에 주석했음 -풀어야함
     private void LateUpdate()
     {
         var screenPos = Camera.main.WorldToScreenPoint(targetTr.position + offset);
-        if (screenPos.z<0)
+        if (screenPos.z < 0)
         {
             screenPos *= -1f;
             //z-메인카메라에서 XY평면까지의 거리

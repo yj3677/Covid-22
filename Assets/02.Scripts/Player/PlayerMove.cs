@@ -19,14 +19,12 @@ public class PlayerMove : MonoBehaviour
 
     public bool isMove;
     private PlayerShooter playerShooter;
-    public Animator anim;
     public NavMeshAgent navMesh;
     private PlayerState playerState;
     public PlayerInput playerInput;
 
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
         navMesh = GetComponent<NavMeshAgent>();
         playerState = GetComponent<PlayerState>();
         playerShooter = FindObjectOfType<PlayerShooter>();
@@ -56,8 +54,8 @@ public class PlayerMove : MonoBehaviour
             //Debug.Log(moveInput.magnitude);
             if (isMove)
             {
-                Vector3 lookForward = new Vector3(cam.forward.x * (-1), 0, cam.forward.z * (-1)).normalized;
-                Vector3 lookRight = new Vector3(cam.right.x * (-1), 0, cam.right.z * (-1)).normalized;
+                Vector3 lookForward = new Vector3(cam.forward.x , 0, cam.forward.z ).normalized;
+                Vector3 lookRight = new Vector3(cam.right.x , 0, cam.right.z ).normalized;
                 Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;  //이동 방향
 
                 player.forward = moveDir;  //방향 바라보기
@@ -65,20 +63,20 @@ public class PlayerMove : MonoBehaviour
                 //걷기 & 달리기 애니메이션
                 if (!isRunning)
                 {
-                    anim.SetBool("IsWalk", isMove);
-                    anim.SetFloat("Speed", moveInput.magnitude);
+                    playerState.playerAnim.SetBool("IsWalk", isMove);
+                    playerState.playerAnim.SetFloat("Speed", moveInput.magnitude);
                 }
                 else if (isRunning)
                 {
-                    anim.SetBool("IsWalk", false);
-                    anim.SetBool("IsRun", true);
+                    playerState.playerAnim.SetBool("IsWalk", false);
+                    playerState.playerAnim.SetBool("IsRun", true);
                 }
             }
             //멈춘 상태에서는 애니메이션 정지
             else
             {
-                anim.SetBool("IsRun", false);
-                anim.SetBool("IsWalk", false);
+                playerState.playerAnim.SetBool("IsRun", false);
+                playerState.playerAnim.SetBool("IsWalk", false);
             }
         }
        
@@ -127,7 +125,7 @@ public class PlayerMove : MonoBehaviour
         if (navMesh.speed == 9)
         {
             navMesh.speed = 5;
-            anim.SetBool("IsRun", false);
+            playerState.playerAnim.SetBool("IsRun", false);
             isRunning = false;
         }
     }

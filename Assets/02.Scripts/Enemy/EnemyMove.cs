@@ -66,16 +66,22 @@ public class EnemyMove : MonoBehaviour
         agent.destination = pos;
         agent.isStopped = false;
     }
+    void OnEnable()
+    {
+        //agent.enabled = true;
+    }
     private void Awake()
     {
         playerState = FindObjectOfType<PlayerState>();
         enemyFire = GetComponent<EnemyFire>();
         enemyTr = GetComponent<Transform>();
         agent = GetComponent<NavMeshAgent>();
+        //agent.enabled = false;
         enemyAI = GetComponent<EnemyAI>();
     }
     private void Start()
     {
+        //agent.enabled = true;
         agent.autoBraking = false;
         //자동으로 회전하는 기능 비활성화
         agent.updateRotation = false;

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// Item 인벤토리 창 활성화
+/// Item Box 구현
+/// 사용 안함
 /// </summary>
 
 public class ItemInven : MonoBehaviour

@@ -7,6 +7,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 //데이터 저장 클래스에 접근하기 위한 네임스페이스
 using DataInfo;
+/// <summary>
+/// 사용 안함
+/// </summary>
 
 public class DataManager : MonoBehaviour
 {

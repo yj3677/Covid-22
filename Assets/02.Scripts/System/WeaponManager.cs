@@ -37,10 +37,11 @@ public class WeaponManager : MonoBehaviour
 
     void Start()
     {
+        playerState = FindObjectOfType<PlayerState>();
         attackCtrl = FindObjectOfType<AttackCtrl>();
         shootCtrl = FindObjectOfType<PlayerShooter>();
         playermove = FindObjectOfType<PlayerMove>();
-        currentWeaponType = "Mlee";
+        currentWeaponType = "Melee";
         SetAnimations(overrideControllers[0]);
     }
 
@@ -59,7 +60,7 @@ public class WeaponManager : MonoBehaviour
             Debug.Log("Test");
             if (!isChangeWeapon) //무기 교체중이 아니라면
             {
-                StartCoroutine(ChangeWeaponCoroutine());
+                StartCoroutine(ChangeWeaponCoroutine(currentWeaponType));
             }
             else
             {
@@ -83,7 +84,7 @@ public class WeaponManager : MonoBehaviour
             //}
             Debug.Log("d");
             //근접 무기를 들고 있다면
-            if (currentWeaponType == "Mlee")
+            if (currentWeaponType == "Melee")
             {
                 Debug.Log("e");
                 Weaponmlee.gameObject.SetActive(false);
@@ -101,7 +102,7 @@ public class WeaponManager : MonoBehaviour
                 gunButton.gameObject.SetActive(false);
                 Weaponmlee.gameObject.SetActive(true);
                 mleeButton.gameObject.SetActive(true);
-                currentWeaponType = "Mlee";  //타입이 근접 무기로 변경
+                currentWeaponType = "Melee";  //타입이 근접 무기로 변경
                 SetAnimations(overrideControllers[0]);
             }
         }
@@ -112,7 +113,7 @@ public class WeaponManager : MonoBehaviour
         {
             SetAnimations(overrideControllers[1]);
         }
-        else if(currentWeaponType == "Mlee")
+        else if(currentWeaponType == "Melee")
         {
             SetAnimations(overrideControllers[0]);
         }
@@ -120,11 +121,11 @@ public class WeaponManager : MonoBehaviour
     }
     public void SetAnimations(AnimatorOverrideController overrideController)
     {
-        playermove.anim.runtimeAnimatorController = overrideController;
+        playerState.playerAnim.runtimeAnimatorController = overrideController;
     }
 
 
-    public IEnumerator ChangeWeaponCoroutine()
+    public IEnumerator ChangeWeaponCoroutine(string currentWeaponType)
     {
         isChangeWeapon = true;  //무기교체중
         //교체 애니매이션 넣기

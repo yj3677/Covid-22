@@ -19,6 +19,7 @@ public class BulletCtrl : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //애너미에게 닿으면 총알 제거
+        Debug.Log("총알제거");
         if (other.tag == "Enemy")
         {
             Destroy(gameObject);

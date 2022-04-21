@@ -43,6 +43,7 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        Debug.Log("ssss");
         if (collider.gameObject.tag== "VaccineBullet")
         {
             bulletDamage = FindObjectOfType<PlayerShooter>();
@@ -57,16 +58,16 @@ public class EnemyDamage : MonoBehaviour
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
                 //아이템 드롭하는 함수 호출
                 ItemDrop();
-                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
-                GameManager.instance.IncKillCount();
+                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                UIManager.instance.KillCount();
                 //Capsule Collider 컴포넌트 비활성화
                 GetComponent<CapsuleCollider>().enabled = false;
             }
         }
         else if(collider.gameObject.tag == "Weapon")
-        {
-            
+        {  
             Debug.Log("방망이 맞음");
+            mleeDamage = FindObjectOfType<AttackCtrl>();
             currentHp -= mleeDamage.damage;
             hpBarImage.fillAmount = currentHp / startHp;
             if (currentHp <= 0)
@@ -75,8 +76,8 @@ public class EnemyDamage : MonoBehaviour
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
                 //아이템 드롭하는 함수 호출
                 ItemDrop();
-                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
-                GameManager.instance.IncKillCount();
+                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                UIManager.instance.KillCount();
                 //Capsule Collider 컴포넌트 비활성화
                 GetComponent<CapsuleCollider>().enabled = false;
             }
