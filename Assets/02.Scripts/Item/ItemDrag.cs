@@ -22,10 +22,7 @@ public class ItemDrag : MonoBehaviour ,IDragHandler, IBeginDragHandler,IEndDragH
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    void Update()
-    {
-        
-    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         this.transform.SetParent(inventoryTr);
@@ -35,8 +32,7 @@ public class ItemDrag : MonoBehaviour ,IDragHandler, IBeginDragHandler,IEndDragH
     }
     public void OnDrag(PointerEventData eventData)
     {
-        itemTr.position = Input.mousePosition;
-       
+        itemTr.position = Input.mousePosition; 
     }
 
     public void OnEndDrag(PointerEventData eventData)
