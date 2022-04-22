@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     PlayerState playerState;
 
     //PlayerPrefs를 활용한 데이터 저장
-    [HideInInspector] public int killCount;
+    //[HideInInspector] public int killCount;
 
 
     //DataManager를 저장할 변수

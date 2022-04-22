@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item", menuName = "New Item/item")]
-public class Item : ScriptableObject
+public class ItemData : ScriptableObject
 {
     public string itemName; //아이템의 이름.
     public ItemType itemType; //아이템의 유형

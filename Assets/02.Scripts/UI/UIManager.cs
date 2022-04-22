@@ -7,8 +7,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public GameData gameData;
-    //적 캐릭터를 죽인 횟수를 표시할 텍스트 UI
-    public Text killCountText;
+    
+    public Text killCountText; //적 캐릭터를 죽인 횟수를 표시할 텍스트 UI
+    public GameObject notice1; //알림창1
+    public GameObject notice2; //알림창2
+
+
     public int killCount; //적 죽인수
 
     void Awake()
