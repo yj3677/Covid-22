@@ -68,7 +68,6 @@ public class ActionCtrl : MonoBehaviour
         }
     }
 
-
     private void ItemInfoAppear()
     {
         if (playerState.isDead)

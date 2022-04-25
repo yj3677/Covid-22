@@ -42,8 +42,7 @@ public class ItemInven : MonoBehaviour
        
     }
     private void OnMouseDown()
-    {
-        
+    {    
         float distance = Vector3.Distance(playerPos.position, transform.position); //플레이어가 아이템박스 근처로 갔을때 활성화
         Debug.Log(distance);
         if (gameObject.tag=="Item")

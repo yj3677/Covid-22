@@ -25,40 +25,28 @@ public class PlayerState : MonoBehaviour
     float recoveryTime = 0;
     public bool isCrouch = false;
     //체력
-    public float health;
-    [SerializeField]
-    private float currentHp;
+    public int maxHealth; //최대 체력
+    public int health;
+    public int currentHp;
 
     //스테미너
-    public int stamina=10;
-    private int currentSt;
+    public int maxStamina; //최대 스테미너
+    public int stamina;
+    public int currentStamina;
 
     //배고픔
+    public int maxHungry; //최대 포만감
     public int hungry;
-    [SerializeField]
-    private int currentHungry;
+    public int currentHungry;
     private float hungryDecreaseTime=2; 
     private float currentHungryDecreaseTime;
 
-    //목마름
-    public int thirsty;
-    [SerializeField]
-    private float currentThirsty;
-    private int thirstyDecreaseTime = 2;
-    private float currentThirstyDecreaseTime;
-
-     //피곤함
-    public int tired;
-    [SerializeField]
-    private float currentTired;
-    private int tiredDecreaseTime = 2;
-    private float currentTiredDecreaseTime;
+   
     //배열로 구현하기
     public Image Image_gauges0;
     public Image Image_gauges1;
     public Image Image_gauges2;
-    public Image Image_gauges3;
-    public Image Image_gauges4;
+
     
 
     //플레이어 죽음
@@ -72,7 +60,6 @@ public class PlayerState : MonoBehaviour
         actionCtrl = FindObjectOfType<ActionCtrl>();
         playerInput = FindObjectOfType<PlayerInput>();
         playermove = FindObjectOfType<PlayerMove>();
-
         enemyMove = FindObjectOfType<EnemyMove>();
         enemyAI = FindObjectOfType<EnemyAI>();
         playerAnim = GetComponent<Animator>();
@@ -80,10 +67,8 @@ public class PlayerState : MonoBehaviour
     private void Start()
     {
         currentHp = health;
-        currentSt = stamina;
+        currentStamina = stamina;
         currentHungry = hungry;
-        currentThirsty = thirsty;
-        currentTired = tired;
     }
 
     private void FixedUpdate()
@@ -94,10 +79,7 @@ public class PlayerState : MonoBehaviour
     {
         Recovery();
         Hungry();
-        Thirsty();
-        Tired();
-        GaugeUpdate();
-       
+        GaugeUpdate(); 
     }
 
     void Health()
@@ -116,8 +98,7 @@ public class PlayerState : MonoBehaviour
                 isDead = true;
                 Die();
             }
-        }
-      
+        } 
     }
 
     void Hungry()
@@ -146,67 +127,13 @@ public class PlayerState : MonoBehaviour
         }
           
     }
-    void Thirsty()
-    {
-        if (isDead)
-        {
-            return;
-        }
-        if (currentThirsty > 0)
-        {
-            if (currentThirstyDecreaseTime <= thirstyDecreaseTime)
-            {
-                currentThirstyDecreaseTime += Time.deltaTime;
-            }
-            else
-            {
-                currentThirsty--;
-                currentThirstyDecreaseTime = 0;
-            }
-        }
-        else //사망처리하기
-        {
-            isDead = true;
-            Die();
-            Debug.Log("목마름 수치가 0이 되었습니다.");
-        }
-            
-    }
-    void Tired()
-    {
-        if (isDead)
-        {
-            return;
-        }
-        if (currentTired > 0)
-        {
-            if (currentTiredDecreaseTime <= tiredDecreaseTime)
-            {
-                currentTiredDecreaseTime += Time.deltaTime;
-            }
-            else
-            {
-                currentTired--;
-                currentTiredDecreaseTime = 0;
-            }
-        }
-        else //사망처리하기
-        {
-            isDead = true;
-            Die();
-            Debug.Log("피곤함 수치가 0이 되었습니다.");
-        }
-            
-    }
+
+
     private void GaugeUpdate()
     {
         Image_gauges0.fillAmount = (float)currentHp / health;
-        Image_gauges1.fillAmount = (float)stamina / currentSt;
-        Image_gauges2.fillAmount = (float)currentHungry/hungry;
-        Image_gauges3.fillAmount = (float)currentThirsty / thirsty;
-        Image_gauges4.fillAmount = (float)currentTired / tired;
-        
-
+        Image_gauges1.fillAmount = (float)stamina / currentStamina;
+        Image_gauges2.fillAmount = (float)currentHungry/hungry;    
     }
     public void Crouch()
     {

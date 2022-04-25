@@ -10,15 +10,19 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
     public Item item; //획득한 아이템
     public int itemCount; //획득한 아이템의 개수
     public Image itemImage; //아이템의 이미지
+    public bool isDoorOpen = false; //보스방 활성화
+    public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
 
     [SerializeField]
     private Text textCount; //텍스트UI
     [SerializeField]
     private GameObject countImage; //아이템 획득시 텍스트 이미지 띄우기
 
+    PlayerState playerState;
     private WeaponManager weaponManger;
     private void Start()
     {
+        playerState = FindObjectOfType<PlayerState>();
         weaponManger = FindObjectOfType<WeaponManager>();
     }
 
@@ -76,7 +80,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button==PointerEventData.InputButton.Right) //우클릭시 
+        if (eventData.button==PointerEventData.InputButton.Left) //우클릭시 =>한번 터치시로 바꾸기
         {
             if (item!=null) //아이템 유무 확인
             {
@@ -84,14 +88,40 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
                 {
                     //장착
                     StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType));
-
                 }
-                else
+                else if (item.itemType==Item.ItemType.Key)
+                {
+                    isDoorOpen = true;
+                    doorEffect.SetActive(true);
+                    //문 열린 텍스트 활성화하기
+                }
+                //HP아이템을 사용하고, 최대HP보다 적다면
+                else if(item.itemType == Item.ItemType.Hp && playerState.currentHp <= playerState.maxHealth)
                 {
                     //소모
+                    //회복물약 구현
+                    
+                    playerState.currentHp += item.num;
+                    Debug.Log(item.itemName + "을 사용했습니다.");
+                    SetSlotCount(-1);                    
+                }
+                else if (item.itemType == Item.ItemType.Hp && playerState.currentHp == playerState.maxHealth)
+                {
+                    return;
+                }
+                else if (item.itemType == Item.ItemType.Stamina)
+                {
+                    //소모
+                    playerState.currentStamina += item.num;
                     Debug.Log(item.itemName + "을 사용했습니다.");
                     SetSlotCount(-1);
-                    
+                }
+                else if (item.itemType == Item.ItemType.Food)
+                {
+                    //소모
+                    playerState.currentHungry += item.num;
+                    Debug.Log(item.itemName + "을 사용했습니다.");
+                    SetSlotCount(-1);
                 }
             }
         }
@@ -146,5 +176,9 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
         {  //비어있으면 그대로 넣기
             DragSlot.instance.dragSlot.ClearSlot();
         }
+    }
+    void ItemUse()
+    {
+
     }
 }

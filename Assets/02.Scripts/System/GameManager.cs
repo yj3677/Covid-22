@@ -138,4 +138,5 @@ public class GameManager : MonoBehaviour
             playerState.Die();
         }
     }
+
 }

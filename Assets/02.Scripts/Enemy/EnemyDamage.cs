@@ -14,8 +14,9 @@ public class EnemyDamage : MonoBehaviour
     public Vector3 hpBarOffset = new Vector3(0, 2.2f, 0);
     [Header("---Item---")]
     public GameObject hpItem; //체력 아이템
+    public GameObject foodItem; //음식 아이템
     public GameObject vaccineItem;//(총알)백신 아이템
-    public GameObject staminaItem; //총 아이템
+    public GameObject staminaItem; //스테미너 아이템
 
     private PlayerShooter bulletDamage;
     private AttackCtrl mleeDamage;
@@ -101,8 +102,12 @@ public class EnemyDamage : MonoBehaviour
             Instantiate(vaccineItem, transform.position, Quaternion.identity);
         }
         else if (ran < 10)
-        {  //Gun
+        {  //stamina
             Instantiate(staminaItem, transform.position, Quaternion.identity);
+        }
+        else if(ran<11)
+        {
+            Instantiate(foodItem, transform.position, Quaternion.identity);
         }
 
     }

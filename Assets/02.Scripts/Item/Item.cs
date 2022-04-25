@@ -9,10 +9,11 @@ public class Item : ScriptableObject
     public ItemType itemType; //아이템의 유형
     public Sprite itemImage; //아이템의 이미지.
     public GameObject itemPrefab; //아이템의 프리팹
+    public int num; //아이템 사용시 수치(값)
 
     public string weaponType; //무기 유형
     public enum ItemType
     {
-        Equipment, Used, Ingredient, ETC
+        Equipment, Hp, Stamina, Food, Key
     }
 }

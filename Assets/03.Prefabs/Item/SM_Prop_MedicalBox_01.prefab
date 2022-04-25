@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: -4072165963117355841}
   - component: {fileID: 2636343576998240614}
   - component: {fileID: 4535976579452529829}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SM_Prop_MedicalBox_01
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435410842068634}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.48161238, y: 0.13283943, z: 0.38596162}
-  m_Center: {x: 0, y: 0.06641971, z: -0.000000014901161}
+  m_Size: {x: 0.93, y: 1.98, z: 1.25}
+  m_Center: {x: 0, y: 0.63, z: -0.000000014901161}
 --- !u!114 &2636343576998240614
 MonoBehaviour:
   m_ObjectHideFlags: 0

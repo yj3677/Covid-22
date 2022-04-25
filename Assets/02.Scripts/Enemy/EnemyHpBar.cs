@@ -21,7 +21,6 @@ public class EnemyHpBar : MonoBehaviour
         rectHp = GetComponent<RectTransform>();
     }
 
-    //테스트 때문에 주석했음 -풀어야함
     private void LateUpdate()
     {
         var screenPos = Camera.main.WorldToScreenPoint(targetTr.position + offset);
