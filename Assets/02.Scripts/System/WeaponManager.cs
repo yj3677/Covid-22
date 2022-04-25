@@ -128,11 +128,10 @@ public class WeaponManager : MonoBehaviour
     public IEnumerator ChangeWeaponCoroutine(string currentWeaponType)
     {
         isChangeWeapon = true;  //무기교체중
-        //교체 애니매이션 넣기
-        yield return new WaitForSeconds(changeWeaponDelayTime);
+        playerState.playerAnim.SetTrigger("doChangeWeapon");  //무기교체 애니메이션
+        yield return new WaitForSeconds(changeWeaponDelayTime); //무기교체 딜레이 
         CanclePreWeaponAction();
-        Debug.Log("a");
-        WeaponChange();
+        WeaponChange();  //무기 교체 실행
         yield return new WaitForSeconds(changeWeaponEndDelayTime);
 
         isChangeWeapon = false;
