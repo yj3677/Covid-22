@@ -10,9 +10,9 @@ public class ItemUse : MonoBehaviour
     PlayerState playerState;
     private void Start()
     {
-        recoverHealth = item.num;
-        recoverStamina = item.num;
-        hungry = item.num;
+        recoverHealth = item.valueEffect;
+        recoverStamina = item.valueEffect;
+        hungry = item.valueEffect;
         playerState = FindObjectOfType<PlayerState>();
     }
 
@@ -28,7 +28,7 @@ public class ItemUse : MonoBehaviour
     {
 
         Debug.Log("스테미나 회복" + recoverStamina);
-        playerState.currentStamina += item.num;
+        playerState.currentStamina += item.valueEffect;
 
 
     }
@@ -36,7 +36,7 @@ public class ItemUse : MonoBehaviour
     {
 
         Debug.Log("배고픔 회복" + hungry);
-        playerState.currentHungry += item.num;
+        playerState.currentHungry += item.valueEffect;
 
 
     }

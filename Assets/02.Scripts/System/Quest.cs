@@ -27,23 +27,25 @@ public class Quest : MonoBehaviour
         {
             UIManager.instance.notice1.SetActive(true);
             yield return new WaitForSeconds(15);
+            UIManager.instance.notice1.SetActive(false);
         }
-        //30마리 치료 퀘스트를 완료하면 랜덤 위치에 아이템이 생성
+        //30마리 치료 퀘스트를 완료하면 랜덤 위치에 아이템이 생성됨
         else if (UIManager.instance.killCount == 30) 
         {
             UIManager.instance.notice2.SetActive(true);
             RareItemSpawn();
             yield return new WaitForSeconds(15);
+            UIManager.instance.notice2.SetActive(false);
         }
        
     }
     //보스를 죽일 수 있는 아이템이 일정 장소에서 랜덤하게 드롭
     private void RareItemSpawn()
     {
-            //랜덤 위치에 아이템 스폰
-            int idx = Random.Range(1, points.Length);
-            Instantiate(RareBullet, points[idx].position, points[idx].rotation);
-            Instantiate(BossRoomKey, points[idx].position, points[idx].rotation);
+        //랜덤 위치에 아이템 스폰
+        int idx = Random.Range(1, points.Length);
+        Instantiate(RareBullet, points[idx].position, points[idx].rotation);
+        Instantiate(BossRoomKey, points[idx].position, points[idx].rotation);
     }
 
 }

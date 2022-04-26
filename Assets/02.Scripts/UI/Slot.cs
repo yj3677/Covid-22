@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler
 {
     public Item item; //획득한 아이템
     public int itemCount; //획득한 아이템의 개수
@@ -19,11 +19,14 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
     private GameObject countImage; //아이템 획득시 텍스트 이미지 띄우기
 
     PlayerState playerState;
+    public PlayerShooter playerShooter;
     private WeaponManager weaponManger;
+    private SlotToolTip slotToolTip;
     private void Start()
     {
         playerState = FindObjectOfType<PlayerState>();
         weaponManger = FindObjectOfType<WeaponManager>();
+        slotToolTip = FindObjectOfType<SlotToolTip>();
     }
 
     private void SetColor(float alpha)
@@ -55,10 +58,10 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
         SetColor(1);
 
     }
-    public void SetSlotCount(int count)
+    public void SetSlotCount(int number)
     {
         //아이템 개수 조정
-        itemCount += count;
+        itemCount += item.number;
         textCount.text = itemCount.ToString();
 
         if (itemCount<=0)
@@ -66,6 +69,18 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
             ClearSlot();
         }
     }
+    public void minusSlotCount(int number)
+    {
+        //아이템 개수 조정
+        itemCount -= item.number;
+        textCount.text = itemCount.ToString();
+
+        if (itemCount <= 0)
+        {
+            ClearSlot();
+        }
+    }
+
     private void ClearSlot()
     {
         //아이템이 0개가 되면 슬롯 초기화
@@ -78,52 +93,23 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
         
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item != null)
+        {
+            slotToolTip.ShowToolTip(item,transform.position);
+        }
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        slotToolTip.HideToolTip();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button==PointerEventData.InputButton.Left) //우클릭시 =>한번 터치시로 바꾸기
         {
-            if (item!=null) //아이템 유무 확인
-            {
-                if (item.itemType==Item.ItemType.Equipment) //클릭한게 장비 아이템인지
-                {
-                    //장착
-                    StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType));
-                }
-                else if (item.itemType==Item.ItemType.Key)
-                {
-                    isDoorOpen = true;
-                    doorEffect.SetActive(true);
-                    //문 열린 텍스트 활성화하기
-                }
-                //HP아이템을 사용하고, 최대HP보다 적다면
-                else if(item.itemType == Item.ItemType.Hp && playerState.currentHp <= playerState.maxHealth)
-                {
-                    //소모
-                    //회복물약 구현
-                    
-                    playerState.currentHp += item.num;
-                    Debug.Log(item.itemName + "을 사용했습니다.");
-                    SetSlotCount(-1);                    
-                }
-                else if (item.itemType == Item.ItemType.Hp && playerState.currentHp == playerState.maxHealth)
-                {
-                    return;
-                }
-                else if (item.itemType == Item.ItemType.Stamina)
-                {
-                    //소모
-                    playerState.currentStamina += item.num;
-                    Debug.Log(item.itemName + "을 사용했습니다.");
-                    SetSlotCount(-1);
-                }
-                else if (item.itemType == Item.ItemType.Food)
-                {
-                    //소모
-                    playerState.currentHungry += item.num;
-                    Debug.Log(item.itemName + "을 사용했습니다.");
-                    SetSlotCount(-1);
-                }
-            }
+            ItemUse();
         }
     }
 
@@ -148,6 +134,7 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     { //드래그가 끝나면 아이템 정보를 빼고 이미지 없애기
+        slotToolTip.HideToolTip();
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
         Debug.Log("OnEndDrag 호출");
@@ -179,6 +166,55 @@ public class Slot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler,IDrag
     }
     void ItemUse()
     {
-
+        if (item != null) //아이템 유무 확인
+        {
+            if (item.itemType == Item.ItemType.Equipment) //클릭한게 장비 아이템인지
+            {
+                StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType));
+            }
+            else if (item.itemType == Item.ItemType.Key)
+            {
+                isDoorOpen = true;
+                doorEffect.SetActive(true);
+                //문 열린 텍스트 활성화하기
+            }
+            //HP아이템을 사용하고, maxHealth보다 적다면 회복
+            else if (item.itemType == Item.ItemType.Hp)
+            {
+                playerState.currentHp += item.valueEffect;
+                if (playerState.currentHp > playerState.maxHealth)
+                    playerState.currentHp = playerState.maxHealth;
+                Debug.Log(item.itemName + "을 사용했습니다.");
+                minusSlotCount(-item.number);
+            }
+            //Stamina아이템을 사용
+            else if (item.itemType == Item.ItemType.Stamina)
+            {
+                playerState.currentStamina += item.valueEffect;
+                if (playerState.currentStamina > playerState.maxStamina)
+                    playerState.currentStamina = playerState.maxStamina;
+                Debug.Log(item.itemName + "을 사용했습니다.");
+                minusSlotCount(-item.number);
+            }
+            //Food아이템을 사용
+            else if (item.itemType == Item.ItemType.Food )
+            {
+                playerState.currentHungry += item.valueEffect;
+                if (playerState.currentHungry > playerState.maxHungry)
+                    playerState.currentHungry = playerState.maxHungry;
+                Debug.Log(item.itemName + "을 사용했습니다.");
+                minusSlotCount(-item.number);
+            }
+            //총을 든 상태에서만 VaccineBullet아이템을 사용
+            else if(item.itemType==Item.ItemType.Vaccine&&weaponManger.currentWeaponType=="Gun")
+            {
+                playerShooter = FindObjectOfType<PlayerShooter>();
+                playerShooter.remainBullet += item.number;
+                Debug.Log(item.itemName + "을 사용했습니다.");
+                minusSlotCount(-item.number);
+            }
+        }
     }
+
+
 }
