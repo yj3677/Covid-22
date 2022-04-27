@@ -12,7 +12,8 @@ public class UIManager : MonoBehaviour
     public GameObject notice1; //알림창1
     public GameObject notice2; //알림창2
 
-
+    public Text bulletCapacityTxt; //탄창에 남은 총알 개수를 표시할 텍스트 UI
+    public Text remainBulletTxt; //전체 남은 총알 개수를 표시할 텍스트 UI
     public int killCount; //적 죽인수
 
     void Awake()

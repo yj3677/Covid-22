@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: Vaccine
   m_EditorClassIdentifier: 
   itemName: Vaccine
-  itemExplain: "\uAC10\uC5FC\uC790\uB97C \uCE58\uB8CC\uD560 \uC218 \uC788\uB294 \uBC31\uC2E0\uCD1D\uC54C\n\uD55C
-    \uBB36\uC74C\uC5D0 30\uAC1C"
+  itemExplain: "\uAC10\uC5FC\uC790\uB97C \uCE58\uB8CC\uD560 \uC218 \uC788\uB294 \uBC31\uC2E0\uCD1D\uC54C\n\uCD1D\uC744
+    \uCC29\uC6A9 \uC911\uC77C \uB54C\uB9CC \uC0AC\uC6A9 \uAC00\uB2A5\n\uD55C \uBB36\uC74C\uC5D0
+    30\uAC1C"
   itemType: 5
-  itemImage: {fileID: 21300000, guid: db1889e9ba4e71e4482b22ff0e2f61c5, type: 3}
+  itemImage: {fileID: 21300000, guid: d24eb9419ab2e184f966b6bdae277376, type: 3}
   itemPrefab: {fileID: 1313210510606457372, guid: 1b118aa74b98d2c42b95e6c47ed39911, type: 3}
   valueEffect: 0
   number: 30

@@ -19,25 +19,33 @@ public class Quest : MonoBehaviour
     
     void Update()
     {
-       StartCoroutine(NoticeQuest());
+       StartCoroutine(NoticeQuest1());
+       StartCoroutine(NoticeQuest2());
     }
-    IEnumerator NoticeQuest()
+    IEnumerator NoticeQuest1()
     {
         if (UIManager.instance.killCount==5) //킬 카운트가 5가 되면 알림창 실행
         {
             UIManager.instance.notice1.SetActive(true);
             yield return new WaitForSeconds(15);
             UIManager.instance.notice1.SetActive(false);
+            StopCoroutine(NoticeQuest1());
         }
+      
+
+       
+    }
+    IEnumerator NoticeQuest2()
+    {
         //30마리 치료 퀘스트를 완료하면 랜덤 위치에 아이템이 생성됨
-        else if (UIManager.instance.killCount == 30) 
+        if (UIManager.instance.killCount == 30)
         {
             UIManager.instance.notice2.SetActive(true);
             RareItemSpawn();
             yield return new WaitForSeconds(15);
             UIManager.instance.notice2.SetActive(false);
+            StopCoroutine(NoticeQuest2());
         }
-       
     }
     //보스를 죽일 수 있는 아이템이 일정 장소에서 랜덤하게 드롭
     private void RareItemSpawn()

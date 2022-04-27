@@ -21,8 +21,8 @@ public class SlotToolTip : MonoBehaviour
     {
         go_Base.SetActive(true);
         //ItemToolTip이 현재 위치의 우측 아래쪽(너비,높이의 반만큼)에 위치되게 한다
-        pos += new Vector3(go_Base.GetComponent<RectTransform>().rect.width * 0.5f,
-               -go_Base.GetComponent<RectTransform>().rect.height * 0.5f, 0);
+        pos += new Vector3(go_Base.GetComponent<RectTransform>().rect.width * 0.8f,
+               -go_Base.GetComponent<RectTransform>().rect.height * 0.8f, 0);
         go_Base.transform.position = pos;
         txtItemName.text = item.itemName;
         txtItemExplain.text = item.itemExplain;
