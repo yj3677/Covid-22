@@ -37,8 +37,8 @@ public class Quest : MonoBehaviour
     }
     IEnumerator NoticeQuest2()
     {
-        //30마리 치료 퀘스트를 완료하면 랜덤 위치에 아이템이 생성됨
-        if (UIManager.instance.killCount == 30)
+        //20마리 치료 퀘스트를 완료하면 랜덤 위치에 아이템이 생성됨
+        if (UIManager.instance.killCount == 20)
         {
             UIManager.instance.notice2.SetActive(true);
             RareItemSpawn();

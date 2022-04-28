@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Play : MonoBehaviour
 {
-    [SerializeField] private Transform player;
+    [SerializeField] private Transform player; //추적할 대상
 
     Vector3 offset;
 
@@ -39,13 +39,15 @@ public class Play : MonoBehaviour
     void Update()
     {
         transform.position = player.transform.position + offset;  //카메라
+        
+        
         //GetTouchInput();
         //if (Input.GetMouseButton(1))
         //{
         //    CamLookAround();
         //}
     }
-
+   
     //private void GetTouchInput()
     //{
     //    몇개의 터치가 입력되는가
