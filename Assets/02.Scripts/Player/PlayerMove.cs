@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("---Running---")]
     public bool isRunning = false; //달리기중
+    float originSpeed;
+    float runCooltime = 4;
+
     [SerializeField]
     private Transform player;
     [SerializeField]
@@ -32,7 +35,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void Start()
     {
-        
+        originSpeed=navMesh.speed; //플레이어 속도 초기값
     }
     private void Update()
     {
@@ -84,47 +87,29 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-
-    //public void LookAround(Vector3 inputDirection) //카메라 방향
-    //{
-    //    Vector2 mouseDelta = inputDirection;
-    //    Vector3 camAngle = cam.rotation.eulerAngles;
-
-    //    float x = camAngle.x - mouseDelta.y;
-    //    if (x < 180)
-    //    {
-    //        x = Mathf.Clamp(x, -70, -1);  //위쪽 방향 제한
-    //    }
-    //    else
-    //    {
-    //        x = Mathf.Clamp(x, 359, 359); //아래쪽 방향 제한
-    //    }
-    //    cam.rotation = Quaternion.Euler(x, camAngle.y + mouseDelta.x, camAngle.z);  //카메라 회전
-    //}
-
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
     {
         if (playerState.isDead)
         {
             return;
         }
+        //달리는 중, 스테미너=0, 앉은 상태가 아니라면
         if (!(isRunning) && playerState.stamina != 0 && !(playerState.isCrouch))
         {
-            playerState.stamina -= 4;
-            navMesh.speed = 9;
-            
-            isRunning = true;
+            playerState.stamina -= 4;  //스테미너 4감소
+            navMesh.speed = 9;    //플레이어 속도 9로 증가
+            isRunning = true;   //달리는 상태로 변경
             Invoke("RunOff", 4);
 
         }
         
     }
     void RunOff()
-    {
-        float originSpeed = navMesh.speed;
-        if (navMesh.speed == 9)
+    { //달리는 상태에서 걷는 상태로 변경
+        
+        if (isRunning) //달리는 상태라면
         {
-            navMesh.speed = 5;
+            navMesh.speed = originSpeed;
             playerState.playerAnim.SetBool("IsRun", false);
             isRunning = false;
         }

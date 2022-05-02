@@ -205,8 +205,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 Debug.Log(item.itemName + "을 사용했습니다.");
                 minusSlotCount(-item.number);
             }
-            //총을 든 상태에서만 VaccineBullet아이템을 사용
-            else if(item.itemType==Item.ItemType.Vaccine&&weaponManger.currentWeaponType=="Gun")
+            //총을 든 상태에서만 Bullet아이템을 사용
+            else if(item.itemType==Item.ItemType.bullet&&weaponManger.currentWeaponType=="Gun")
             {
                 playerShooter = FindObjectOfType<PlayerShooter>();
                 playerShooter.remainBullet += item.number;

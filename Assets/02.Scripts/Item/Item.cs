@@ -18,6 +18,6 @@ public class Item : ScriptableObject
     public string weaponType; //무기 유형
     public enum ItemType
     {
-        Equipment, Hp, Stamina, Food, Key, Vaccine
+        Equipment, Hp, Stamina, Food, Key, bullet, Vaccine
     }
 }

@@ -32,8 +32,8 @@ public class WeaponManager : MonoBehaviour
 
     private AttackCtrl attackCtrl; //근접 공격
     private PlayerShooter shootCtrl; //원거리 공격
-    private PlayerState playerState;
-    private PlayerMove playermove;
+    public PlayerState playerState;
+    public PlayerMove playermove;
 
     void Start()
     {
@@ -45,10 +45,6 @@ public class WeaponManager : MonoBehaviour
         SetAnimations(overrideControllers[0]);
     }
 
-    void Update()
-    {
-        
-    }
     //무기 교체 버튼을 눌렀을 때 무기 교체 실행
     public void WeaponChangeButton()
     {
@@ -65,10 +61,7 @@ public class WeaponManager : MonoBehaviour
             else
             {
 
-            }
-        
- 
-        
+            }    
     }
     void WeaponChange()
     {
