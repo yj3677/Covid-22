@@ -88,8 +88,8 @@ public class EnemyDamage : MonoBehaviour
 
     private void ItemDrop()
     {  //랜덤으로 아이템 드랍
-        int ran = Random.Range(0, 10);
-        if (ran < 5)
+        int ran = Random.Range(0, 11);
+        if (ran < 7)
         {
             Debug.Log("Not Item");
         }

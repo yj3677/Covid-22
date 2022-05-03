@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 33686642431113250}
   - component: {fileID: 23063353853416478}
   - component: {fileID: -4072165963117355841}
+  - component: {fileID: 3804110522250401114}
   - component: {fileID: 2636343576998240614}
   - component: {fileID: 4535976579452529829}
   m_Layer: 11
@@ -191,6 +192,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.93, y: 1.98, z: 1.25}
   m_Center: {x: 0, y: 0.63, z: -0.000000014901161}
+--- !u!114 &3804110522250401114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435410842068634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e89c3f38759444b8fa2d3ec3282447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponManger: {fileID: 0}
+  isDoorOpen: 0
+  doorEffect: {fileID: 0}
 --- !u!114 &2636343576998240614
 MonoBehaviour:
   m_ObjectHideFlags: 0

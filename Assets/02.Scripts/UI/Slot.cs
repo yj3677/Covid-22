@@ -12,6 +12,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Image itemImage; //아이템의 이미지
     public bool isDoorOpen = false; //보스방 활성화
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
+    public GameObject mixTool; //아이템 사용 시 열릴 조합창
+    public GameObject medicine; //조합 시 생성될 치료제
+
+    public bool isVaccine;
+    public bool isPrescription;
 
     [SerializeField]
     private Text textCount; //텍스트UI
@@ -19,14 +24,25 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private GameObject countImage; //아이템 획득시 텍스트 이미지 띄우기
 
     PlayerState playerState;
+    ItemMix itemMix;
     public PlayerShooter playerShooter;
     private WeaponManager weaponManger;
     private SlotToolTip slotToolTip;
     private void Start()
     {
+        itemMix = FindObjectOfType<ItemMix>();
         playerState = FindObjectOfType<PlayerState>();
         weaponManger = FindObjectOfType<WeaponManager>();
         slotToolTip = FindObjectOfType<SlotToolTip>();
+    }
+
+    private void Update()
+    {
+        if (isVaccine && isPrescription)
+        {
+            mixTool.SetActive(true);
+        }
+
     }
 
     private void SetColor(float alpha)
@@ -69,7 +85,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             ClearSlot();
         }
     }
-    public void minusSlotCount(int number)
+    public void MinusSlotCount(int number)
     {
         //아이템 개수 조정
         itemCount -= item.number;
@@ -110,6 +126,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (eventData.button==PointerEventData.InputButton.Left) //우클릭시 =>한번 터치시로 바꾸기
         {
             ItemUse();
+            MixItemUsed();
         }
     }
 
@@ -185,7 +202,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 if (playerState.currentHp > playerState.maxHealth)
                     playerState.currentHp = playerState.maxHealth;
                 Debug.Log(item.itemName + "을 사용했습니다.");
-                minusSlotCount(-item.number);
+                MinusSlotCount(-item.number);
             }
             //Stamina아이템을 사용
             else if (item.itemType == Item.ItemType.Stamina)
@@ -194,7 +211,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 if (playerState.currentStamina > playerState.maxStamina)
                     playerState.currentStamina = playerState.maxStamina;
                 Debug.Log(item.itemName + "을 사용했습니다.");
-                minusSlotCount(-item.number);
+                MinusSlotCount(-item.number);
             }
             //Food아이템을 사용
             else if (item.itemType == Item.ItemType.Food )
@@ -203,18 +220,40 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 if (playerState.currentHungry > playerState.maxHungry)
                     playerState.currentHungry = playerState.maxHungry;
                 Debug.Log(item.itemName + "을 사용했습니다.");
-                minusSlotCount(-item.number);
+                MinusSlotCount(-item.number);
             }
             //총을 든 상태에서만 Bullet아이템을 사용
-            else if(item.itemType==Item.ItemType.bullet&&weaponManger.currentWeaponType=="Gun")
+            else if(item.itemType==Item.ItemType.Bullet&&weaponManger.currentWeaponType=="Gun")
             {
                 playerShooter = FindObjectOfType<PlayerShooter>();
                 playerShooter.remainBullet += item.number;
                 Debug.Log(item.itemName + "을 사용했습니다.");
-                minusSlotCount(-item.number);
+                MinusSlotCount(-item.number);
             }
         }
     }
+    void MixItemUsed()
+    { //Vaccine 아이템 사용 시 조합창이 뜨고 조합창에 백신과 조합서를 올리고 조합버튼을 누르면 치료제가 생성되게 한다
+        if (item.itemType == Item.ItemType.Vaccine)
+        {
+            itemMix.isVaccine = true;  //수정
+        }
+        else if (item.itemType == Item.ItemType.Prescription)
+        {
+            itemMix.isPrescription = true; //수정
+        }
 
+
+
+    }
+    public void MixTool()
+    {
+        Debug.Log("테스트");
+
+        //AddItem(medicine, itemCount);
+        //MinusSlotCount(-item.number);
+        Instantiate(medicine, playerState.transform.position, Quaternion.identity);
+
+    }
 
 }

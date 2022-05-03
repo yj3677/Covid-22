@@ -1,18 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 
 public class ItemMix : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Item item;
+    public bool isVaccine;
+    public bool isPrescription;
+
+    public PlayerState playerState;
+    public GameObject mixTool; //아이템 사용 시 열릴 조합창
+    public GameObject medicine; //조합 시 생성될 치료제
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (isVaccine&&isPrescription)
+        {
+            mixTool.SetActive(true);
+        }
     }
+
+    //public void MixItemUsed()
+    //{ //Vaccine 아이템 사용 시 조합창이 뜨고 조합창에 백신과 조합서를 올리고 조합버튼을 누르면 치료제가 생성되게 한다
+    //    if (item.itemType == Item.ItemType.Vaccine)
+    //    {
+    //        isVaccine = true;
+    //    }
+    //    else if (item.itemType == Item.ItemType.Prescription)
+    //    {
+    //        isPrescription = true;
+    //    }
+
+
+
+    //}
+    //public void MixTool()
+    //{
+    //    Debug.Log("테스트");
+    //    Instantiate(medicine, playerState.transform.position, Quaternion.identity);
+
+
+    //}
 }

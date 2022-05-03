@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 1568124766078286652}
   - component: {fileID: 4355395738195239026}
   - component: {fileID: 1902737845169223382}
+  - component: {fileID: 6601160350578889909}
   m_Layer: 11
   m_Name: Donut
   m_TagString: Item
@@ -164,6 +165,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.8, z: 0.5}
   m_Center: {x: 0.91, y: 0.22, z: 0.2}
+--- !u!114 &6601160350578889909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538886261622408931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e89c3f38759444b8fa2d3ec3282447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponManger: {fileID: 0}
+  isDoorOpen: 0
+  doorEffect: {fileID: 0}
 --- !u!1 &2259008817910555656
 GameObject:
   m_ObjectHideFlags: 0
