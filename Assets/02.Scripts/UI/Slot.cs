@@ -14,6 +14,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
     public GameObject mixTool; //아이템 사용 시 열릴 조합창
     public GameObject medicine; //조합 시 생성될 치료제
+    private Transform enemyParent; //치료제 사용 시 지워질 애너미
 
     public bool isVaccine;
     public bool isPrescription;
@@ -23,6 +24,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     [SerializeField]
     private GameObject countImage; //아이템 획득시 텍스트 이미지 띄우기
 
+    EnemyDamage enemyDamage;
     PlayerState playerState;
     ItemMix itemMix;
     public PlayerShooter playerShooter;
@@ -30,6 +32,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     private SlotToolTip slotToolTip;
     private void Start()
     {
+        enemyParent = GameObject.Find("Enemies").transform;
         itemMix = FindObjectOfType<ItemMix>();
         playerState = FindObjectOfType<PlayerState>();
         weaponManger = FindObjectOfType<WeaponManager>();
@@ -126,7 +129,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         if (eventData.button==PointerEventData.InputButton.Left) //우클릭시 =>한번 터치시로 바꾸기
         {
             ItemUse();
-            MixItemUsed();
         }
     }
 
@@ -137,8 +139,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             DragSlot.instance.dragSlot = this; //드래그에 자기자신 넣기(아이템 정보)
             DragSlot.instance.DragSetImage(itemImage); //드래그 중인 아이템 이미지가 넣어짐
             DragSlot.instance.transform.position = eventData.position;
-        }
-        
+        }  
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -214,7 +215,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 MinusSlotCount(-item.number);
             }
             //Food아이템을 사용
-            else if (item.itemType == Item.ItemType.Food )
+            else if (item.itemType == Item.ItemType.Food)
             {
                 playerState.currentHungry += item.valueEffect;
                 if (playerState.currentHungry > playerState.maxHungry)
@@ -223,37 +224,31 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                 MinusSlotCount(-item.number);
             }
             //총을 든 상태에서만 Bullet아이템을 사용
-            else if(item.itemType==Item.ItemType.Bullet&&weaponManger.currentWeaponType=="Gun")
+            else if (item.itemType == Item.ItemType.Bullet && weaponManger.currentWeaponType == "Gun")
             {
                 playerShooter = FindObjectOfType<PlayerShooter>();
                 playerShooter.remainBullet += item.number;
                 Debug.Log(item.itemName + "을 사용했습니다.");
                 MinusSlotCount(-item.number);
             }
+            else if (item.itemType == Item.ItemType.Vaccine && !itemMix.isVaccine)
+            {
+                itemMix.isVaccine = true;  //수정
+                MinusSlotCount(-item.number);
+            }
+            else if (item.itemType == Item.ItemType.Prescription && !itemMix.isPrescription)
+            {
+                itemMix.isPrescription = true; //수정
+                MinusSlotCount(-item.number);
+            }
+            else if(item.itemType==Item.ItemType.Medicine)
+            {
+               
+                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                UIManager.instance.KillCount();
+            }
         }
     }
-    void MixItemUsed()
-    { //Vaccine 아이템 사용 시 조합창이 뜨고 조합창에 백신과 조합서를 올리고 조합버튼을 누르면 치료제가 생성되게 한다
-        if (item.itemType == Item.ItemType.Vaccine)
-        {
-            itemMix.isVaccine = true;  //수정
-        }
-        else if (item.itemType == Item.ItemType.Prescription)
-        {
-            itemMix.isPrescription = true; //수정
-        }
 
-
-
-    }
-    public void MixTool()
-    {
-        Debug.Log("테스트");
-
-        //AddItem(medicine, itemCount);
-        //MinusSlotCount(-item.number);
-        Instantiate(medicine, playerState.transform.position, Quaternion.identity);
-
-    }
 
 }

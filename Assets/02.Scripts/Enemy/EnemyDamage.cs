@@ -77,8 +77,6 @@ public class EnemyDamage : MonoBehaviour
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
                 //아이템 드롭하는 함수 호출
                 ItemDrop();
-                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
-                UIManager.instance.KillCount();
                 //Capsule Collider 컴포넌트 비활성화
                 GetComponent<CapsuleCollider>().enabled = false;
             }

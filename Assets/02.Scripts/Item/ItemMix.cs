@@ -6,6 +6,7 @@ public class ItemMix : MonoBehaviour
     Item item;
     public bool isVaccine;
     public bool isPrescription;
+    public bool isItemUse; //아이템 사용 여부
 
     public PlayerState playerState;
     public GameObject mixTool; //아이템 사용 시 열릴 조합창
@@ -21,6 +22,7 @@ public class ItemMix : MonoBehaviour
         {
             mixTool.SetActive(true);
         }
+
     }
 
     //public void MixItemUsed()
@@ -37,11 +39,22 @@ public class ItemMix : MonoBehaviour
 
 
     //}
-    //public void MixTool()
-    //{
-    //    Debug.Log("테스트");
-    //    Instantiate(medicine, playerState.transform.position, Quaternion.identity);
-
-
-    //}
+    public void MixTool()
+    {
+        Debug.Log("테스트");
+        Instantiate(medicine, playerState.transform.position, Quaternion.identity);
+        isItemUse = true;
+        isVaccine = false;
+        isPrescription = false;
+        mixTool.SetActive(false);
+        Invoke("MixItemUsed",2);
+        
+    }
+    void MixItemUsed()
+    {
+        if (isItemUse)
+        {
+            isItemUse = false;
+        }
+    }
 }

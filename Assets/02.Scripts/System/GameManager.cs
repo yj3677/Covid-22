@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Transform[] points;
     //적 캐릭터 프리팹을 저장할 변수
     public GameObject enemy;
+    //생성된 적 프리팹을 담을 부모
+    public GameObject enemies; 
     //적 캐릭터를 생성할 주기
     public float createTime = 2;
     //적 캐릭터의 최대 생성 개수
@@ -126,7 +128,8 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(createTime);
                 //랜덤한 위치에 적을 리스폰
                 int idx = Random.Range(1, points.Length);
-                Instantiate(enemy, points[idx].position, points[idx].rotation);
+                GameObject enemiesInfo = Instantiate(enemy, points[idx].position, points[idx].rotation);
+                enemiesInfo.transform.parent = enemies.transform; //생성된 적을 enemies object의 자식으로 생성되게 한다
             }
             else yield return null;
         }
