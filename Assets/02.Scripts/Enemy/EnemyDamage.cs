@@ -6,7 +6,7 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField]
     private float startHp;  //시작체력
     [SerializeField]
-    private float currentHp; //현재체력
+    public float currentHp; //현재체력
 
     private GameObject healEffect; //치료이펙트 추가하기
 
@@ -82,6 +82,16 @@ public class EnemyDamage : MonoBehaviour
             }
         }
         
+    }
+    public void WeaponAttack()
+    {
+        GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
+        hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
+        ////아이템 드롭하는 함수 호출
+        //ItemDrop();
+        //Capsule Collider 컴포넌트 비활성화
+        GetComponent<CapsuleCollider>().enabled = false;
+
     }
 
     private void ItemDrop()

@@ -19,6 +19,6 @@ MonoBehaviour:
   itemImage: {fileID: 0}
   itemPrefab: {fileID: 0}
   valueEffect: 0
-  number: 0
+  number: 1
   usenum: 0
   weaponType: 

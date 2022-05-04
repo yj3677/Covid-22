@@ -14,6 +14,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
     public GameObject mixTool; //아이템 사용 시 열릴 조합창
     public GameObject medicine; //조합 시 생성될 치료제
+    public BoxCollider playerColl;
     private Transform enemyParent; //치료제 사용 시 지워질 애너미
 
     public bool isVaccine;
@@ -27,11 +28,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     EnemyDamage enemyDamage;
     PlayerState playerState;
     ItemMix itemMix;
+    VaccineAttack vaccineAttack;
     public PlayerShooter playerShooter;
     private WeaponManager weaponManger;
     private SlotToolTip slotToolTip;
     private void Start()
     {
+        
+        vaccineAttack = FindObjectOfType<VaccineAttack>();
         enemyParent = GameObject.Find("Enemies").transform;
         itemMix = FindObjectOfType<ItemMix>();
         playerState = FindObjectOfType<PlayerState>();
@@ -243,12 +247,17 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
             else if(item.itemType==Item.ItemType.Medicine)
             {
-               
-                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
+                playerColl.enabled=true;                             
+                vaccineAttack.DoVaccineAttack();
+                MinusSlotCount(-item.number);
+                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
                 UIManager.instance.KillCount();
+                Invoke("ColliderCancel", 2);
             }
         }
     }
-
-
+    void ColliderCancel()
+    {
+        playerColl.enabled = false;
+    }
 }

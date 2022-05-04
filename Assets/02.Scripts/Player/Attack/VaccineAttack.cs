@@ -7,15 +7,38 @@ using UnityEngine;
 /// </summary>
 public class VaccineAttack : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
+    EnemyDamage enemyDamage;
 
-    
-    void Update()
+    public float searchTimer;
+    public void DoVaccineAttack()
     {
-        
+        Collider[] cols = Physics.OverlapSphere(transform.position, 10);
+        if (cols.Length>0)
+        {
+            for (int i = 0; i < cols.Length; i++)
+            {
+                if (cols[i].tag=="Enemy")
+                {
+                    Debug.Log("aaaaaaaaa");
+                    enemyDamage = FindObjectOfType<EnemyDamage>();
+                    enemyDamage.WeaponAttack();
+                }
+            }
+        }
     }
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    Debug.Log("s");
+    //    if (searchTimer<0.1)
+    //    {
+    //        searchTimer += Time.deltaTime;
+    //    }
+    //    if (other.gameObject.tag=="Enemy"&&searchTimer>=0.1)
+    //    {
+    //        enemyDamage = FindObjectOfType<EnemyDamage>();
+    //        enemyDamage.WeaponAttack();
+    //        searchTimer = 0;
+
+    //    }
+    //}
 }

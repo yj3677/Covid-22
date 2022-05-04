@@ -419,7 +419,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 500410926}
         m_TargetAssemblyTypeName: ItemMix, Assembly-CSharp
         m_MethodName: MixTool
         m_Mode: 1
@@ -544,6 +544,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 173103766}
   m_CullTransparentMesh: 1
+--- !u!1 &211192571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 211192572}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &211192572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 211192571}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.803218, y: -35.298904, z: 60.803074}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 28
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226092360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,6 +1336,51 @@ MonoBehaviour:
   type: 0
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   radius: 0.5
+--- !u!1 &347987983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347987984}
+  - component: {fileID: 347987985}
+  m_Layer: 6
+  m_Name: VaccineColl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &347987984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347987983}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4787292174081429157}
+  m_RootOrder: 19
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &347987985
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347987983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 5.51
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &352345724
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,6 +2050,7 @@ MonoBehaviour:
   - {fileID: 232113093}
   - {fileID: 1115968976}
   enemy: {fileID: 6998751418215259049, guid: bafddd0cb9e13e74f880671a7dd8019b, type: 3}
+  enemies: {fileID: 211192571}
   createTime: 2
   maxEnemy: 10
   isGameOver: 0
@@ -2007,6 +2083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isVaccine: 0
   isPrescription: 0
+  isItemUse: 0
   playerState: {fileID: 5270390733781718050}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 6645830288469074507, guid: 50a338ba0c5df2048b45fa4140a95fbc, type: 3}
@@ -8041,6 +8118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 870273184}
   - component: {fileID: 870273183}
+  - component: {fileID: 870273185}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: Untagged
@@ -8105,6 +8183,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &870273185
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870273182}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b60c24670d0d6cb419848447a111ec34, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &876942317
 GameObject:
   m_ObjectHideFlags: 0
@@ -10142,6 +10239,63 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 3388940821260292462, guid: d01c3f4eb70c90e4a99b8100feeea7d1, type: 3}
   m_PrefabInstance: {fileID: 3338642047915988730}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1890539054
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_RootOrder
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -34.587242
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60.195076
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510994, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6645311432826510998, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
+      propertyPath: m_Name
+      value: Prescription (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 301c7ab6c1983ad47ad59e84557c131a, type: 3}
 --- !u!1 &1922450063
 GameObject:
   m_ObjectHideFlags: 0
@@ -10288,6 +10442,68 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.84, y: 12.458044, z: 0.72}
   m_Center: {x: 0.16, y: 6.2201557, z: 0.023572957}
+--- !u!1001 &2029499069
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3888729804219080678, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_Name
+      value: DNA (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.249
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -34.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 63.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890472537509112726, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384443914250832483, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+      propertyPath: weaponManger
+      value: 
+      objectReference: {fileID: 5270390733781718048}
+    m_RemovedComponents:
+    - {fileID: 4384443914250832483, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 01e1c1cf358b4a740a3587eb01f02573, type: 3}
 --- !u!1001 &2093774374
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10698,10 +10914,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3804110522250401114, guid: 9efa848c9a423b04493ee1b7772154b2, type: 3}
+      propertyPath: itemMix
+      value: 
+      objectReference: {fileID: 500410926}
+    - target: {fileID: 3804110522250401114, guid: 9efa848c9a423b04493ee1b7772154b2, type: 3}
       propertyPath: weaponManger
       value: 
       objectReference: {fileID: 5270390733781718048}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3804110522250401114, guid: 9efa848c9a423b04493ee1b7772154b2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9efa848c9a423b04493ee1b7772154b2, type: 3}
 --- !u!4 &13559793982972830
 Transform:
@@ -11318,6 +11539,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 6645830288469074507, guid: 50a338ba0c5df2048b45fa4140a95fbc, type: 3}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273311131500}
@@ -11895,6 +12117,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272958156021}
@@ -12248,6 +12471,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273162456565}
@@ -12606,6 +12830,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273307853560}
@@ -13288,6 +13513,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272168654750}
@@ -13509,6 +13735,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 6645830288469074507, guid: 50a338ba0c5df2048b45fa4140a95fbc, type: 3}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272951965183}
@@ -14276,6 +14503,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273651660380}
@@ -14582,6 +14810,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271804590588}
@@ -15223,6 +15452,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 8583723767327508989}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272197381013}
@@ -15519,6 +15749,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272606950164}
@@ -15571,6 +15802,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273345086972}
@@ -15753,6 +15985,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271972185900}
@@ -15957,6 +16190,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271895743146}
@@ -16175,6 +16409,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273660819056}
@@ -16623,6 +16858,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273008001886}
@@ -18277,6 +18513,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 6645830288469074507, guid: 50a338ba0c5df2048b45fa4140a95fbc, type: 3}
+  playerColl: {fileID: 5270390733781718053}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273428207614}
@@ -19356,6 +19593,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676273470033587}
@@ -20840,6 +21078,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272883956403}
@@ -21534,6 +21773,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271751125444}
@@ -21731,6 +21971,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272096579160}
@@ -21931,6 +22172,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 244228262}
   medicine: {fileID: 6645830288469074507, guid: 50a338ba0c5df2048b45fa4140a95fbc, type: 3}
+  playerColl: {fileID: 347987983}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271696957950}
@@ -22208,6 +22450,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272317260612}
@@ -22741,6 +22984,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272110403124}
@@ -22811,6 +23055,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676272707957547}
@@ -23069,6 +23314,7 @@ MonoBehaviour:
   doorEffect: {fileID: 0}
   mixTool: {fileID: 0}
   medicine: {fileID: 0}
+  playerColl: {fileID: 0}
   isVaccine: 0
   isPrescription: 0
   textCount: {fileID: 858676271884337726}
@@ -24672,6 +24918,7 @@ Transform:
   - {fileID: 4083232809631059142}
   - {fileID: 1149181004971465848}
   - {fileID: 8680664768095388977}
+  - {fileID: 347987984}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24854,6 +25101,7 @@ GameObject:
   - component: {fileID: 5270390733781718048}
   - component: {fileID: 5270390733781718053}
   - component: {fileID: 5270390733781718057}
+  - component: {fileID: 5270390733781718058}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -24980,11 +25228,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5270390733781718047}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.63, y: 0.4, z: 0.3}
-  m_Center: {x: 0, y: 0.26, z: 0}
+  m_Size: {x: 4.42, y: 3.98, z: 2.99}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5270390733781718054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25048,6 +25296,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5270390733781718058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5270390733781718047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 698ee6b5153823a4eb7f9e313ee5af8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchTimer: 0
 --- !u!1 &5290962521618672854
 GameObject:
   m_ObjectHideFlags: 0

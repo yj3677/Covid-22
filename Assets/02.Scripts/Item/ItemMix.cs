@@ -47,7 +47,7 @@ public class ItemMix : MonoBehaviour
         isVaccine = false;
         isPrescription = false;
         mixTool.SetActive(false);
-        Invoke("MixItemUsed",2);
+        Invoke("MixItemUsed",1);
         
     }
     void MixItemUsed()

@@ -206,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponManger: {fileID: 0}
   isDoorOpen: 0
+  itemMix: {fileID: 0}
   doorEffect: {fileID: 0}
 --- !u!114 &2636343576998240614
 MonoBehaviour:
