@@ -45,7 +45,7 @@ public class EnemyDamage : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log("ssss");
-        if (collider.gameObject.tag== "VaccineBullet")
+        if (collider.gameObject.tag == "VaccineBullet")
         {
             bulletDamage = FindObjectOfType<PlayerShooter>();
             Debug.Log("백신맞고 치유");
@@ -59,14 +59,12 @@ public class EnemyDamage : MonoBehaviour
                 hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
                 //아이템 드롭하는 함수 호출
                 ItemDrop();
-                ////적 캐릭터 사망 횟수를 누적시키는 함수 호출
-                UIManager.instance.KillCount();
                 //Capsule Collider 컴포넌트 비활성화
                 GetComponent<CapsuleCollider>().enabled = false;
             }
         }
-        else if(collider.gameObject.tag == "Weapon")
-        {  
+        else if (collider.gameObject.tag == "Weapon")
+        {
             Debug.Log("방망이 맞음");
             mleeDamage = FindObjectOfType<AttackCtrl>();
             currentHp -= mleeDamage.damage;
@@ -81,19 +79,23 @@ public class EnemyDamage : MonoBehaviour
                 GetComponent<CapsuleCollider>().enabled = false;
             }
         }
+        else if (collider.gameObject.tag == "Medicine")
+        {
+            currentHp = 0;
+            hpBarImage.fillAmount = currentHp / startHp;
+            Debug.Log("치료");
+            GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
+            hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
+            //아이템 드롭하는 함수 호출
+            ItemDrop();
+            //Capsule Collider 컴포넌트 비활성화
+            GetComponent<CapsuleCollider>().enabled = false;
+            //애니메이션
+            //적 캐릭터 치료 횟수를 누적시키는 함수 호출
+            UIManager.instance.KillCount();
+        }
         
     }
-    public void WeaponAttack()
-    {
-        GetComponent<EnemyAI>().state = EnemyAI.State.DIE;
-        hpBarImage.GetComponentsInParent<Image>()[1].color = Color.clear;
-        ////아이템 드롭하는 함수 호출
-        //ItemDrop();
-        //Capsule Collider 컴포넌트 비활성화
-        GetComponent<CapsuleCollider>().enabled = false;
-
-    }
-
     private void ItemDrop()
     {  //랜덤으로 아이템 드랍
         int ran = Random.Range(0, 11);

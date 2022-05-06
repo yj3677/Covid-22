@@ -8,24 +8,42 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class BossRoom : MonoBehaviour
 {
-    Slot itemUse; //열쇠 아이템 사용여부
+    public string transferMapName; //이동할 맵이름.
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
+    public GameObject NoticeBossRoom;
+    public bool isDoorOpen; //열쇠 아이템 사용했는지
 
+    public PlayerMove player;
     void Start()
     {
-        itemUse = FindObjectOfType<Slot>();
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //플레이어가 해당 콜라이더에 닿아있고, 문이 열린 상태(아이템 사용)에서 문을 클릭하면 씬 이동
-        if (other.tag == "Player" && itemUse.isDoorOpen && Input.GetMouseButtonDown(0))
+        if (other.tag == "Player" && isDoorOpen)
         {
-            SceneManager.LoadScene("BossRoom");
+            player.currentMapName = transferMapName;
+            NoticeBossRoom.SetActive(true);
+            GameManager.instance.isBossRoom = true;
+        }
+        else
+        {
+            return;
         }
     }
     void GoBossRoom()
     {
         
+    }
+    public void NoticeYes()
+    {
+        Invoke("NoticeNo", 0.1f);
+        SceneManager.LoadScene("BossRoom");
+    }
+    public void NoticeNo()
+    {
+        NoticeBossRoom.SetActive(false);
     }
 }

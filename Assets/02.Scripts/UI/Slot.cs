@@ -10,11 +10,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public Item item; //획득한 아이템
     public int itemCount; //획득한 아이템의 개수
     public Image itemImage; //아이템의 이미지
-    public bool isDoorOpen = false; //보스방 활성화
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
     public GameObject mixTool; //아이템 사용 시 열릴 조합창
     public GameObject medicine; //조합 시 생성될 치료제
-    public BoxCollider playerColl;
+    public CapsuleCollider playerColl;
     private Transform enemyParent; //치료제 사용 시 지워질 애너미
 
     public bool isVaccine;
@@ -32,6 +31,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     public PlayerShooter playerShooter;
     private WeaponManager weaponManger;
     private SlotToolTip slotToolTip;
+    public BossRoom bossRoom;
     private void Start()
     {
         
@@ -194,10 +194,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 StartCoroutine(weaponManger.ChangeWeaponCoroutine(item.weaponType));
             }
-            else if (item.itemType == Item.ItemType.Key)
+            else if (item.itemType == Item.ItemType.Key && !bossRoom.isDoorOpen)
             {
-                isDoorOpen = true;
-                doorEffect.SetActive(true);
+                Debug.Log("문 열림");
+                bossRoom.isDoorOpen = true;
+                MinusSlotCount(-item.number);
+                //doorEffect.SetActive(true);
                 //문 열린 텍스트 활성화하기
             }
             //HP아이템을 사용하고, maxHealth보다 적다면 회복
@@ -237,22 +239,20 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             }
             else if (item.itemType == Item.ItemType.Vaccine && !itemMix.isVaccine)
             {
-                itemMix.isVaccine = true;  //수정
+                itemMix.isVaccine = true;  
                 MinusSlotCount(-item.number);
             }
             else if (item.itemType == Item.ItemType.Prescription && !itemMix.isPrescription)
             {
-                itemMix.isPrescription = true; //수정
+                itemMix.isPrescription = true; 
                 MinusSlotCount(-item.number);
             }
-            else if(item.itemType==Item.ItemType.Medicine)
+            else if(item.itemType==Item.ItemType.Medicine) //치료제 아이템 사용
             {
                 playerColl.enabled=true;                             
-                vaccineAttack.DoVaccineAttack();
+                //vaccineAttack.DoVaccineAttack();
                 MinusSlotCount(-item.number);
-                //적 캐릭터 사망 횟수를 누적시키는 함수 호출
-                UIManager.instance.KillCount();
-                Invoke("ColliderCancel", 2);
+                Invoke("ColliderCancel", 2);   //2초 뒤, 콜라이더 비활성화
             }
         }
     }

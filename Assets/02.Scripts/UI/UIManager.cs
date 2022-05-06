@@ -30,9 +30,9 @@ public class UIManager : MonoBehaviour
     }
     public void KillCount()
     {
-        //적 캐릭터 사망시킨 횟수 누적
+        //적 캐릭터 치료시킨 횟수 누적
         ++killCount;
-        killCountText.text = "KILL " + killCount.ToString("0000");
+        killCountText.text = "치료 " + killCount.ToString("0000");
         //PlayerPrefs.SetInt("KillCount", killCount);
     }
     void Start()

@@ -5,10 +5,10 @@ using UnityEngine.AI;
 
 public class PlayerMove : MonoBehaviour
 {
+    static public PlayerMove instance; //값 공유
     [Header("---Running---")]
     public bool isRunning = false; //달리기중
     float originSpeed;
-    float runCooltime = 4;
 
     [SerializeField]
     private Transform player;
@@ -18,8 +18,8 @@ public class PlayerMove : MonoBehaviour
     private PlayerInput moveJoystick;
     [SerializeField]
     private PlayerInput camJoystick;
-    
 
+    public string currentMapName; //BossRoom스크립트에 있는 transferMapName변수값 저장
     public bool isMove;
     private PlayerShooter playerShooter;
     public NavMeshAgent navMesh;
@@ -35,7 +35,16 @@ public class PlayerMove : MonoBehaviour
     }
     private void Start()
     {
-        originSpeed=navMesh.speed; //플레이어 속도 초기값
+        if (instance==null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+            originSpeed = navMesh.speed; //플레이어 속도 초기값
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     private void Update()
     {

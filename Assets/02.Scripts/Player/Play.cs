@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class Play : MonoBehaviour
 {
+    static public Play instance;
     [SerializeField] private Transform player; //추적할 대상
 
     Vector3 offset;
@@ -24,14 +25,24 @@ public class Play : MonoBehaviour
     private Vector3 originPos; //초기 카메라 위치
     private Quaternion originRot; //초기 카메라 각도
 
-
+   
     void Start()
     {
+        if (instance!=null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+            offset = transform.position - player.transform.position;
+            transform.position = player.transform.position + offset;
+        }
         //this.rightFingerId = -1;    //-1은 추적중이 아닌 손가락
         //this.halfScreenWidth = Screen.width / 2;
         //this.cameraPitch = 35f;
-        offset = transform.position - player.transform.position;
-        transform.position = player.transform.position + offset;
+
         //originPos = transform.position; //위치초기값 
         //originRot = transform.rotation; //각도초기값
     }

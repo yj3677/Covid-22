@@ -20,19 +20,12 @@ public class GameManager : MonoBehaviour
     public int maxEnemy = 10;
     //게임 종료 여부를 판단할 변수
     public bool isGameOver = false;
-    //인벤토리 창이 열렸는지 판단
-    //public bool isInvenOpen = false;
+    //보스 룸으로 이동 했는지 판단할 변수
+    public bool isBossRoom = false;
 
     public CanvasGroup inventoryCG;  //인벤토리 캔버스 그룹
 
     PlayerState playerState;
-
-    //PlayerPrefs를 활용한 데이터 저장
-    //[HideInInspector] public int killCount;
-
-
-    //DataManager를 저장할 변수
-    private DataManager dataMgr;
 
 
     //인벤토리의 아이템이 변경됐을 때 발생시킬 이벤트 정의
@@ -68,7 +61,7 @@ public class GameManager : MonoBehaviour
         points = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
         if (points.Length>0)
         {
-            StartCoroutine(this.CreateEnemy());
+           // StartCoroutine(this.CreateEnemy());
         }
     }
     private void Update()
@@ -117,23 +110,23 @@ public class GameManager : MonoBehaviour
 
  
 
-    IEnumerator CreateEnemy()
-    {   //게임오버 상태가 아니라면 생성 주기마다 적을 리스폰
-        while(!isGameOver || !playerState.isDead)
-        {
-            int enemyCount = (int)GameObject.FindGameObjectsWithTag("Enemy").Length;
-            //현재 적 숫자가 최대 적 숫자보다 적다면 리스폰
-            if (enemyCount < maxEnemy)
-            {
-                yield return new WaitForSeconds(createTime);
-                //랜덤한 위치에 적을 리스폰
-                int idx = Random.Range(1, points.Length);
-                GameObject enemiesInfo = Instantiate(enemy, points[idx].position, points[idx].rotation);
-                enemiesInfo.transform.parent = enemies.transform; //생성된 적을 enemies object의 자식으로 생성되게 한다
-            }
-            else yield return null;
-        }
-    }
+    //IEnumerator CreateEnemy()
+    //{   //게임오버 상태가 아니라면 생성 주기마다 적을 리스폰
+    //    while(!isGameOver || !playerState.isDead || !isBossRoom)
+    //    {
+    //        int enemyCount = (int)GameObject.FindGameObjectsWithTag("Enemy").Length;
+    //        //현재 적 숫자가 최대 적 숫자보다 적다면 리스폰
+    //        if (enemyCount < maxEnemy)
+    //        {
+    //            yield return new WaitForSeconds(createTime);
+    //            //랜덤한 위치에 적을 리스폰
+    //            int idx = Random.Range(1, points.Length);
+    //            GameObject enemiesInfo = Instantiate(enemy, points[idx].position, points[idx].rotation);
+    //            enemiesInfo.transform.parent = enemies.transform; //생성된 적을 enemies object의 자식으로 생성되게 한다
+    //        }
+    //        else yield return null;
+    //    }
+    //}
     public void GameOver()
     {
         if (isGameOver)
