@@ -4818,7 +4818,7 @@ GameObject:
   - component: {fileID: 2931220138510435}
   - component: {fileID: 7925565876206078108}
   - component: {fileID: 6002915925496346722}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bullet
   m_TagString: Virus
   m_Icon: {fileID: 0}

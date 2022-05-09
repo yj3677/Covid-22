@@ -39,7 +39,7 @@ public class BossRoom : MonoBehaviour
     }
     public void NoticeYes()
     {
-        Invoke("NoticeNo", 0.1f);
+        NoticeNo();
         SceneManager.LoadScene("BossRoom");
     }
     public void NoticeNo()

@@ -93,8 +93,7 @@ public class EnemyDamage : MonoBehaviour
             //애니메이션
             //적 캐릭터 치료 횟수를 누적시키는 함수 호출
             UIManager.instance.KillCount();
-        }
-        
+        }  
     }
     private void ItemDrop()
     {  //랜덤으로 아이템 드랍
@@ -119,7 +118,6 @@ public class EnemyDamage : MonoBehaviour
         {
             Instantiate(foodItem, transform.position, Quaternion.identity);
         }
-
     }
 
     private void ShowBloodEffect()

@@ -14,13 +14,20 @@ public class StartPoint : MonoBehaviour
         if (startPoint == player.currentMapName)
         {
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
-            player.transform.position = new Vector3(9,transform.position.y,transform.position.z);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z);
 
         }
     }
     void Start()
     {
-        
+        player = FindObjectOfType<PlayerMove>();
+        mainCamera = FindObjectOfType<Play>();
+        if (startPoint == player.currentMapName)
+        {
+            mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        }
     }
 
     // Update is called once per frame

@@ -9,7 +9,6 @@ public class Bullet : MonoBehaviour
         transform.Translate(0, 1.3f, 0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Destroy(this.gameObject, 1);

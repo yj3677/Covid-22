@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8749095327664477115}
   - component: {fileID: 615672516}
   - component: {fileID: 1807637125}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: VaccineBullet
   m_TagString: VaccineBullet
   m_Icon: {fileID: 0}

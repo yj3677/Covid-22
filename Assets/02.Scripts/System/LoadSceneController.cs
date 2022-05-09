@@ -25,27 +25,43 @@ public class LoadSceneController : MonoBehaviour
         //씬의 90%까지 업로드 된 상태로 놔두고 true로 변경 시 다시 로드
         op.allowSceneActivation = false;
 
-        float timer = 0;
+        float timer = 0f;
         while(!op.isDone)
         {
             yield return null;
             timer += Time.deltaTime;
-            if (op.progress>0.89f)
+            if (op.progress < 0.9f)
             {
                 roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
-                if (roadingBar.fillAmount>=0.95f)
+                if (roadingBar.fillAmount >= op.progress)
+                {
+                    timer = 0f;
+                }      
+            }
+            else
+            {
+                roadingBar.fillAmount = Mathf.Lerp(op.progress, 1f, timer);
+                if (roadingBar.fillAmount >= 0.99f)
                 {
                     op.allowSceneActivation = true;
                 }
             }
-            else
-            {
-                roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, op.progress, timer);
-                if (roadingBar.fillAmount>=op.progress)
-                {
-                    timer = 0;
-                }
-            }
+            //if (op.progress>0.89f)
+            //{
+            //    roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
+            //    if (roadingBar.fillAmount>=0.95f)
+            //    {
+            //        op.allowSceneActivation = true;
+            //    }
+            //}
+            //else
+            //{
+            //    roadingBar.fillAmount = Mathf.Lerp( op.progress,1f, timer);
+            //    if (roadingBar.fillAmount>=op.progress)
+            //    {
+            //        timer = 0;
+            //    }
+            //}
             //yield return null;
             //if (op.progress < 0.9f)
             //{

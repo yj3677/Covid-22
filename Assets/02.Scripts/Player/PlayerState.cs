@@ -60,8 +60,8 @@ public class PlayerState : MonoBehaviour
         actionCtrl = FindObjectOfType<ActionCtrl>();
         playerInput = FindObjectOfType<PlayerInput>();
         playermove = FindObjectOfType<PlayerMove>();
-        enemyMove = FindObjectOfType<EnemyMove>();
-        enemyAI = FindObjectOfType<EnemyAI>();
+        //enemyMove = FindObjectOfType<EnemyMove>();
+        //enemyAI = FindObjectOfType<EnemyAI>();
         playerAnim = GetComponent<Animator>();
     }
     private void Start()
@@ -100,7 +100,6 @@ public class PlayerState : MonoBehaviour
             }
         } 
     }
-
     void Hungry()
     {
         if (isDead)
@@ -124,11 +123,8 @@ public class PlayerState : MonoBehaviour
             isDead = true;
             Die();
             Debug.Log("배고픔 수치가 0이 되었습니다.");
-        }
-          
+        }        
     }
-
-
     private void GaugeUpdate()
     {
         Image_gauges0.fillAmount = (float)currentHp / health;
@@ -204,7 +200,6 @@ public class PlayerState : MonoBehaviour
             playerAnim.SetTrigger("IsDead");
             //죽었을때 높이 조절 
             playerAnim.applyRootMotion = true;
-            //playerDeadTr.transform.position = new Vector3(transform.position.x, -0.2f, transform.position.z);
             isDead = true;
             actionCtrl.DisAppearInfo();
             playermove.navMesh.speed = 0; //속도0
