@@ -51,7 +51,6 @@ public class PlayerMove : MonoBehaviour
         Move();
     }
 
-
     public void Move()
     {
         if (playerState.isDead == true)
@@ -91,9 +90,6 @@ public class PlayerMove : MonoBehaviour
                 playerState.playerAnim.SetBool("IsWalk", false);
             }
         }
-       
-
-
     }
 
     public void RunOn() //버튼 누르면 달리기 , 스테미나 감소
@@ -109,9 +105,7 @@ public class PlayerMove : MonoBehaviour
             navMesh.speed = 9;    //플레이어 속도 9로 증가
             isRunning = true;   //달리는 상태로 변경
             Invoke("RunOff", 4);
-
-        }
-        
+        }      
     }
     void RunOff()
     { //달리는 상태에서 걷는 상태로 변경

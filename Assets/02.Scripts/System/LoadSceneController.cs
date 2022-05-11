@@ -29,23 +29,30 @@ public class LoadSceneController : MonoBehaviour
         while(!op.isDone)
         {
             yield return null;
-            timer += Time.deltaTime;
-            if (op.progress < 0.9f)
+            if (roadingBar.fillAmount<0.9f)
             {
-                roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
-                if (roadingBar.fillAmount >= op.progress)
-                {
-                    timer = 0f;
-                }      
+                //https://www.youtube.com/watch?v=hHHZucxsZPE
             }
-            else
-            {
-                roadingBar.fillAmount = Mathf.Lerp(op.progress, 1f, timer);
-                if (roadingBar.fillAmount >= 0.99f)
-                {
-                    op.allowSceneActivation = true;
-                }
-            }
+        }
+        //{
+        //    yield return null;
+        //    timer += Time.deltaTime;
+        //    if (op.progress < 0.9f)
+        //    {
+        //        roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
+        //        if (roadingBar.fillAmount >= op.progress)
+        //        {
+        //            timer = 0f;
+        //        }      
+        //    }
+        //    else
+        //    {
+        //        roadingBar.fillAmount = Mathf.Lerp(op.progress, 1f, timer);
+        //        if (roadingBar.fillAmount >= 0.9f)
+        //        {
+        //            op.allowSceneActivation = true;
+        //        }
+        //    }
             //if (op.progress>0.89f)
             //{
             //    roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
@@ -77,6 +84,6 @@ public class LoadSceneController : MonoBehaviour
             //        yield break;
             //    }
             //}
-        }
+        //}
     }
 }

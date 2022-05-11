@@ -5,20 +5,21 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour
 {
     public string startPoint;
-    private PlayerMove player;
-    private Play mainCamera;
+    public PlayerMove player;
+    public Play mainCamera;
     private void Awake()
     {
         player = FindObjectOfType<PlayerMove>();
         mainCamera = FindObjectOfType<Play>();
         if (startPoint == player.currentMapName)
         {
+            Debug.Log("플레이어 시작위치");
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
             player.transform.position = new Vector3(transform.position.x, transform.position.y,transform.position.z);
 
         }
     }
-    void Start()
+    private void OnEnable()
     {
         player = FindObjectOfType<PlayerMove>();
         mainCamera = FindObjectOfType<Play>();
@@ -29,10 +30,28 @@ public class StartPoint : MonoBehaviour
 
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        DontDestroyOnLoad(gameObject);
+    }
+    private void Update()
+    {
+        SceneMovePlayer();
+        Invoke("DontSceneMovePlayer", 2);
+    }
+    void SceneMovePlayer()
+    {
+        player = FindObjectOfType<PlayerMove>();
+        mainCamera = FindObjectOfType<Play>();
+        if (startPoint == player.currentMapName)
+        {
+            mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
+            player.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+
+        }
+    }
+    void DontSceneMovePlayer()
+    {
+        gameObject.SetActive(false);
     }
 }

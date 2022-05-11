@@ -11,6 +11,8 @@ public class BossRoom : MonoBehaviour
     public string transferMapName; //이동할 맵이름.
     public GameObject doorEffect; //다음 스테이지로 이동할 포탈 
     public GameObject NoticeBossRoom;
+    public GameObject startPoint; //맵 이동 시 시작 지점
+
     public bool isDoorOpen; //열쇠 아이템 사용했는지
 
     public PlayerMove player;
@@ -27,6 +29,7 @@ public class BossRoom : MonoBehaviour
             player.currentMapName = transferMapName;
             NoticeBossRoom.SetActive(true);
             GameManager.instance.isBossRoom = true;
+
         }
         else
         {
@@ -41,6 +44,7 @@ public class BossRoom : MonoBehaviour
     {
         NoticeNo();
         SceneManager.LoadScene("BossRoom");
+
     }
     public void NoticeNo()
     {

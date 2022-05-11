@@ -45,7 +45,7 @@ public class BossAttack : MonoBehaviour
                 nextFire = Time.time + fireRate + Random.Range(1, 5f);
             }
             //플레이어를 바라보게 함. 시간에 따라 점진적으로 회전 시킴.
-            Quaternion rot = Quaternion.LookRotation(playerTr.position - transform.position);
+            Quaternion rot = Quaternion.LookRotation(playerTr.position - enemyTr.transform.position);
             enemyTr.rotation = Quaternion.Slerp(enemyTr.rotation, rot, Time.deltaTime * damping);
         }
     }
