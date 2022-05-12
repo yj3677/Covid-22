@@ -14,8 +14,10 @@ public class PlayerState : MonoBehaviour
     private PlayerInput playerInput;
     public Animator playerAnim;
     private EnemyFire enemyfire;
+    private BossAttack bossFire;
     private EnemyMove enemyMove;
     private EnemyAI enemyAI;
+    public int enemyDamage; //공격 받았을 때 받아올 에너미데미지 
     [SerializeField]
     private GameObject playerDeadTr;
 
@@ -92,7 +94,7 @@ public class PlayerState : MonoBehaviour
         if (currentHp>0)
         {
             Debug.Log("체력--");
-            currentHp -= enemyfire.damage;
+            currentHp -= enemyDamage;
             if (currentHp <= 0)
             {
                 isDead = true;

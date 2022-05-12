@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     [Header("---Running---")]
     public bool isRunning = false; //달리기중
     float originSpeed;
+    public bool isCameraMoving;
 
     [SerializeField]
     private Transform player;
@@ -53,7 +54,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Move()
     {
-        if (playerState.isDead == true)
+        if (playerState.isDead == true ||isCameraMoving)
         { 
             return;
         }

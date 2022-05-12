@@ -5,11 +5,8 @@ using UnityEngine;
 public class IntroScene : MonoBehaviour
 {
 
-    void Update()
-    {
-        Invoke("MainScene", 3);
-    }
-    void MainScene()
+
+    public void MainScene()
     {
         LoadSceneController.LoadScene("MainStage");
     }

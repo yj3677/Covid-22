@@ -27,7 +27,7 @@ public class StartPoint : MonoBehaviour
         //player.enabled = false;
         //SceneMovePlayer();
         player2.SetActive(true);
-        Invoke("SceneMovePlayer", 5);
+        Invoke("SceneMovePlayer", 0.5f);
     }
     private void Update()
     {

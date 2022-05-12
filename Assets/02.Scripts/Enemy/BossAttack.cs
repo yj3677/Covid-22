@@ -23,11 +23,12 @@ public class BossAttack : MonoBehaviour
     {
         playerState = FindObjectOfType<PlayerState>();
         playerTr = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerState.enemyDamage = damage;
     }
 
     void Update()
     {
-        EnemyAttack();
+        Invoke("EnemyAttack", 0.1f);
     }
     //isFire면 애너미가 공격
     void EnemyAttack()

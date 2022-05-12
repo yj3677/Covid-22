@@ -23,7 +23,6 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
     {
         joyBackground = GetComponent<Image>();
         joyController = transform.GetChild(0).GetComponent<Image>();
-
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -68,7 +67,6 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
        
     }
 
-
     public void OnPointerUp(PointerEventData eventData)
     {
         //터치 종료 시 컨트롤러 위치를 제자리로 옮긴다.
@@ -77,8 +75,6 @@ public class PlayerInput : MonoBehaviour, IPointerDownHandler, IDragHandler, IPo
         inputDirection = Vector2.zero;
         isInput = false;
         Debug.Log("터치 종료");
-
-
     }
     //private void JoystickCircle(PointerEventData eventData)
     //{

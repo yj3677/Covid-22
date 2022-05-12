@@ -55,6 +55,7 @@ public class Boss : MonoBehaviour
  
     IEnumerator Action()
     {
+        yield return new WaitForSeconds(0.1f); //플레이어 스폰되는 시간까지 기다리기
         //적 캐릭터가 사망할 때까지 무한루프
         while (!isDie)
         {
@@ -96,6 +97,7 @@ public class Boss : MonoBehaviour
     }
     IEnumerator CheckState()
     {
+        yield return new WaitForSeconds(2);
         while (!isDie)
         {
             if (state == State.DIE)

@@ -9809,7 +9809,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4787292174081429157}
-  cameraMain: {fileID: 0}
   cam: {fileID: 1386768532}
   cameraSensitivity: 1
 --- !u!95 &1386768534
@@ -9820,7 +9819,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1386768531}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3e162bb525f90264cba03e510436ef9b, type: 2}
   m_CullingMode: 0
@@ -26143,6 +26142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnim: {fileID: 5270390733781718057}
+  enemyDamage: 0
   playerDeadTr: {fileID: 5270390733781718047}
   isCrouch: 0
   maxHealth: 200

@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-
 public class Play : MonoBehaviour
 {
+    private Animator anim;
+    private PlayerMove playerMove;
     static public Play instance;
     [SerializeField] private Transform player; //추적할 대상
 
     Vector3 offset;
-
     private int rightFingerId;
     float halfScreenWidth;  //화면 절반만 터치하면 카메라 회전
     private Vector2 prevPoint;
 
-    public GameObject cameraMain;
     public Transform cam;
     public float cameraSensitivity;
 
@@ -26,7 +23,13 @@ public class Play : MonoBehaviour
     private Vector3 originPos; //초기 카메라 위치
     private Quaternion originRot; //초기 카메라 각도
 
-   
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        playerMove = FindObjectOfType<PlayerMove>();
+        anim.SetBool("ZoomIn", true);
+        playerMove.isCameraMoving = true;
+    }
     void Start()
     {
         if (instance!=null)
@@ -37,7 +40,7 @@ public class Play : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
-            
+            Invoke("StopAnim",1.5f);
             offset = transform.position - player.transform.position;
             transform.position = player.transform.position + offset;
         }
@@ -59,6 +62,12 @@ public class Play : MonoBehaviour
         //{
         //    CamLookAround();
         //}
+    }
+    void StopAnim()
+    {
+        anim.SetBool("ZoomIn", false);
+        anim.enabled = false;
+        playerMove.isCameraMoving = false;
     }
    
     //private void GetTouchInput()

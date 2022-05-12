@@ -33,6 +33,7 @@ public class EnemyFire : MonoBehaviour
         anim = GetComponent<Animator>();
         _audio = GetComponent<AudioSource>();
         //muzzleFlash.enabled = false;
+        playerState.enemyDamage = damage;
 
     }
 
