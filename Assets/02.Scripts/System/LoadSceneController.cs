@@ -9,6 +9,7 @@ public class LoadSceneController : MonoBehaviour
     static string nextScene;
     [SerializeField]
     Image roadingBar;
+    float timer;
     public static void LoadScene(string sceneName)
     {
         nextScene = sceneName;
@@ -21,38 +22,31 @@ public class LoadSceneController : MonoBehaviour
 
     IEnumerator LoadingScene()
     {
+        yield return new WaitForSeconds(3);
         AsyncOperation op = SceneManager.LoadSceneAsync("MainStage"); //비동기방식(씬 이동 시 다른 작업 가능)
         //씬의 90%까지 업로드 된 상태로 놔두고 true로 변경 시 다시 로드
         op.allowSceneActivation = false;
 
-        float timer = 0f;
-        while(!op.isDone)
         {
             yield return null;
-            if (roadingBar.fillAmount<0.9f)
+            timer += Time.deltaTime;
+            if (op.progress < 0.9f)
             {
-                //https://www.youtube.com/watch?v=hHHZucxsZPE
+                roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
+                if (roadingBar.fillAmount >= op.progress)
+                {
+                    timer = 0f;
+                }
+            }
+            else
+            {
+                roadingBar.fillAmount = Mathf.Lerp(op.progress, 1f, timer);
+                if (roadingBar.fillAmount >= 0.9f)
+                {
+                    op.allowSceneActivation = true;
+                }
             }
         }
-        //{
-        //    yield return null;
-        //    timer += Time.deltaTime;
-        //    if (op.progress < 0.9f)
-        //    {
-        //        roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
-        //        if (roadingBar.fillAmount >= op.progress)
-        //        {
-        //            timer = 0f;
-        //        }      
-        //    }
-        //    else
-        //    {
-        //        roadingBar.fillAmount = Mathf.Lerp(op.progress, 1f, timer);
-        //        if (roadingBar.fillAmount >= 0.9f)
-        //        {
-        //            op.allowSceneActivation = true;
-        //        }
-        //    }
             //if (op.progress>0.89f)
             //{
             //    roadingBar.fillAmount = Mathf.Lerp(roadingBar.fillAmount, 1f, timer);
@@ -84,6 +78,6 @@ public class LoadSceneController : MonoBehaviour
             //        yield break;
             //    }
             //}
-        //}
-    }
+            //}
+        }
 }

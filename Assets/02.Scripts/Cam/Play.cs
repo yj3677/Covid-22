@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
+
 
 
 public class Play : MonoBehaviour
@@ -14,8 +15,8 @@ public class Play : MonoBehaviour
     private int rightFingerId;
     float halfScreenWidth;  //화면 절반만 터치하면 카메라 회전
     private Vector2 prevPoint;
-    
 
+    public GameObject cameraMain;
     public Transform cam;
     public float cameraSensitivity;
 
@@ -36,6 +37,7 @@ public class Play : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             instance = this;
+            
             offset = transform.position - player.transform.position;
             transform.position = player.transform.position + offset;
         }
